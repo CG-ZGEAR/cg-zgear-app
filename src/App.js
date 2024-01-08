@@ -1,3 +1,4 @@
+
 import {
   createBrowserRouter,
   RouterProvider,
@@ -21,6 +22,8 @@ import Offer from "./pages/Offer/Offer";
 import Payment from "./pages/payment/Payment";
 import ProductDetails from "./pages/ProductDetails/ProductDetails";
 import Shop from "./pages/Shop/Shop";
+import AdminNavbar from "./components/user/AdminNavbar"
+
 
 const Layout = () => {
   return (
@@ -52,9 +55,11 @@ const router = createBrowserRouter(
       </Route>
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
+      <Route path="/adminnavbar" element = {<AdminNavbar/>}></Route>
     </Route>
   )
 );
+
 
 function App() {
   return (
@@ -64,4 +69,5 @@ function App() {
   );
 }
 
-export default App;
+
+export default App

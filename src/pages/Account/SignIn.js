@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { logoLight } from "../../assets/images";
+import { loginUser, selectSuccess } from "../../features/user/userSice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loginSuccess = useSelector(selectSuccess);
+
   // ============= Initial State Start here =============
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // ============= Initial State End here ===============
   // ============= Error Msg Start here =================
@@ -16,7 +23,7 @@ const SignIn = () => {
   const [successMsg, setSuccessMsg] = useState("");
   // ============= Event Handler Start here =============
   const handleEmail = (e) => {
-    setEmail(e.target.value);
+    setUsername(e.target.value);
     setErrEmail("");
   };
   const handlePassword = (e) => {
@@ -24,10 +31,30 @@ const SignIn = () => {
     setErrPassword("");
   };
   // ============= Event Handler End here ===============
+
+  const user = { admin: true };
+  const isAdmin = user && user.role === "admin";
+
+  useEffect(() => {
+    if (loginSuccess) {
+      setSuccessMsg(
+        `Hello dear, Thank you for your attempt. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${username}`
+      );
+      setUsername("");
+      setPassword("");
+
+      if (isAdmin) {
+        navigate("/adminnavbar");
+      } else {
+        navigate("/");
+      }
+    }
+  }, [loginSuccess, username, isAdmin, navigate]);
+
   const handleSignUp = (e) => {
     e.preventDefault();
 
-    if (!email) {
+    if (!username) {
       setErrEmail("Enter your email");
     }
 
@@ -35,14 +62,18 @@ const SignIn = () => {
       setErrPassword("Create a password");
     }
     // ============== Getting the value ==============
-    if (email && password) {
-      setSuccessMsg(
-        `Hello dear, Thank you for your attempt. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
-      );
-      setEmail("");
-      setPassword("");
+    if (username && password) {
+      let userLogin = {
+        username: username,
+        password: password,
+      };
+      console.log(loginSuccess);
+
+      console.log(userLogin);
+      dispatch(loginUser(userLogin));
     }
   };
+
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
@@ -121,7 +152,7 @@ const SignIn = () => {
             </p>
             <Link to="/signup">
               <button
-                className="w-full h-10 bg-primeColor text-gray-200 rounded-md text-base font-titleFont font-semibold 
+                className="w-full h-10 bg-primeColor text-gray-200 rounded-md text-base font-titleFont font-semibold
             tracking-wide hover:bg-black hover:text-white duration-300"
               >
                 Sign Up
@@ -138,13 +169,12 @@ const SignIn = () => {
                 {/* Email */}
                 <div className="flex flex-col gap-.5">
                   <p className="font-titleFont text-base font-semibold text-gray-600">
-                    User name
+                    Username
                   </p>
                   <input
                     onChange={handleEmail}
-                    value={email}
+                    value={username}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                  
                     placeholder="User name"
                   />
                   {errEmail && (
