@@ -63,7 +63,7 @@ export const deleteUser = createAsyncThunk(
   "user/deleteUser",
   async (userId) => {
     try {
-      const response = await get(userId);
+      const response = await getDeletedUsers(userId);
       return response;
     } catch (error) {
       console.error("Delete user error:", error);
