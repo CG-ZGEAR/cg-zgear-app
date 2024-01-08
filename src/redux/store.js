@@ -24,7 +24,7 @@ const persistedReducer = persistReducer(persistConfig, orebiReducer);
 export const store = configureStore({
   reducer: {
     orebiReducer: persistedReducer,
-    products: productsReducer, // Correctly placed inside the reducer configuration
+    products: productsReducer,
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
