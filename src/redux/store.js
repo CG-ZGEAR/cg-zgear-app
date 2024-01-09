@@ -10,7 +10,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import orebiReducer from "./orebiSlice";
+import zgearReducer from "./zgearSlice";
 import productsReducer from "../features/product/productsReducer";
 
 const persistConfig = {
@@ -19,11 +19,11 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, orebiReducer);
+const persistedReducer = persistReducer(persistConfig, zgearReducer);
 
 export const store = configureStore({
   reducer: {
-    orebiReducer: persistedReducer,
+    zgearReducer: persistedReducer,
     products: productsReducer,
   },
   middleware: (getDefaultMiddleware) =>
