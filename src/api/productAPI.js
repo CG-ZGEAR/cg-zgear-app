@@ -1,3 +1,6 @@
+
+import {createAsyncThunk} from "@reduxjs/toolkit";
+
 import axios from 'axios';
 
 const PRODUCT_MANAGEMENT_API = "http://localhost:8080/api";
@@ -53,5 +56,3 @@ export const deleteProduct = async (productId) => {
     }
     return result;
 };
-
-

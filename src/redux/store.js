@@ -12,6 +12,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import zgearReducer from "./zgearSlice";
 import productsReducer from "../features/product/productsReducer";
+import userReducer from "../features/user/userSlice"
 
 const persistConfig = {
   key: "root",
@@ -25,6 +26,7 @@ export const store = configureStore({
   reducer: {
     zgearReducer: persistedReducer,
     products: productsReducer,
+    user: userReducer
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
