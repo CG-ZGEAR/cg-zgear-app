@@ -1,25 +1,43 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { ClipboardText, CalendarCheck } from "phosphor-react";
-import "../../assets/css/navbar.css"
+import logoImage from "../../assets/images/logoLight.png"
+
+import "../../assets/css/navbar.css";
+
 export const Navbar = () => {
+  const storedToken = localStorage.getItem("accessToken");
+  console.log(storedToken);
+
   return (
-    <div className="navbar">
-      <div className="links">
-        <Link to="/active-users" className="activeUser">
-          <CalendarCheck size={46} />
-          List <br></br>
-          User
-        </Link>
+    <>
+      <div className="navbar">
 
+        {/* <div className="logo">
+        <img src={logoImage} alt="Logo" />
+        </div> */}
 
-        <Link to="/fetch-deleted-users" className="FetchDeletedUsers">
-          <ClipboardText size={46} />
-          Deleted<br></br>
-          Users
-        </Link>
+        <div className="links">
+          <Link to={`/adminnavbar/active-users`} className="activeuser">
+            <CalendarCheck size={46} />
+            List <br />
+            User
+          </Link>
+
+          <Link
+            to={`/adminnavbar/fetch-deleted-users`}
+            className="fetchfdeletedusers"
+          >
+            <ClipboardText size={46} />
+            Deleted
+            <br />
+            Users
+          </Link>
+        </div>
       </div>
-    </div>
+      <Outlet />
+    </>
   );
 };
+
 export default Navbar;

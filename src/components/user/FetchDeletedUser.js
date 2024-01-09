@@ -26,7 +26,7 @@ export default function FetchDeletedUsers() {
 
 
   useEffect(() => {
-    if (userList.length === 0 || render) {
+    if (userList?.length === 0 || render) {
       getfetchDeletedUsers();
       SetRender(false);
     }

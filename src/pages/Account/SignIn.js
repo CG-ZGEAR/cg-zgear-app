@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { logoLight } from "../../assets/images";
-import { loginUser, selectSuccess } from "../../features/user/userSice";
+import {
+  loginUser,
+  selectLoginSuccess,
+  selectUserLogin,
+} from "../../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const loginSuccess = useSelector(selectSuccess);
+  const loginSuccess = useSelector(selectLoginSuccess);
 
   // ============= Initial State Start here =============
   const [username, setUsername] = useState("");
@@ -32,8 +36,7 @@ const SignIn = () => {
   };
   // ============= Event Handler End here ===============
 
-  const user = { admin: true };
-  const isAdmin = user && user.role === "admin";
+  const user = useSelector(selectUserLogin);
 
   useEffect(() => {
     if (loginSuccess) {
@@ -43,13 +46,15 @@ const SignIn = () => {
       setUsername("");
       setPassword("");
 
-      if (isAdmin) {
+      if (user.admin) {
         navigate("/adminnavbar");
       } else {
         navigate("/");
       }
+
+      localStorage.setItem("accessToken", user.token);
     }
-  }, [loginSuccess, username, isAdmin, navigate]);
+  }, [loginSuccess, username, navigate, user]);
 
   const handleSignUp = (e) => {
     e.preventDefault();
@@ -67,9 +72,7 @@ const SignIn = () => {
         username: username,
         password: password,
       };
-      console.log(loginSuccess);
 
-      console.log(userLogin);
       dispatch(loginUser(userLogin));
     }
   };

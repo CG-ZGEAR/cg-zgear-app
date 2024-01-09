@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import Product from '../../home/Products/Product';
-import { fetchProducts } from '../../../features/product/productsReducer';
+import {productListSelector} from '../../../features/product/productsReducer';
+import {getProducts} from "../../../features/product/productReducerService";
 import { useDispatch, useSelector } from 'react-redux';
-
-console.log(Items);
+import Product from "../../home/Products/Product";
 
 function Items({ currentItems }) {
     return (
@@ -16,6 +15,7 @@ function Items({ currentItems }) {
                         img={item.imageUrls.length > 0 ? item.imageUrls[0] : 'default-image.jpg'}
                         productName={item.productName}
                         price={item.price}
+                        categoryName={item.categoryName}
                         description={item.description}
                         specifications={item.specifications.map(spec => `${spec.specKey}: ${spec.specValue}`).join(', ')}
                     />
@@ -27,24 +27,27 @@ function Items({ currentItems }) {
 
 const Pagination = ({ itemsPerPage }) => {
     const dispatch = useDispatch();
-    const { items, loading, error, pageCount } = useSelector((state) => state.products);
+    const products = useSelector(productListSelector) || [];
     const [currentPage, setCurrentPage] = useState(0);
+    const pageCount = Math.ceil(products.total / itemsPerPage);
+    const { content = [], totalPages = 0 } = products;
 
     useEffect(() => {
-        dispatch(fetchProducts({ page: currentPage, size: itemsPerPage }));
+        // Dispatch getProducts action with current page and size
+        dispatch(getProducts({ page: currentPage, size: itemsPerPage }));
     }, [dispatch, currentPage, itemsPerPage]);
-
     const handlePageClick = (event) => {
         setCurrentPage(event.selected);
     };
 
-    if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error}</div>;
+    if (!products) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 mdl:gap-4 lg:gap-10">
-                <Items currentItems={items} />
+                <Items currentItems={content} />
             </div>
             <div className="flex flex-col mdl:flex-row justify-center mdl:justify-between items-center">
                 <ReactPaginate
@@ -60,7 +63,7 @@ const Pagination = ({ itemsPerPage }) => {
                     activeClassName="bg-black text-white"
                 />
                 <p className="text-base font-normal text-lightText">
-                    Showing page {currentPage + 1} of {pageCount}
+                    Showing page {currentPage + 1} of {totalPages}
                 </p>
             </div>
         </div>

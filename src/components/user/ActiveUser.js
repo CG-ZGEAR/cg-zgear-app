@@ -11,28 +11,24 @@ import { FaLock, FaLockOpen } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Table from "react-bootstrap/Table";
 
-
 export default function ActiveUsers() {
   const dispatch = useDispatch();
   const users = useSelector(selectUsersList);
   const [userList, SetUserList] = useState([]);
   const [render, SetRender] = useState(true);
 
-
   const getactiveUsers = async () => {
     dispatch(activeUsers());
     SetUserList(users);
   };
 
-
   useEffect(() => {
-    if (userList.length === 0 || render) {
+    if (userList?.length === 0 || render) {
       getactiveUsers();
       SetRender(false);
     }
     SetUserList(users);
   }, [users, render]);
-
 
   const handleIconClick = async (id, lock) => {
     if (lock) {
@@ -63,10 +59,8 @@ export default function ActiveUsers() {
         }
       });
     }
-    // setIsLocked(!isLocked);
     SetRender(true);
   };
-
 
   return (
     <div>
@@ -105,5 +99,3 @@ export default function ActiveUsers() {
     </div>
   );
 }
-
-

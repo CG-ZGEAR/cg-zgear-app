@@ -1,48 +1,94 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import header from "../../components/home/Header/Header";
+import { createSlice } from '@reduxjs/toolkit';
+import {addProduct, editProduct, getProduct, getProducts, removeProduct} from "./productReducerService";
 
 const initialState = {
-    items: [],
+    values: null,
+    value: null,
     loading: false,
     error: null,
-    pageCount: 0,
+    success: false,
 };
-export const fetchProducts = createAsyncThunk(
-    'products/fetchProducts',
-    async ({ page, size }) => {
-        const response = await axios.get(
-            `http://localhost:8080/api/products?page=${page}&size=${size}`,
-            {
-                headers: {
-                    Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtbHVja2NvY2swIiwiaWF0IjoxNzA0MzU1Njc5LCJleHAiOjE3MDQ5NjA0Nzl9.J89XH5R2nCXulQTHYl6mVciTpk4vaag1HVD4QeCWjYHvIH7wsCodVrhfEJXmrJX29xQvyXwl36qTy90bHvo2kQ'
-                }
-            }
-        );
 
-        return response.data;
-    }
-);
 
-const productsSlice = createSlice({
-    name: 'products',
+export const productSlice = createSlice({
+    name: "products",
     initialState,
-    reducers: {},
+    reducers: {
+        setError: (state, action) => {
+            state.error = action.payload;
+        },
+        setSuccess: (state, action) => {
+            state.success = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchProducts.pending, (state) => {
+            .addCase(getProducts.rejected, (state, action) => {
+                state.success = false;
+                state.error = action.error;
+            })
+            .addCase(getProducts.fulfilled, (state, action) => {
+                state.success = true;
+                state.values = action.payload;
+                state.error = false;
+            })
+
+
+            .addCase(getProduct.rejected, (state, action) => {
+                state.success = false;
+                state.loading = false;
+                state.error = action.error;
+            })
+            .addCase(getProduct.fulfilled, (state, action) => {
+                state.success = true;
+                state.value = action.payload;
+                state.error = false;
+            })
+
+            .addCase(addProduct.rejected, (state, action) => {
+                state.success = false;
+                state.error = action.error;
+            })
+            .addCase(addProduct.fulfilled, (state, action) => {
+                state.success = true;
+                state.value = action.payload;
+                state.error = false;
+            })
+
+            .addCase(getProduct.pending, (state) => {
                 state.loading = true;
+                state.success = false;
+                state.error = false;
+
             })
-            .addCase(fetchProducts.fulfilled, (state, action) => {
-                state.loading = false;
-                state.items = action.payload.content;
-                state.pageCount = action.payload.totalPages;
+
+            .addCase(editProduct.rejected, (state, action) => {
+                state.success = false;
+                state.error = action.error;
             })
-            .addCase(fetchProducts.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.error.message;
+            .addCase(editProduct.fulfilled, (state, action) => {
+                state.success = true;
+                state.value = action.payload;
+                state.error = false;
+            })
+
+            .addCase(removeProduct.rejected, (state, action) => {
+                state.success = false;
+                state.error = action.error;
+            })
+            .addCase(removeProduct.fulfilled, (state, action) => {
+                state.success = true;
+                state.value = action.payload;
+                state.error = false;
             });
     },
 });
 
-export default productsSlice.reducer;
+
+export const productListSelector = (state) => state.products.values;
+export const productSelector = (state) => state.products.value;
+export const productAddedSelector = (state) => state.products.value;
+export const productEditedSelector = (state) => state.products.value;
+export const productRemovedSelector = (state) => state.products.value;
+
+export default productSlice.reducer;

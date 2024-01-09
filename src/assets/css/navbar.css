@@ -6,6 +6,9 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    display: flex;
+    justify-content: center;
+    
   }
   
   
@@ -128,6 +131,3 @@
     font-size: 18px;
     color: #505c8c;
   }
-  
-  
-  

@@ -4,8 +4,14 @@ const USER_MANAGEMENT_API = "http://localhost:8080/api/users";
 
 export const getActiveUsers = async () => {
   let response = null;
+  const token = localStorage.getItem("accessToken");
   try {
-    response = await axios.get(`${USER_MANAGEMENT_API}`);
+    response = await axios.get(`${USER_MANAGEMENT_API}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` 
+      }
+    });
   } catch (error) {
     console.error("Get active users API error:", error);
     throw error;
@@ -14,8 +20,14 @@ export const getActiveUsers = async () => {
 };
 
 export const getDeletedUsers = async () => {
+  const token = localStorage.getItem("accessToken");
   try {
-    const response = await axios.get(`${USER_MANAGEMENT_API}/remove-user`);
+    const response = await axios.get(`${USER_MANAGEMENT_API}/remove-user`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` 
+      }
+    });
     return response.data;
   } catch (error) {
     console.error("Get deleted users API error:", error);
@@ -24,8 +36,18 @@ export const getDeletedUsers = async () => {
 };
 
 export const lockUserAccount = async (userId) => {
+  const token = localStorage.getItem("accessToken");
   try {
-    const response = await axios.post(`${USER_MANAGEMENT_API}/${userId}/lock`);
+    const response = await axios.post(
+      `${USER_MANAGEMENT_API}/${userId}/lock`,
+      null,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        }
+      }
+    );
     return response;
   } catch (error) {
     console.error("Lock user account API error:", error);
@@ -33,10 +55,19 @@ export const lockUserAccount = async (userId) => {
   }
 };
 
+
 export const unlockUserAccount = async (userId) => {
+  const token = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      `${USER_MANAGEMENT_API}/${userId}/unlock`
+      `${USER_MANAGEMENT_API}/${userId}/unlock`,
+      null,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}` 
+        }
+      }
     );
     return response;
   } catch (error) {
@@ -44,6 +75,7 @@ export const unlockUserAccount = async (userId) => {
     throw error;
   }
 };
+
 
 export const getDeleteUser = async (userId) => {
   try {
@@ -70,11 +102,6 @@ export const getRegisterUser = async (userDTO) => {
 
 export const getLoginUser = async (LoginRequestDTO) => {
   try {
-    // const response = await axios.post(
-    //   `http://localhost:8080/api/login`,
-    //   LoginResponseDTO
-    // );
-
     const response = await axios({
       url: `http://localhost:8080/api/login`,
       method: "POST",
@@ -83,8 +110,6 @@ export const getLoginUser = async (LoginRequestDTO) => {
         password: LoginRequestDTO.password,
       },
     });
-
-    console.log("Response data:", response.data);
     return response.data;
   } catch (error) {
     console.error("Register user API error:", error);
