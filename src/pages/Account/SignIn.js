@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { logoLight } from "../../assets/images";
+import {
+  loginUser,
+  selectLoginSuccess,
+  selectUserLogin,
+} from "../../features/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SignIn = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const loginSuccess = useSelector(selectLoginSuccess);
+
   // ============= Initial State Start here =============
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // ============= Initial State End here ===============
   // ============= Error Msg Start here =================
@@ -16,7 +27,7 @@ const SignIn = () => {
   const [successMsg, setSuccessMsg] = useState("");
   // ============= Event Handler Start here =============
   const handleEmail = (e) => {
-    setEmail(e.target.value);
+    setUsername(e.target.value);
     setErrEmail("");
   };
   const handlePassword = (e) => {
@@ -24,10 +35,31 @@ const SignIn = () => {
     setErrPassword("");
   };
   // ============= Event Handler End here ===============
+
+  const user = useSelector(selectUserLogin);
+
+  useEffect(() => {
+    if (loginSuccess) {
+      setSuccessMsg(
+        `Hello dear, Thank you for your attempt. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${username}`
+      );
+      setUsername("");
+      setPassword("");
+
+      if (user.admin) {
+        navigate("/adminnavbar");
+      } else {
+        navigate("/");
+      }
+
+      localStorage.setItem("accessToken", user.token);
+    }
+  }, [loginSuccess, username, navigate, user]);
+
   const handleSignUp = (e) => {
     e.preventDefault();
 
-    if (!email) {
+    if (!username) {
       setErrEmail("Enter your email");
     }
 
@@ -35,14 +67,16 @@ const SignIn = () => {
       setErrPassword("Create a password");
     }
     // ============== Getting the value ==============
-    if (email && password) {
-      setSuccessMsg(
-        `Hello dear, Thank you for your attempt. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
-      );
-      setEmail("");
-      setPassword("");
+    if (username && password) {
+      let userLogin = {
+        username: username,
+        password: password,
+      };
+
+      dispatch(loginUser(userLogin));
     }
   };
+
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
@@ -62,7 +96,7 @@ const SignIn = () => {
             </span>
             <p className="text-base text-gray-300">
               <span className="text-white font-semibold font-titleFont">
-                Get started fast with OREBI
+                Get started fast with ZGEAR
               </span>
               <br />
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
@@ -75,7 +109,7 @@ const SignIn = () => {
             </span>
             <p className="text-base text-gray-300">
               <span className="text-white font-semibold font-titleFont">
-                Access all OREBI services
+                Access all ZGEAR services
               </span>
               <br />
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
@@ -98,7 +132,7 @@ const SignIn = () => {
           <div className="flex items-center justify-between mt-10">
             <Link to="/">
               <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
-                © OREBI
+                © ZGEAR
               </p>
             </Link>
             <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
@@ -121,7 +155,7 @@ const SignIn = () => {
             </p>
             <Link to="/signup">
               <button
-                className="w-full h-10 bg-primeColor text-gray-200 rounded-md text-base font-titleFont font-semibold 
+                className="w-full h-10 bg-primeColor text-gray-200 rounded-md text-base font-titleFont font-semibold
             tracking-wide hover:bg-black hover:text-white duration-300"
               >
                 Sign Up
@@ -138,14 +172,13 @@ const SignIn = () => {
                 {/* Email */}
                 <div className="flex flex-col gap-.5">
                   <p className="font-titleFont text-base font-semibold text-gray-600">
-                    Work Email
+                    Username
                   </p>
                   <input
                     onChange={handleEmail}
-                    value={email}
+                    value={username}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                    type="email"
-                    placeholder="john@workemail.com"
+                    placeholder="User name"
                   />
                   {errEmail && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">

@@ -8,20 +8,28 @@ import { useSelector } from "react-redux";
 import { paginationItems } from "../../../constants";
 
 const HeaderBottom = () => {
-  const products = useSelector((state) => state.orebiReducer.products);
+  const products = useSelector((state) => state.zgearReducer.products);
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const navigate = useNavigate();
   const ref = useRef();
-  useEffect(() => {
-    document.body.addEventListener("click", (e) => {
+ useEffect(() => {
+  if (ref && ref.current) { 
+    const handleClick = (e) => {
       if (ref.current.contains(e.target)) {
         setShow(true);
       } else {
         setShow(false);
       }
-    });
-  }, [show, ref]);
+    };
+    document.body.addEventListener("click", handleClick);
+
+    return () => {
+      document.body.removeEventListener("click", handleClick);
+    };
+  }
+}, [show, ref]); 
+
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);

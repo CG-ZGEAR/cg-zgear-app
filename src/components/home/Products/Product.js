@@ -7,20 +7,21 @@ import Image from "../../designLayouts/Image";
 import Badge from "./Badge";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/orebiSlice";
+import { addToCart } from "../../../redux/zgearSlice";
 
 const Product = (props) => {
   const dispatch = useDispatch();
   const _id = props.productName;
   const idString = (_id) => {
-    return String(_id).toLowerCase().split(" ").join("");
+    return String(_id).toLowerCase().replace(/\s+/g, '-');
   };
   const rootId = idString(_id);
 
   const navigate = useNavigate();
   const productItem = props;
   const handleProductDetails = () => {
-    navigate(`/product/${rootId}`, {
+    const productUrl = idString(props.productName);
+    navigate(`/product/${productUrl}`, {
       state: {
         item: productItem,
       },
@@ -51,9 +52,7 @@ const Product = (props) => {
                     name: props.productName,
                     quantity: 1,
                     image: props.img,
-                    badge: props.badge,
                     price: props.price,
-                    colors: props.color,
                   })
                 )
               }
@@ -88,9 +87,6 @@ const Product = (props) => {
             {props.productName}
           </h2>
           <p className="text-[#767676] text-[14px]">${props.price}</p>
-        </div>
-        <div>
-          <p className="text-[#767676] text-[14px]">{props.color}</p>
         </div>
       </div>
     </div>
