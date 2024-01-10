@@ -6,9 +6,10 @@ import Flex from "../../designLayouts/Flex";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { paginationItems } from "../../../constants";
+import {productListSelector} from "../../../features/product/productReducer";
 
 const HeaderBottom = () => {
-  const products = useSelector((state) => state.zgearReducer.products);
+  const products = useSelector(productListSelector) || [];
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const navigate = useNavigate();
@@ -28,8 +29,9 @@ const HeaderBottom = () => {
       document.body.removeEventListener("click", handleClick);
     };
   }
-}, [show, ref]); 
+}, [show, ref]);
 
+  console.log("Products: ", products);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -40,12 +42,15 @@ const HeaderBottom = () => {
   };
 
   useEffect(() => {
-    const filtered = paginationItems.filter((item) =>
-      item.productName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredProducts(filtered);
-  }, [searchQuery]);
-
+    if (searchQuery === "") {
+      setFilteredProducts([]);
+    } else {
+      const filtered = products.content.filter((product) =>
+          product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [searchQuery, products]);
   return (
     <div className="w-full bg-[#F5F5F3] relative">
       <div className="max-w-container mx-auto">
@@ -147,7 +152,7 @@ const HeaderBottom = () => {
                       key={item._id}
                       className="max-w-[600px] h-28 bg-gray-100 mb-3 flex items-center gap-3"
                     >
-                      <img className="w-24" src={item.img} alt="productImg" />
+                      <img className="w-24" src={item.imageUrls[0]} alt="productImg" />
                       <div className="flex flex-col gap-1">
                         <p className="font-semibold text-lg">
                           {item.productName}

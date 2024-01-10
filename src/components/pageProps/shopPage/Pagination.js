@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import {productListSelector} from '../../../features/product/productsReducer';
+import {productListSelector} from '../../../features/product/productReducer';
 import {getProducts} from "../../../features/product/productReducerService";
 import { useDispatch, useSelector } from 'react-redux';
 import Product from "../../home/Products/Product";
@@ -33,12 +33,22 @@ const Pagination = ({ itemsPerPage }) => {
     const { content = [], totalPages = 0 } = products;
 
     useEffect(() => {
-        // Dispatch getProducts action with current page and size
         dispatch(getProducts({ page: currentPage, size: itemsPerPage }));
     }, [dispatch, currentPage, itemsPerPage]);
     const handlePageClick = (event) => {
         setCurrentPage(event.selected);
     };
+    const handleNextPage = () => {
+        if (currentPage < totalPages - 1) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+    const handlePreviousPage = () => {
+        if (currentPage > 0) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
 
     if (!products) {
         return <div>Loading...</div>;
@@ -62,6 +72,21 @@ const Pagination = ({ itemsPerPage }) => {
                     containerClassName="flex text-base font-semibold font-titleFont py-10"
                     activeClassName="bg-black text-white"
                 />
+                <button
+                    onClick={handlePreviousPage}
+                    disabled={currentPage <= 0}
+                    className={`py-2 px-4 mr-2 bg-primeColor text-white font-semibold rounded hover:bg-opacity-90 transition duration-300 ${currentPage <= 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                    Previous Page
+                </button>
+                <button
+                    onClick={handleNextPage}
+                    disabled={currentPage >= totalPages - 1}
+                    className={`py-2 px-4 bg-primeColor text-white font-semibold rounded hover:bg-opacity-90 transition duration-300 ${currentPage >= totalPages - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                    Next Page
+                </button>
+
                 <p className="text-base font-normal text-lightText">
                     Showing page {currentPage + 1} of {totalPages}
                 </p>
