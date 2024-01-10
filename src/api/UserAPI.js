@@ -16,7 +16,7 @@ export const getActiveUsers = async () => {
     console.error("Get active users API error:", error);
     throw error;
   }
-  return response;
+  return response.content;
 };
 
 export const getDeletedUsers = async () => {
@@ -28,7 +28,7 @@ export const getDeletedUsers = async () => {
         'Authorization': `Bearer ${token}` 
       }
     });
-    return response.data;
+    return response.data.content;
   } catch (error) {
     console.error("Get deleted users API error:", error);
     throw error;

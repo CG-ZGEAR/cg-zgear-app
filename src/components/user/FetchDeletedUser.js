@@ -95,7 +95,8 @@ export default function FetchDeletedUsers() {
                 onClick={() => handleIconClick(user.id, user.locked)}
                 className="text-center"
               >
-                {user.locked ? <FaLock size={30} /> : <FaLockOpen size={30} />}
+                {user.locked ? <FaLock size={30} /> : 
+                <FaLockOpen size={30} />}
               </td>
             </tr>
           ))}
