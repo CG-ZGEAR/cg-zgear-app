@@ -1,10 +1,8 @@
 
-import {createAsyncThunk} from "@reduxjs/toolkit";
-
 import axios from 'axios';
 
 const PRODUCT_MANAGEMENT_API = "http://localhost:8080/api";
-export const findProducts = async (page = 0, size = 5) => {
+export const findProducts = async (page, size ) => {
     let result = null;
     try {
         result = await axios.get(
