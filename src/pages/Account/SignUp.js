@@ -1,65 +1,89 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { logoLight } from "../../assets/images";
+import { registerUser,
+   selectLoginSuccess } from "../../features/user/userSlice"
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+  const loginSuccess = useSelector(selectLoginSuccess);
+  console.log(loginSuccess);
   // ============= Initial State Start here =============
-  const [clientName, setClientName] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [zip, setZip] = useState("");
   const [checked, setChecked] = useState(false);
   // ============= Initial State End here ===============
   // ============= Error Msg Start here =================
-  const [errClientName, setErrClientName] = useState("");
+  const [errFullName, setErrFullName] = useState("");
+  const [errUserName, setErrUserName] = useState("");
   const [errEmail, setErrEmail] = useState("");
-  const [errPhone, setErrPhone] = useState("");
+  const [errPhoneNumber, setErrPhoneNumber] = useState("");
   const [errPassword, setErrPassword] = useState("");
-  const [errAddress, setErrAddress] = useState("");
-  const [errCity, setErrCity] = useState("");
-  const [errCountry, setErrCountry] = useState("");
-  const [errZip, setErrZip] = useState("");
+  
   // ============= Error Msg End here ===================
+
   const [successMsg, setSuccessMsg] = useState("");
+
   // ============= Event Handler Start here =============
   const handleName = (e) => {
-    setClientName(e.target.value);
-    setErrClientName("");
+    setFullName(e.target.value);
+    setErrFullName("");
+  };
+  const handleUserName = (e) => {
+    setUsername(e.target.value);
+    setErrUserName("");
   };
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrEmail("");
   };
   const handlePhone = (e) => {
-    setPhone(e.target.value);
-    setErrPhone("");
+    setPhoneNumber(e.target.value);
+    setErrPhoneNumber("");
   };
   const handlePassword = (e) => {
     setPassword(e.target.value);
     setErrPassword("");
-  };
-  const handleAddress = (e) => {
-    setAddress(e.target.value);
-    setErrAddress("");
-  };
-  const handleCity = (e) => {
-    setCity(e.target.value);
-    setErrCity("");
-  };
-  const handleCountry = (e) => {
-    setCountry(e.target.value);
-    setErrCountry("");
-  };
-  const handleZip = (e) => {
-    setZip(e.target.value);
-    setErrZip("");
-  };
-  // ============= Event Handler End here ===============
+   };
+
+  useEffect(() => {
+    if (loginSuccess) {
+      if (checked) {
+        if (!fullName) {
+          setErrFullName("Enter your name");
+        } if (!username) {
+          setErrUserName("Enter your name");
+        }
+        if (!email) {
+          setErrEmail("Enter your email");
+        } else {
+          if (!EmailValidation(email)) {
+            setErrEmail("Enter a Valid email");
+          }
+        }
+        if (!phoneNumber) {
+          setErrPhoneNumber("Enter your phone number");
+        }
+        if (!password) {
+          setErrPassword("Create a password");
+        } else {
+          if (password.length < 6) {
+            setErrPassword("Passwords must be at least 6 characters");
+          }
+        }
+        }
+    }
+    
+  }, []);
+
   // ================= Email Validation start here =============
   const EmailValidation = (email) => {
     return String(email)
@@ -71,8 +95,10 @@ const SignUp = () => {
   const handleSignUp = (e) => {
     e.preventDefault();
     if (checked) {
-      if (!clientName) {
-        setErrClientName("Enter your name");
+      if (!fullName) {
+        setErrFullName("Enter your name");
+      } if (!username) {
+        setErrUserName("Enter your name");
       }
       if (!email) {
         setErrEmail("Enter your email");
@@ -81,8 +107,8 @@ const SignUp = () => {
           setErrEmail("Enter a Valid email");
         }
       }
-      if (!phone) {
-        setErrPhone("Enter your phone number");
+      if (!phoneNumber) {
+        setErrPhoneNumber("Enter your phone number");
       }
       if (!password) {
         setErrPassword("Create a password");
@@ -91,44 +117,29 @@ const SignUp = () => {
           setErrPassword("Passwords must be at least 6 characters");
         }
       }
-      if (!address) {
-        setErrAddress("Enter your address");
-      }
-      if (!city) {
-        setErrCity("Enter your city name");
-      }
-      if (!country) {
-        setErrCountry("Enter the country you are residing");
-      }
-      if (!zip) {
-        setErrZip("Enter the zip code of your area");
-      }
-      // ============== Getting the value ==============
       if (
-        clientName &&
+        fullName &&
+        username &&
         email &&
         EmailValidation(email) &&
         password &&
         password.length >= 6 &&
-        address &&
-        city &&
-        country &&
-        zip
+        phoneNumber
       ) {
-        setSuccessMsg(
-          `Hello dear ${clientName}, Welcome you to ZGEAR Admin panel. We received your Sign up request. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${email}`
-        );
-        setClientName("");
-        setEmail("");
-        setPhone("");
-        setPassword("");
-        setAddress("");
-        setCity("");
-        setCountry("");
-        setZip("");
+        let register = {
+          fullName: fullName,
+          username: username,
+          email: email,
+          password: password,
+          phoneNumber: phoneNumber,
+        };
+        dispatch(registerUser(register));
+        navigate('/signin');
       }
     }
   };
+
+
   return (
     <div className="w-full h-screen flex items-center justify-start">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
@@ -226,29 +237,49 @@ const SignUp = () => {
                   </p>
                   <input
                     onChange={handleName}
-                    value={clientName}
+                    value={fullName}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
                     placeholder=""
                   />
-                  {errClientName && (
+                  {errFullName && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
                       <span className="font-bold italic mr-1">!</span>
-                      {errClientName}
+                      {errFullName}
+                    </p>
+                  )}
+                </div>
+
+                 {/* UserName */}
+                 <div className="flex flex-col gap-.5">
+                  <p className="font-titleFont text-base font-semibold text-gray-600">
+                    User name
+                  </p>
+                  <input
+                    onChange={handleUserName}
+                    value={username}
+                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
+                
+                    placeholder="user name"
+                  />
+                  {errUserName && (
+                    <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
+                      <span className="font-bold italic mr-1">!</span>
+                      {errUserName}
                     </p>
                   )}
                 </div>
                 {/* Email */}
                 <div className="flex flex-col gap-.5">
                   <p className="font-titleFont text-base font-semibold text-gray-600">
-                    User name
+                    Email
                   </p>
                   <input
                     onChange={handleEmail}
                     value={email}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                 
-                    placeholder="user name"
+                    placeholder="email"
                   />
                   {errEmail && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -264,15 +295,15 @@ const SignUp = () => {
                   </p>
                   <input
                     onChange={handlePhone}
-                    value={phone}
+                    value={phoneNumber}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
                     placeholder="008801234567891"
                   />
-                  {errPhone && (
+                  {errPhoneNumber && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
                       <span className="font-bold italic mr-1">!</span>
-                      {errPhone}
+                      {errPhoneNumber}
                     </p>
                   )}
                 </div>
@@ -295,83 +326,6 @@ const SignUp = () => {
                     </p>
                   )}
                 </div>
-                {/* Address */}
-                <div className="flex flex-col gap-.5">
-                  <p className="font-titleFont text-base font-semibold text-gray-600">
-                    Address
-                  </p>
-                  <input
-                    onChange={handleAddress}
-                    value={address}
-                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                    type="text"
-                    placeholder="road-001, house-115, example area"
-                  />
-                  {errAddress && (
-                    <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
-                      <span className="font-bold italic mr-1">!</span>
-                      {errAddress}
-                    </p>
-                  )}
-                </div>
-                {/* City */}
-                <div className="flex flex-col gap-.5">
-                  <p className="font-titleFont text-base font-semibold text-gray-600">
-                    City
-                  </p>
-                  <input
-                    onChange={handleCity}
-                    value={city}
-                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                    type="text"
-                    placeholder="Your city"
-                  />
-                  {errCity && (
-                    <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
-                      <span className="font-bold italic mr-1">!</span>
-                      {errCity}
-                    </p>
-                  )}
-                </div>
-                {/* Country */}
-                <div className="flex flex-col gap-.5">
-                  <p className="font-titleFont text-base font-semibold text-gray-600">
-                    Country
-                  </p>
-                  <input
-                    onChange={handleCountry}
-                    value={country}
-                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                    type="text"
-                    placeholder="Your country"
-                  />
-                  {errCountry && (
-                    <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
-                      <span className="font-bold italic mr-1">!</span>
-                      {errCountry}
-                    </p>
-                  )}
-                </div>
-                {/* Zip code */}
-                <div className="flex flex-col gap-.5">
-                  <p className="font-titleFont text-base font-semibold text-gray-600">
-                    Zip/Postal code
-                  </p>
-                  <input
-                    onChange={handleZip}
-                    value={zip}
-                    className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                    type="text"
-                    placeholder="Your country"
-                  />
-                  {errZip && (
-                    <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
-                      <span className="font-bold italic mr-1">!</span>
-                      {errZip}
-                    </p>
-                  )}
-                </div>
-                {/* Checkbox */}
                 <div className="flex items-start mdl:items-center gap-2">
                   <input
                     onChange={() => setChecked(!checked)}
