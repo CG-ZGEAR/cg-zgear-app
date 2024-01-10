@@ -54,3 +54,17 @@ export const deleteProduct = async (productId) => {
     }
     return result;
 };
+
+export const searchProducts = async (searchTerm ) => {
+    let result = null;
+    try {
+        result = await axios.get(
+            `${PRODUCT_MANAGEMENT_API}/products/search?searchTerm=${searchTerm}`
+        );
+    } catch (e) {
+        console.log("Find products API error: " + e);
+    }
+    return result;
+};
+
+
