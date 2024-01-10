@@ -46,7 +46,7 @@ const SignIn = () => {
       setUsername("");
       setPassword("");
 
-      if (user.admin) {
+      if (user.roles) {
         navigate("/adminnavbar");
       } else {
         navigate("/");
