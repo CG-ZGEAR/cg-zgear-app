@@ -1,22 +1,34 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../../redux/zgearSlice";
+import Image from "../../designLayouts/Image";
 
 const ProductInfo = ({ productInfo }) => {
   const dispatch = useDispatch();
-    console.log(productInfo)
+    console.log("productInfo is "+  productInfo)
     const renderSpecifications = () => {
-        if (productInfo && typeof productInfo.specifications === "string") {
-            const specsArray = productInfo.specifications.split(", ");
-            return specsArray.map((spec, index) => (
-                <li key={index} className="text-base text-gray-600">{spec}</li>
-            ));
-        }
-        return <li>No specifications available.</li>;
-    };
+        if (productInfo && productInfo.specifications) {
+            if (typeof productInfo.specifications === "string") {
+                const specsArray = productInfo.specifications.split(", ");
+                return specsArray.map((spec, index) => (
+                    <li key={index} className="text-base text-gray-600">
+                        {spec}
+                    </li>
+                ));
+            } else if (Array.isArray(productInfo.specifications)) {
+                return productInfo.specifications.map((spec, index) => (
+                    <li key={index} className="text-base text-gray-600">
+                        {spec.specKey}: {spec.specValue}
+                    </li>
+                ));
+            }
+            return <li>No specifications available.</li>;
+            }
+        };
+
   return (
     <div className="flex flex-col gap-5">
-      <h2 className="text-4xl font-semibold">{productInfo.productName}</h2>
+        <h2 className="text-4xl font-semibold">{productInfo.productName}</h2>
       <p className="text-xl font-semibold">${productInfo.price}</p>
       <p className="text-base text-gray-600">{productInfo.description}</p>
       <p className="text-sm">Be the first to leave a review.</p>

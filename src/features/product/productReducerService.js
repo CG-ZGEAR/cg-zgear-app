@@ -1,7 +1,7 @@
 import {
     createProduct,
     deleteProduct,
-    findProduct,
+    findProduct, findProductByName,
     findProducts,
     updateProduct,
 } from "../../api/productAPI";
@@ -12,10 +12,16 @@ export const getProducts = createAsyncThunk("product/list", async ({page, size})
     return response.data;
 });
 
+export const getProductByName = createAsyncThunk("product/detail", async (productName) => {
+    const response = await findProductByName(productName);
+    return response.data;
+});
+
 export const getProduct = createAsyncThunk("product/detail", async (productId) => {
     const response = await findProduct(productId);
     return response.data;
 });
+
 
 export const addProduct = createAsyncThunk("product/create", async (product) => {
     const response = await createProduct(product);

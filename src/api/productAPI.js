@@ -66,5 +66,14 @@ export const searchProducts = async (searchTerm ) => {
     }
     return result;
 };
+export const findProductByName = async (productName) => {
+    let result = null;
+    try {
+        result = await axios.get(`${PRODUCT_MANAGEMENT_API}/products/name/${productName}`);
+    } catch (e) {
+        console.log("Find product API error: " + e);
+    }
+    return result;
+};
 
 

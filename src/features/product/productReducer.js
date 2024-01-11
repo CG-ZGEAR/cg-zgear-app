@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {addProduct, editProduct, getProduct, getProducts, removeProduct} from "./productReducerService";
+import {addProduct, editProduct, getProduct, getProducts, removeProduct,getProductByName} from "./productReducerService";
 
 const initialState = {
     values: null,
@@ -31,14 +31,12 @@ export const productSlice = createSlice({
                 state.values = action.payload;
                 state.error = false;
             })
-
-
-            .addCase(getProduct.rejected, (state, action) => {
+            .addCase(getProductByName.rejected, (state, action) => {
                 state.success = false;
                 state.loading = false;
                 state.error = action.error;
             })
-            .addCase(getProduct.fulfilled, (state, action) => {
+            .addCase(getProductByName.fulfilled, (state, action) => {
                 state.success = true;
                 state.value = action.payload;
                 state.error = false;

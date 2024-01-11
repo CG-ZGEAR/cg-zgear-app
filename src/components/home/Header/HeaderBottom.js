@@ -50,7 +50,7 @@ const HeaderBottom = () => {
       );
       setFilteredProducts(filtered);
     }
-  }, [searchQuery, products]);
+  }, [searchQuery]);
   return (
     <div className="w-full bg-[#F5F5F3] relative">
       <div className="max-w-container mx-auto">
@@ -139,7 +139,7 @@ const HeaderBottom = () => {
                           `/product/${item.productName
                             .toLowerCase()
                             .split(" ")
-                            .join("")}`,
+                            .join("-")}`,
                           {
                             state: {
                               item: item,
@@ -157,7 +157,7 @@ const HeaderBottom = () => {
                         <p className="font-semibold text-lg">
                           {item.productName}
                         </p>
-                        <p className="text-xs">{item.des}</p>
+                        <p className="text-xs">{item.categoryName}</p>
                         <p className="text-sm">
                           Price:{" "}
                           <span className="text-primeColor font-semibold">
