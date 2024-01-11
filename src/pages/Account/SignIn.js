@@ -46,9 +46,10 @@ const SignIn = () => {
       setUsername("");
       setPassword("");
 
-      if (user.roles) {
+
+      if (user.roles.includes("ROLE_ADMIN")) {
         navigate("/adminnavbar");
-      } else {
+      } else if (user.roles.includes("ROLE_USER")) {
         navigate("/");
       }
 
