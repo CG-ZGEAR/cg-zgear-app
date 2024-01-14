@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { logoLight } from "../../assets/images";
-import { registerUser,
-   selectLoginSuccess } from "../../features/user/userSlice"
+import { registerUser, selectLoginSuccess } from "../../features/user/userSlice"
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -27,7 +26,7 @@ const SignUp = () => {
   const [errEmail, setErrEmail] = useState("");
   const [errPhoneNumber, setErrPhoneNumber] = useState("");
   const [errPassword, setErrPassword] = useState("");
-  
+
   // ============= Error Msg End here ===================
 
   const [successMsg, setSuccessMsg] = useState("");
@@ -52,15 +51,15 @@ const SignUp = () => {
   const handlePassword = (e) => {
     setPassword(e.target.value);
     setErrPassword("");
-   };
+  };
 
   useEffect(() => {
     if (loginSuccess) {
       if (checked) {
         if (!fullName) {
-          setErrFullName("Enter your name");
+          setErrFullName("Enter your fullname");
         } if (!username) {
-          setErrUserName("Enter your name");
+          setErrUserName("Enter your username");
         }
         if (!email) {
           setErrEmail("Enter your email");
@@ -79,9 +78,9 @@ const SignUp = () => {
             setErrPassword("Passwords must be at least 6 characters");
           }
         }
-        }
+      }
     }
-    
+
   }, []);
 
   // ================= Email Validation start here =============
@@ -96,9 +95,9 @@ const SignUp = () => {
     e.preventDefault();
     if (checked) {
       if (!fullName) {
-        setErrFullName("Enter your name");
+        setErrFullName("Enter your fullname");
       } if (!username) {
-        setErrUserName("Enter your name");
+        setErrUserName("Enter your username");
       }
       if (!email) {
         setErrEmail("Enter your email");
@@ -143,7 +142,7 @@ const SignUp = () => {
   return (
     <div className="w-full h-screen flex items-center justify-start">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
-        <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center">
+        <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center pt-10">
           <Link to="/">
             <img src={logoLight} alt="logoImg" className="w-28" />
           </Link>
@@ -240,7 +239,7 @@ const SignUp = () => {
                     value={fullName}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
-                    placeholder=""
+                    placeholder="e.g: Bui Phuc Hau"
                   />
                   {errFullName && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -250,17 +249,17 @@ const SignUp = () => {
                   )}
                 </div>
 
-                 {/* UserName */}
-                 <div className="flex flex-col gap-.5">
+                {/* UserName */}
+                <div className="flex flex-col gap-.5">
                   <p className="font-titleFont text-base font-semibold text-gray-600">
-                    User name
+                    Username
                   </p>
                   <input
                     onChange={handleUserName}
                     value={username}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                
-                    placeholder="user name"
+
+                    placeholder="e.g: bphau121020"
                   />
                   {errUserName && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -278,8 +277,8 @@ const SignUp = () => {
                     onChange={handleEmail}
                     value={email}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                
-                    placeholder="email"
+
+                    placeholder="e.g: example@gmail.com"
                   />
                   {errEmail && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -298,7 +297,7 @@ const SignUp = () => {
                     value={phoneNumber}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="text"
-                    placeholder="008801234567891"
+                    placeholder="e.g: 0123-456-789"
                   />
                   {errPhoneNumber && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -317,7 +316,7 @@ const SignUp = () => {
                     value={password}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="password"
-                    placeholder="Create password"
+                    placeholder="Enter your new password"
                   />
                   {errPassword && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -329,10 +328,10 @@ const SignUp = () => {
                 <div className="flex items-start mdl:items-center gap-2">
                   <input
                     onChange={() => setChecked(!checked)}
-                    className="w-4 h-4 mt-1 mdl:mt-0 cursor-pointer"
+                    className="w-4 h-4 mdl:mt-0 cursor-pointer"
                     type="checkbox"
                   />
-                  <p className="text-sm text-primeColor">
+                  <p className="text-sm text-primeColor mb-0">
                     I agree to the ZGEAR{" "}
                     <span className="text-blue-500">Terms of Service </span>and{" "}
                     <span className="text-blue-500">Privacy Policy</span>.
@@ -340,11 +339,10 @@ const SignUp = () => {
                 </div>
                 <button
                   onClick={handleSignUp}
-                  className={`${
-                    checked
+                  className={`${checked
                       ? "bg-primeColor hover:bg-black hover:text-white cursor-pointer"
                       : "bg-gray-500 hover:bg-gray-500 hover:text-gray-200 cursor-none"
-                  } w-full text-gray-200 text-base font-medium h-10 rounded-md hover:text-white duration-300`}
+                    } w-full text-gray-200 text-base font-medium h-10 rounded-md hover:text-white duration-300`}
                 >
                   Create Account
                 </button>

@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { motion } from "framer-motion";
-import { logo, logoLight } from "../../../assets/images";
+import { logoLight } from "../../../assets/images";
 import Image from "../../designLayouts/Image";
 import { navBarList } from "../../../constants";
 import Flex from "../../designLayouts/Flex";
@@ -32,7 +32,7 @@ const Header = () => {
         <Flex className="flex items-center justify-between h-full">
           <Link to="/">
             <div>
-              <Image  className="w-40 object-cover"  imgSrc={logo} />
+              <Image className="w-40 object-cover" imgSrc={logoLight} />
             </div>
           </Link>
           <div>
@@ -41,7 +41,7 @@ const Header = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="flex items-center w-auto z-50 p-0 gap-2"
+                className="flex items-center w-auto z-50 p-0 gap-2 mb-0"
               >
                 <>
                   {navBarList.map(({ _id, title, link }) => (
@@ -104,7 +104,7 @@ const Header = () => {
                           initial={{ y: 15, opacity: 0 }}
                           animate={{ y: 0, opacity: 1 }}
                           transition={{ duration: 0.4 }}
-                          className="text-sm flex flex-col gap-1"
+                          className="text-sm flex flex-col gap-1 top-2"
                         >
                           <li className="headerSedenavLi">Laptop</li>
                           <li className="headerSedenavLi">Laptop Gaming</li>
@@ -121,7 +121,6 @@ const Header = () => {
                           <li className="headerSedenavLi">Software - Networking</li>
                           <li className="headerSedenavLi">Accessory</li>
                           <li className="headerSedenavLi">Tips - Answers</li>
- 
                         </motion.ul>
                       )}
                     </div>

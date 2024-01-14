@@ -37,7 +37,7 @@ const Footer = () => {
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim sint
               ab ullam, numquam nesciunt in.
             </p>
-            <ul className="flex items-center gap-2">
+            <ul className="flex items-center gap-2 pl-0">
               <a
                 href="https://www.youtube.com/@reactjsBD"
                 target="_blank"
@@ -79,7 +79,7 @@ const Footer = () => {
         </div>
         <div>
           <FooterListTitle title="Shop" />
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 pl-0">
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
               Accesories
             </li>
@@ -99,7 +99,7 @@ const Footer = () => {
         </div>
         <div>
           <FooterListTitle title="Your account" />
-          <ul className="flex flex-col gap-2">
+          <ul className="flex flex-col gap-2 pl-0">
             <li className="font-titleFont text-base text-lightText hover:text-black hover:underline decoration-[1px] decoration-gray-500 underline-offset-2 cursor-pointer duration-300">
               Profile
             </li>
@@ -150,7 +150,7 @@ const Footer = () => {
                 </div>
                 <button
                   onClick={handleSubscription}
-                  className="bg-white text-lightText w-[30%] h-10 hover:bg-black hover:text-white duration-300 text-base tracking-wide"
+                  className="bg-white text-lightText w-[30%] h-10 hover:bg-black hover:text-black border-2 duration-300 text-base tracking-wide px-2"
                 >
                   Subscribe
                 </button>
