@@ -4,7 +4,7 @@ import {productListSelector} from '../../../features/product/productReducer';
 import {getProducts} from "../../../features/product/productReducerService";
 import { useDispatch, useSelector } from 'react-redux';
 import Product from "../../home/Products/Product";
-
+import PaginationCss from "../../../assets/css/PaginationCss.css"
 function Items({ currentItems }) {
     return (
         <>
@@ -32,6 +32,7 @@ const Pagination = ({ itemsPerPage }) => {
     const pageCount = Math.ceil(products.total / itemsPerPage);
     const { content = [], totalPages = 0 } = products;
 
+    console.log(pageCount);
     useEffect(() => {
         dispatch(getProducts({ page: currentPage, size: itemsPerPage }));
     }, [dispatch, currentPage, itemsPerPage]);
@@ -48,6 +49,10 @@ const Pagination = ({ itemsPerPage }) => {
             setCurrentPage(currentPage - 1);
         }
     };
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [currentPage]);
 
 
     if (!products) {
@@ -79,6 +84,20 @@ const Pagination = ({ itemsPerPage }) => {
                 >
                     Previous Page
                 </button>
+                {totalPages > 0 && (
+                    <div className="page-buttons">
+                        {[...Array(totalPages).keys()].map(number => (
+                        <button
+                            key={number}
+                            className={`page-button ${currentPage === number ? 'active' : ''}`}
+                            onClick={() => setCurrentPage(number)}
+                        >
+                            {number + 1}
+                        </button>
+                    ))}
+                </div>
+                )}
+
                 <button
                     onClick={handleNextPage}
                     disabled={currentPage >= totalPages - 1}
