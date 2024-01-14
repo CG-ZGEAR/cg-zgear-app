@@ -65,7 +65,7 @@ const SignIn = () => {
     }
 
     if (!password) {
-      setErrPassword("Create a password");
+      setErrPassword("Enter your password");
     }
     // ============== Getting the value ==============
     if (username && password) {
@@ -81,10 +81,10 @@ const SignIn = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
-        <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center">
+        <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center pt-10">
           <Link to="/">
             <img src={logoLight} alt="logoImg" className="w-28" />
-          </Link>
+          </Link> 
           <div className="flex flex-col gap-1 -mt-1">
             <h1 className="font-titleFont text-xl font-medium">
               Stay sign in for more
@@ -179,7 +179,7 @@ const SignIn = () => {
                     onChange={handleEmail}
                     value={username}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
-                    placeholder="User name"
+                    placeholder="e.g: John1234"
                   />
                   {errEmail && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
@@ -199,7 +199,7 @@ const SignIn = () => {
                     value={password}
                     className="w-full h-8 placeholder:text-sm placeholder:tracking-wide px-4 text-base font-medium placeholder:font-normal rounded-md border-[1px] border-gray-400 outline-none"
                     type="password"
-                    placeholder="Create password"
+                    placeholder="Enter your password"
                   />
                   {errPassword && (
                     <p className="text-sm text-red-500 font-titleFont font-semibold px-4">
