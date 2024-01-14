@@ -2,33 +2,33 @@ import axios from "axios";
 
 const USER_MANAGEMENT_API = "http://localhost:8080/api/users";
 
-export const getActiveUsers = async () => {
-  let response = null;
+export const getActiveUsers = async (page = 0, size = 5) => {
   const token = localStorage.getItem("accessToken");
   try {
-    response = await axios.get(`${USER_MANAGEMENT_API}`, {
+    const response = await axios.get(`${USER_MANAGEMENT_API}?page=${page}&size=${size}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}` 
       }
     });
+    return response.data.content;
   } catch (error) {
     console.error("Get active users API error:", error);
     throw error;
   }
-  return response;
 };
 
-export const getDeletedUsers = async () => {
+
+export const getDeletedUsers = async (page = 0, size = 5) => {
   const token = localStorage.getItem("accessToken");
   try {
-    const response = await axios.get(`${USER_MANAGEMENT_API}/remove-user`, {
+    const response = await axios.get(`${USER_MANAGEMENT_API}/remove-user?page=${page}&size=${size}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}` 
       }
     });
-    return response.data;
+    return response.data.content;
   } catch (error) {
     console.error("Get deleted users API error:", error);
     throw error;

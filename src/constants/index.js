@@ -35,7 +35,6 @@ export const navBarList = [
     title: "Contact",
     link: "contact",
   },
- 
 ];
 // =================== NavBarList End here ======================
 // =================== Special Offer data Start here ============
