@@ -25,7 +25,7 @@ import Shop from "./pages/Shop/Shop";
 import AdminNavbar from "./components/user/AdminNavbar";
 import ActiveUser from "./components/user/ActiveUser";
 import FetchDeletedUsers from "./components/user/FetchDeletedUser";
-
+import UserDetails from "./components/user/UserDetails"
 const Layout = () => {
   return (
     <div>
@@ -55,9 +55,11 @@ const router = createBrowserRouter(
         <Route path="/paymentgateway" element={<Payment />}></Route>
       </Route>
 
-      <Route path="/adminnavbar" element={<AdminNavbar />}>
-          <Route path="/adminnavbar/active-users" element={<ActiveUser />}/>
-          <Route path="/adminnavbar/fetch-deleted-users"element={<FetchDeletedUsers />}/>
+      <Route path="/admin"
+             element={<AdminNavbar />}>
+          <Route path="/admin/active-users" element={<ActiveUser />}/>
+          <Route path="/admin/fetch-deleted-users" element={<FetchDeletedUsers />}/>
+          <Route path="user-detail/:id" element={<UserDetails />}/>
       </Route>
 
 
