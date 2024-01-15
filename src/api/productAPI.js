@@ -1,5 +1,6 @@
 
 import axios from 'axios';
+import async from "async";
 
 const PRODUCT_MANAGEMENT_API = "http://localhost:8080/api";
 export const findProducts = async (page, size ) => {
@@ -76,4 +77,13 @@ export const findProductByName = async (productName) => {
     return result;
 };
 
+export const findProductsByCategory = async (categoryName) => {
+  let result = null;
+    try {
+        result = await axios.get(`${PRODUCT_MANAGEMENT_API}/categories/${categoryName}`);
+    } catch (e) {
+        console.log("Find product API error: " + e);
+    }
+    return result;
+};
 

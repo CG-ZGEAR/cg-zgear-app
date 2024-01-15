@@ -4,7 +4,7 @@ import {productListSelector} from '../../../features/product/productReducer';
 import {getProducts} from "../../../features/product/productReducerService";
 import { useDispatch, useSelector } from 'react-redux';
 import Product from "../../home/Products/Product";
-import PaginationCss from "../../../assets/css/PaginationCss.css"
+import "../../../assets/css/PaginationCss.css"
 function Items({ currentItems }) {
     return (
         <>
