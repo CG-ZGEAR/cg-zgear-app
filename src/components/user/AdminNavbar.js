@@ -6,8 +6,6 @@ import logoImage from "../../assets/images/logoLight.png"
 import "../../assets/css/navbar.css";
 
 export const Navbar = () => {
-  const storedToken = localStorage.getItem("accessToken");
-  console.log(storedToken);
 
   return (
     <>
