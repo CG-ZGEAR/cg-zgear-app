@@ -77,10 +77,10 @@ export const findProductByName = async (productName) => {
     return result;
 };
 
-export const findProductsByCategory = async (categoryName) => {
+export const findProductsByCategory = async (categoryName, page , size) => {
   let result = null;
     try {
-        result = await axios.get(`${PRODUCT_MANAGEMENT_API}/categories/${categoryName}`);
+        result = await axios.get(`${PRODUCT_MANAGEMENT_API}/categories/${categoryName}?page=${page}&size=${size}`);
     } catch (e) {
         console.log("Find product API error: " + e);
     }

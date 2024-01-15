@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useLocation, useParams} from "react-router-dom";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import ProductInfo from "../../components/pageProps/productDetails/ProductInfo";
 import ProductsOnSale from "../../components/pageProps/productDetails/ProductsOnSale";
-import { useParams } from "react-router-dom";
 import {getProductByName} from "../../features/product/productReducerService";
 import {useDispatch, useSelector} from "react-redux";
-import {productSelector} from "../../features/product/productReducer";
 
 const ProductDetails = () => {
   const location = useLocation();
