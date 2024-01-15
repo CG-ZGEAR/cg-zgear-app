@@ -2,7 +2,7 @@ import {
     createProduct,
     deleteProduct,
     findProduct, findProductByName,
-    findProducts,
+    findProducts, findProductsByCategory,
     updateProduct,
 } from "../../api/productAPI";
 import {createAsyncThunk} from "@reduxjs/toolkit";
@@ -22,7 +22,6 @@ export const getProduct = createAsyncThunk("product/detail", async (productId) =
     return response.data;
 });
 
-
 export const addProduct = createAsyncThunk("product/create", async (product) => {
     const response = await createProduct(product);
     return response.data;
@@ -35,5 +34,10 @@ export const editProduct = createAsyncThunk("product/edit", async (product) => {
 
 export const removeProduct = createAsyncThunk("product/remove", async (productId) => {
     const response = await deleteProduct(productId);
+    return response.data;
+});
+
+export const getProductsByCategory = createAsyncThunk("category", async ({categoryName,page,size}) => {
+    const response = await findProductsByCategory(categoryName,page, size);
     return response.data;
 });
