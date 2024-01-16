@@ -20,14 +20,12 @@ export default function ActiveUsers() {
   const selectUserSuccess = useSelector(selectSuccess);
 
 
-  const { totalPages } = 5;
   const [userList, setUserList] = useState([]);
   const [render, setRender] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-
+  const [totalPages, setTotalPages] = useState(5)
   const size = 5;
   const navigate = useNavigate();
-
 
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -63,8 +61,8 @@ export default function ActiveUsers() {
       getActiveUsers({ currentPage });
       setRender(false);
     }
-    setUserList(users);
-
+    setUserList(users?.content);
+    setTotalPages(users?.totalPages);
   }, [users, render, currentPage, dispatch]);
 
   const handleIconClick = async (id, activated) => {
