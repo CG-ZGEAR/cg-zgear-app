@@ -56,7 +56,7 @@ export const deleteProduct = async (productId) => {
     return result;
 };
 
-export const searchProducts = async (searchTerm ) => {
+export const searchProductsAPI = async (searchTerm ) => {
     let result = null;
     try {
         result = await axios.get(
