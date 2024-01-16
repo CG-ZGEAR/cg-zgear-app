@@ -48,7 +48,7 @@ const SignIn = () => {
 
 
       if (user.roles.includes("ROLE_ADMIN")) {
-        navigate("/adminnavbar");
+        navigate("/admin");
       } else if (user.roles.includes("ROLE_USER")) {
         navigate("/");
       }
