@@ -12,6 +12,7 @@ import { FaLock, FaLockOpen } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Table from "react-bootstrap/Table";
 import Pagination from '@mui/material/Pagination';
+import {useNavigate} from 'react-router-dom';
 
 export default function ActiveUsers() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export default function ActiveUsers() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const size = 5;
-
+  const navigate = useNavigate();
 
 
   const handleNextPage = () => {
@@ -41,19 +42,25 @@ export default function ActiveUsers() {
   };
 
   const handlePageChange = (event, value) => {
-    console.log("Page changed", value);
     setCurrentPage(value - 1);
     setRender(true);
   };
 
+  const pageStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  };
   const getActiveUsers = async ({ currentPage }) => {
     dispatch(activeUsers({ currentPage }));
   };
-
+  const handleUserClick = (userId) => {
+    console.log(userId);
+    navigate(`/admin/user-detail/${userId}`);
+  };
   useEffect(() => {
     if (render) {
       getActiveUsers({ currentPage });
-      //dispatch(activeUsers({ currentPage, size }));
       setRender(false);
     }
     setUserList(users);
@@ -94,47 +101,54 @@ export default function ActiveUsers() {
   };
 
   return (
+
       <div>
-        <h1 className="text-center m-3">Active Users</h1>
-        <Table striped bordered hover className="w-75 m-auto mb-5 align-middle">
-          <thead className="text-center">
-          <tr>
-            <th>Username</th>
-            <th>Fullname</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Avatar</th>
-            <th>Lock</th>
-          </tr>
-          </thead>
-          <tbody>
-          {userList !== null ? (
-              userList.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.username}</td>
-                    <td>{user.fullName}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phoneNumber}</td>
-                    <td className="text-center">
-                      <img src={user.avatar} alt="avatar"></img>
-                    </td>
-                    <td
-                        onClick={() => handleIconClick(user.id, user.activated)}
-                        className="text-center"
-                    >
-                      {user.activated ? (
-                          <FaLock size={30} />
-                      ) : (
-                          <FaLockOpen size={30} />
-                      )}
-                    </td>
-                  </tr>
-              ))
-          ) : (
-              <tr>Loading...</tr>
-          )}
-          </tbody>
-        </Table>
+        <main class="table" id="customers_table">
+          <section className="table__header">
+            <h1 className="text-center m-3">Active Users</h1>
+            <Table striped bordered hover className="w-75 m-auto mb-5 align-middle">
+
+              <thead className="text-center">
+              <tr>
+                <th>Avatar</th>
+                <th>Username</th>
+                <th>Fullname</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Lock</th>
+              </tr>
+              </thead>
+              <tbody>
+              {userList !== undefined && userList !== null ?(
+                  userList.map((user) => (
+                      <tr key={user.id} onClick={() => handleUserClick(user.id)}>
+                        <td className="text-center">
+                          <img src={user.avatar} alt="avatar"></img>
+                        </td>
+                        <td>{user.username}</td>
+                        <td>{user.fullName}</td>
+                        <td>{user.email}</td>
+                        <td>{user.phoneNumber}</td>
+                        <td
+                            onClick={() => handleIconClick(user.id, user.activated)}
+                            className="text-center"
+                        >
+                          {user.activated ? (
+                              <FaLock size={30}/>
+                          ) : (
+                              <FaLockOpen size={30}/>
+                          )}
+                        </td>
+                      </tr>
+                  ))
+              ) : (
+                  <tr>Loading...</tr>
+              )}
+              </tbody>
+            </Table>
+          </section>
+        </main>
+      <div className="page" style={pageStyle} >
         <button
             onClick={handlePreviousPage}
             disabled={currentPage <= 0}
@@ -163,10 +177,7 @@ export default function ActiveUsers() {
         >
           Next Page
         </button>
-
-        <p className="text-base font-normal text-lightText">
-          Showing page {currentPage + 1} of {totalPages}
-        </p>
+      </div>
       </div>
   );
 }

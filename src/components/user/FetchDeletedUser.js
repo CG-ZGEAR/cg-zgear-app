@@ -3,8 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   fetchDeletedUsers,
   lockUser,
-  selectSuccess,
-  selectUsersList,
+
   selectDeletedUsersList,
   unlockUser,
 } from "../../features/user/userSlice";
@@ -13,6 +12,8 @@ import { FaLock, FaLockOpen } from "react-icons/fa";
 import Swal from "sweetalert2";
 import Table from "react-bootstrap/Table";
 import Pagination from '@mui/material/Pagination';
+import {useNavigate} from 'react-router-dom';
+import UserDetails from "./UserDetails";
 
 export default function FetchDeletedUsers() {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ export default function FetchDeletedUsers() {
   const [currentPage, setCurrentPage] = useState(0);
 
   const size = 5;
-
+  const navigate = useNavigate();
 
 
   const handleNextPage = () => {
@@ -46,8 +47,19 @@ export default function FetchDeletedUsers() {
     setRender(true);
   };
 
+  const handleUserClick = (userId) => {
+    console.log(userId);
+    navigate(`/admin/user-detail/${userId}`);
+  };
+
   const getfetchDeletedUsers  = async ({ currentPage }) => {
     dispatch(fetchDeletedUsers({ currentPage }));
+  };
+
+  const pageStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   };
 
   useEffect(() => {
@@ -110,7 +122,7 @@ export default function FetchDeletedUsers() {
           <tbody>
           {userList !== undefined && userList !== null ?(
               userList.map((user) => (
-                  <tr key={user.id}>
+                  <tr key={user.id} onClick={() => handleUserClick(user.id)}>
                     <td>{user.username}</td>
                     <td>{user.fullName}</td>
                     <td>{user.email}</td>
@@ -135,6 +147,7 @@ export default function FetchDeletedUsers() {
           )}
           </tbody>
         </Table>
+        <div className="page" style={pageStyle}>
         <button
             onClick={handlePreviousPage}
             disabled={currentPage <= 0}
@@ -163,10 +176,7 @@ export default function FetchDeletedUsers() {
         >
           Next Page
         </button>
-
-        <p className="text-base font-normal text-lightText">
-          Showing page {currentPage + 1} of {totalPages}
-        </p>
+        </div>
       </div>
   );
 }
