@@ -10,11 +10,8 @@ import {getProducts} from "../../features/product/productReducerService";
 const Shop = () => {
   const [itemsPerPage, setItemsPerPage] = useState(12);
   const dispatch = useDispatch();
-  const isLoading = useSelector(isLoadingSelector);
   const products = useSelector(productListSelector);
   const [currentPage, setCurrentPage] = useState(0);
-
-  console.log(currentPage);
 
   const itemsPerPageFromBanner = (itemsPerPage) => {
     setItemsPerPage(itemsPerPage);
@@ -22,9 +19,6 @@ const Shop = () => {
   useEffect(() => {
     dispatch(getProducts({ page: currentPage, size: itemsPerPage }));
   }, [dispatch, currentPage, itemsPerPage]);
-  if(isLoading) {
-    return <p>Loading...</p>
-  }
 
   if(!products) {
     return <p>Unable to fetch products</p>
