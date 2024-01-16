@@ -31,8 +31,6 @@ const HeaderBottom = () => {
   }
 }, [show, ref]);
 
-  console.log("Products: ", products);
-
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [showSearchBar, setShowSearchBar] = useState(false);

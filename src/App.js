@@ -25,8 +25,9 @@ import Shop from "./pages/Shop/Shop";
 import AdminNavbar from "./components/user/AdminNavbar";
 import ActiveUser from "./components/user/ActiveUser";
 import FetchDeletedUsers from "./components/user/FetchDeletedUser";
-import UserDetails from "./components/user/UserDetails"
-import Category from "../src/pages/Category/Category"
+ import UserDetails from "./components/user/UserDetails"
+import Category from "./pages/Category/Category";
+
 const Layout = () => {
     return (
         <div>
