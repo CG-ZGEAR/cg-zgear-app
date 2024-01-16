@@ -108,7 +108,7 @@ export const getLoginUser = async (LoginRequestDTO) => {
 
   try {
     const response = await axios({
-      url: `http://localhost:8080/api/login`,
+      url: `http://localhost:8080/api/auth/login`,
       method: "POST",
       data: {
         username: LoginRequestDTO.username,

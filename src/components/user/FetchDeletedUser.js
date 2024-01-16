@@ -3,8 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   fetchDeletedUsers,
   lockUser,
-  selectSuccess,
-  selectUsersList,
+
   selectDeletedUsersList,
   unlockUser,
 } from "../../features/user/userSlice";
@@ -55,6 +54,12 @@ export default function FetchDeletedUsers() {
 
   const getfetchDeletedUsers  = async ({ currentPage }) => {
     dispatch(fetchDeletedUsers({ currentPage }));
+  };
+
+  const pageStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   };
 
   useEffect(() => {
@@ -142,6 +147,7 @@ export default function FetchDeletedUsers() {
           )}
           </tbody>
         </Table>
+        <div className="page" style={pageStyle}>
         <button
             onClick={handlePreviousPage}
             disabled={currentPage <= 0}
@@ -170,10 +176,7 @@ export default function FetchDeletedUsers() {
         >
           Next Page
         </button>
-
-        <p className="text-base font-normal text-lightText">
-          Showing page {currentPage + 1} of {totalPages}
-        </p>
+        </div>
       </div>
   );
 }
