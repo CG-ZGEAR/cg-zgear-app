@@ -5,7 +5,9 @@ import ProductInfo from "../../components/pageProps/productDetails/ProductInfo";
 import ProductsOnSale from "../../components/pageProps/productDetails/ProductsOnSale";
 import {getProductByName} from "../../features/product/productReducerService";
 import {useDispatch, useSelector} from "react-redux";
-
+import ImageGallery from "react-image-gallery";
+import 'react-image-gallery/styles/css/image-gallery.css';
+import {imagesToGallery} from "../../utils/utils"
 const ProductDetails = () => {
   const location = useLocation();
   const  params = useParams();
@@ -19,42 +21,25 @@ const ProductDetails = () => {
     const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
     return formattedWords.join(' ');
   }
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const renderImageGallery = () => {
 
-  const nextImage = () => {
-    if (currentImageIndex < productInfo.imageUrls.length - 1) {
-      setCurrentImageIndex(currentImageIndex + 1);
-    }
-  };
-
-  const previousImage = () => {
-    if (currentImageIndex > 0) {
-      setCurrentImageIndex(currentImageIndex - 1);
-    }
-  };
-
-  const renderImage = () => {
-    if (!productInfo.imageUrls || productInfo.imageUrls.length === 0) {
-      return <div>No images available.</div>;
-    }
+    // Convert to gallery format
+    const galleryImages = productInfo.imageUrls
+        ? imagesToGallery(productInfo.imageUrls)
+        : [];
+    console.log(galleryImages)
     return (
-        <div className="relative">
-          <img
-              className="w-full h-full object-cover"
-              src={productInfo.imageUrls[currentImageIndex]}
-              alt={productInfo.productName}
-          />
-          <div className="absolute top-0 right-0 left-0 flex justify-between">
-            <button onClick={previousImage} className="p-2 bg-white text-gray-700">
-              Previous
-            </button>
-            <button onClick={nextImage} className="p-2 bg-white text-gray-700">
-              Next
-            </button>
-          </div>
-        </div>
+        <ImageGallery
+            items={galleryImages}
+            showThumbnails={true}
+            showFullscreenButton={false}
+            showPlayButton={false}
+            autoPlay={true}
+        />
     );
-  };
+
+  }
+
 
   useEffect(() => {
     dispatch(getProductByName(formatProductName(productName)));
@@ -67,13 +52,13 @@ const ProductDetails = () => {
           <Breadcrumbs title="" prevLocation={prevLocation} />
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-6 gap-4 h-full -mt-5 xl:-mt-8 pb-10 bg-gray-100 p-4">
-          <div className="h-full">
-            <ProductsOnSale />
+          {/*<div className="h-full">*/}
+          {/*  <ProductsOnSale />*/}
+          {/*</div>*/}
+          <div className="image-gallery col-span-2 md:col-span-1 xl:col-span-3">
+            {renderImageGallery()}
           </div>
-          <div className="h-full xl:col-span-2">
-              {renderImage()}
-          </div>
-          <div className="h-full w-full md:col-span-2 xl:col-span-3 xl:p-14 flex flex-col gap-6 justify-center">
+          <div className="h-full w-full md:col-span-2 xl:col-span-3 xl:p-14 flex flex-col gap-4 justify-center">
             {Object.keys(productInfo).length === 0 ? (
                 <div>Loading...</div>
             ) : (
