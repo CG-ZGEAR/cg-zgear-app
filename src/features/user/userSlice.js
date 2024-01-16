@@ -25,7 +25,7 @@ export const activeUsers = createAsyncThunk(
         console.log("slice")
         console.log(currentPage)
       const users = await getActiveUsers(currentPage);
-       return users.content;
+       return users;
     }
 );
 
@@ -34,7 +34,7 @@ export const fetchDeletedUsers = createAsyncThunk(
     async () => {
       try {
         const deletedUsers = await getDeletedUsers();
-        return deletedUsers.content;
+        return deletedUsers;
       } catch (error) {
         console.error("Get deleted users error:", error);
         throw error;

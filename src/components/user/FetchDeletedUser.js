@@ -20,11 +20,10 @@ export default function FetchDeletedUsers() {
   const users = useSelector(selectDeletedUsersList);
 
 
-  const { totalPages } = 5;
   const [userList, setUserList] = useState([]);
   const [render, setRender] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
-
+  const [totalPages, setTotalPages] = useState(5)
   const size = 5;
   const navigate = useNavigate();
 
@@ -65,10 +64,10 @@ export default function FetchDeletedUsers() {
   useEffect(() => {
     if (render) {
       getfetchDeletedUsers({ currentPage });
-      //dispatch(activeUsers({ currentPage, size }));
       setRender(false);
     }
-    setUserList(users);
+    setUserList(users?.content);
+    setTotalPages(users?.totalPages);
 
   }, [users, render, currentPage, dispatch]);
 
@@ -168,6 +167,7 @@ export default function FetchDeletedUsers() {
 
 
         <button
+
             onClick={handleNextPage}
             disabled={currentPage >= totalPages - 1}
             className={`py-2 px-4 bg-primeColor text-white font-semibold rounded hover:bg-opacity-90 transition duration-300 ${
