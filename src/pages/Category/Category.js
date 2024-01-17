@@ -20,9 +20,8 @@ const Category = () => {
     };
 
     useEffect(() => {
-        console.log(categoryName + currentPage + itemsPerPage)
         dispatch(getProductsByCategory({categoryName, page: currentPage, size: itemsPerPage }));
-    }, [dispatch, currentPage, itemsPerPage]);
+    }, [dispatch, currentPage, itemsPerPage, categoryName]);
 
     if(!products) {
         return <p>Unable to fetch products</p>
