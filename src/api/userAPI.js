@@ -114,7 +114,9 @@ export const getLoginUser = async (LoginRequestDTO) => {
         username: LoginRequestDTO.username,
         password: LoginRequestDTO.password,
       },
-    });return response.data;
+    });
+    console.log(response.data)
+    return response.data;
   } catch (error) {
     console.error("Register user API error:", error);
     throw error;

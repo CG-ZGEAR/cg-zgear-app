@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   activeUsers,
   lockUser,
-  selectSuccess,
   selectUsersList,
   unlockUser,
 } from "../../features/user/userSlice";
@@ -17,14 +16,12 @@ import {useNavigate} from 'react-router-dom';
 export default function ActiveUsers() {
   const dispatch = useDispatch();
   const users = useSelector(selectUsersList);
-  const selectUserSuccess = useSelector(selectSuccess);
 
 
   const [userList, setUserList] = useState([]);
   const [render, setRender] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(5)
-  const size = 5;
   const navigate = useNavigate();
 
   const handleNextPage = () => {
@@ -44,18 +41,20 @@ export default function ActiveUsers() {
     setRender(true);
   };
 
+  const handleUserClick = (userId) => {
+    console.log(userId);
+    navigate(`/admin/user-detail/${userId}`);
+  };
+  const getActiveUsers = async ({ currentPage }) => {
+    dispatch(activeUsers({ currentPage }));
+  };
   const pageStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   };
-  const getActiveUsers = async ({ currentPage }) => {
-    dispatch(activeUsers({ currentPage }));
-  };
-  const handleUserClick = (userId) => {
-    console.log(userId);
-    navigate(`/admin/user-detail/${userId}`);
-  };
+
+
   useEffect(() => {
     if (render) {
       getActiveUsers({ currentPage });
@@ -101,11 +100,8 @@ export default function ActiveUsers() {
   return (
 
       <div>
-        <main class="table" id="customers_table">
-          <section className="table__header">
             <h1 className="text-center m-3">Active Users</h1>
             <Table striped bordered hover className="w-75 m-auto mb-5 align-middle">
-
               <thead className="text-center">
               <tr>
                 <th>Avatar</th>
@@ -119,14 +115,14 @@ export default function ActiveUsers() {
               <tbody>
               {userList !== undefined && userList !== null ?(
                   userList.map((user) => (
-                      <tr key={user.id} onClick={() => handleUserClick(user.id)}>
+                      <tr key={user.id} >
                         <td className="text-center">
-                          <img src={user.avatar} alt="avatar"></img>
+                          <img src={user.avatar} alt="avatar" onClick={() => handleUserClick(user.id)}></img>
                         </td>
-                        <td>{user.username}</td>
-                        <td>{user.fullName}</td>
-                        <td>{user.email}</td>
-                        <td>{user.phoneNumber}</td>
+                        <td onClick={() => handleUserClick(user.id)}>{user.username}</td>
+                        <td onClick={() => handleUserClick(user.id)}>{user.fullName}</td>
+                        <td onClick={() => handleUserClick(user.id)}>{user.email}</td>
+                        <td onClick={() => handleUserClick(user.id)}>{user.phoneNumber}</td>
                         <td
                             onClick={() => handleIconClick(user.id, user.activated)}
                             className="text-center"
@@ -144,8 +140,6 @@ export default function ActiveUsers() {
               )}
               </tbody>
             </Table>
-          </section>
-        </main>
       <div className="page" style={pageStyle} >
         <button
             onClick={handlePreviousPage}
