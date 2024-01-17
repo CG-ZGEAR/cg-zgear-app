@@ -92,6 +92,7 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk("login", async (LoginRequestDTO) => {
   try {
     const response = await getLoginUser(LoginRequestDTO);
+      console.log(response);
     return response;
   } catch (error) {
     console.error("Login user error:", error);
