@@ -6,9 +6,10 @@ import Flex from "../../designLayouts/Flex";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { paginationItems } from "../../../constants";
+import {productListSelector} from "../../../features/product/productReducer";
 
 const HeaderBottom = () => {
-  const products = useSelector((state) => state.zgearReducer.products);
+  const products = useSelector(productListSelector) || [];
   const [show, setShow] = useState(false);
   const [showUser, setShowUser] = useState(false);
   const navigate = useNavigate();
@@ -28,8 +29,7 @@ const HeaderBottom = () => {
       document.body.removeEventListener("click", handleClick);
     };
   }
-}, [show, ref]); 
-
+}, [show, ref]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -40,12 +40,15 @@ const HeaderBottom = () => {
   };
 
   useEffect(() => {
-    const filtered = paginationItems.filter((item) =>
-      item.productName.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredProducts(filtered);
+    if (searchQuery === "") {
+      setFilteredProducts([]);
+    } else {
+      const filtered = products.content.filter((product) =>
+          product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    }
   }, [searchQuery]);
-
   return (
     <div className="w-full bg-[#F5F5F3] relative">
       <div className="max-w-container mx-auto">
@@ -56,58 +59,52 @@ const HeaderBottom = () => {
             className="flex h-14 cursor-pointer items-center gap-2 text-primeColor"
           >
             <HiOutlineMenuAlt4 className="w-5 h-5" />
-            <p className="text-[14px] font-normal">Shop by Category</p>
+            <p className="text-[14px] font-normal mb-0">Shop by Category</p>
 
             {show && (
               <motion.ul
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="absolute top-36 z-50 bg-primeColor w-auto text-[#767676] h-auto p-4 pb-6"
+                className="absolute top-14 z-50 bg-primeColor w-auto text-[#767676] h-auto p-4 pb-4 mb-0"
               >
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Laptop
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Laptop Gaming
-                </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   PC GVN
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Main - CPU - VGA
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Case - Power - Accessories
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Hard Drive - Ram - Memory Card
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                  Apple
-                </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Screen
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Keyboard
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Mouse - Mouse Pad
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Headphones - Speakers
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Table - chair
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Software - Networking
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Accessory
                 </li>
-                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                <li className="text-gray-400 px-4 py-2 border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
                   Tips - Answers
                 </li>
               </motion.ul>
@@ -134,7 +131,7 @@ const HeaderBottom = () => {
                           `/product/${item.productName
                             .toLowerCase()
                             .split(" ")
-                            .join("")}`,
+                            .join("-")}`,
                           {
                             state: {
                               item: item,
@@ -147,12 +144,12 @@ const HeaderBottom = () => {
                       key={item._id}
                       className="max-w-[600px] h-28 bg-gray-100 mb-3 flex items-center gap-3"
                     >
-                      <img className="w-24" src={item.img} alt="productImg" />
+                      <img className="w-24" src={item.imageUrls[0]} alt="productImg" />
                       <div className="flex flex-col gap-1">
                         <p className="font-semibold text-lg">
                           {item.productName}
                         </p>
-                        <p className="text-xs">{item.des}</p>
+                        <p className="text-xs">{item.categoryName}</p>
                         <p className="text-sm">
                           Price:{" "}
                           <span className="text-primeColor font-semibold">
@@ -175,9 +172,9 @@ const HeaderBottom = () => {
                 initial={{ y: 30, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="absolute top-6 left-0 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6"
+                className="absolute top-6 right-0 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6"
               >
-                <Link to="/signin">
+                <Link to="/signin" className="">
                   <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                     Login
                   </li>

@@ -1,10 +1,9 @@
 
-import {createAsyncThunk} from "@reduxjs/toolkit";
-
 import axios from 'axios';
+import async from "async";
 
 const PRODUCT_MANAGEMENT_API = "http://localhost:8080/api";
-export const findProducts = async (page = 0, size = 5) => {
+export const findProducts = async (page, size ) => {
     let result = null;
     try {
         result = await axios.get(
@@ -56,3 +55,35 @@ export const deleteProduct = async (productId) => {
     }
     return result;
 };
+
+export const searchProducts = async (searchTerm ) => {
+    let result = null;
+    try {
+        result = await axios.get(
+            `${PRODUCT_MANAGEMENT_API}/products/search?searchTerm=${searchTerm}`
+        );
+    } catch (e) {
+        console.log("Find products API error: " + e);
+    }
+    return result;
+};
+export const findProductByName = async (productName) => {
+    let result = null;
+    try {
+        result = await axios.get(`${PRODUCT_MANAGEMENT_API}/products/name/${productName}`);
+    } catch (e) {
+        console.log("Find product API error: " + e);
+    }
+    return result;
+};
+
+export const findProductsByCategory = async (categoryName, page , size) => {
+  let result = null;
+    try {
+        result = await axios.get(`${PRODUCT_MANAGEMENT_API}/categories/${categoryName}?page=${page}&size=${size}`);
+    } catch (e) {
+        console.log("Find product API error: " + e);
+    }
+    return result;
+};
+

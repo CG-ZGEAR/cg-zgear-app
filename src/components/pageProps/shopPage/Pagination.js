@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import {productListSelector} from '../../../features/product/productsReducer';
+import {productListSelector} from '../../../features/product/productReducer';
 import {getProducts} from "../../../features/product/productReducerService";
 import { useDispatch, useSelector } from 'react-redux';
 import Product from "../../home/Products/Product";
-
+import "../../../assets/css/Pagination.css"
 function Items({ currentItems }) {
     return (
         <>
@@ -25,43 +25,51 @@ function Items({ currentItems }) {
     );
 }
 
-const Pagination = ({ itemsPerPage }) => {
+const Pagination = ({ itemsPerPage,products,currentPage,setCurrentPage }) => {
     const dispatch = useDispatch();
-    const products = useSelector(productListSelector) || [];
-    const [currentPage, setCurrentPage] = useState(0);
-    const pageCount = Math.ceil(products.total / itemsPerPage);
-    const { content = [], totalPages = 0 } = products;
 
     useEffect(() => {
-        // Dispatch getProducts action with current page and size
-        dispatch(getProducts({ page: currentPage, size: itemsPerPage }));
-    }, [dispatch, currentPage, itemsPerPage]);
+        window.scrollTo(0, 0);
+    }, [currentPage]);
+
+    const { content = [] , totalPages  }  = products;
+
     const handlePageClick = (event) => {
         setCurrentPage(event.selected);
     };
-
-    if (!products) {
-        return <div>Loading...</div>;
+    const handlePageChange = (event) => {
+        setCurrentPage(event.selected);
     }
+
 
     return (
         <div>
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 mdl:gap-4 lg:gap-10">
                 <Items currentItems={content} />
             </div>
-            <div className="flex flex-col mdl:flex-row justify-center mdl:justify-between items-center">
+            <div className="flex flex-col mdl:flex-row justify-center mdl:justify-between  focus:ring-0">
+
                 <ReactPaginate
-                    nextLabel=""
-                    onPageChange={handlePageClick}
+                    previousLabel={<button className="btn btn-prev">Previous</button>}
+                    nextLabel={<button className="btn btn-next">Next</button>}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    onPageChange={handlePageChange}
                     pageRangeDisplayed={3}
                     marginPagesDisplayed={2}
-                    pageCount={pageCount}
-                    previousLabel=""
-                    pageLinkClassName="w-9 h-9 border-[1px] border-lightColor hover:border-gray-500 duration-300 flex justify-center items-center"
-                    pageClassName="mr-6"
-                    containerClassName="flex text-base font-semibold font-titleFont py-10"
-                    activeClassName="bg-black text-white"
+                    pageCount={totalPages}
+                    containerClassName="pagination flex items-center justify-center space-x-2 my-4"
+                    activeClassName="active"
+                    pageClassName="page-item"
+                    pageLinkClassName="pagination-link"
+                    activeLinkClassName="pagination-link-active"
+                    previousClassName="page-item"
+                    nextClassName="page-item"
+                    previousLinkClassName="pagination-link"
+                    nextLinkClassName="pagination-link"
+                    disabledClassName="disabled"
                 />
+
                 <p className="text-base font-normal text-lightText">
                     Showing page {currentPage + 1} of {totalPages}
                 </p>
