@@ -5,11 +5,11 @@ import {FaCaretDown, FaSearch, FaShoppingCart, FaUser} from "react-icons/fa";
 import Flex from "../../designLayouts/Flex";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {productListSelector} from "../../../features/product/productReducer";
+import {searchResultsSelector} from "../../../features/product/productReducer";
 import {searchProducts} from "../../../features/product/productReducerService";
 
 const HeaderBottom = () => {
-    const products = useSelector(productListSelector) || [];
+    const products = useSelector(searchResultsSelector) || [];
     const [show, setShow] = useState(false);
     const [showUser, setShowUser] = useState(false);
     const navigate = useNavigate();
@@ -57,7 +57,7 @@ const HeaderBottom = () => {
                 setFilteredProducts(filtered);
             }
         }
-    }, [searchQuery, products]);
+    }, [searchQuery]);
     return (
         <div className="w-full bg-[#F5F5F3] relative">
             <div className="max-w-container mx-auto">

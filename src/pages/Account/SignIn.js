@@ -45,14 +45,11 @@ const SignIn = () => {
       );
       setUsername("");
       setPassword("");
-
-
       if (user.roles.includes("ROLE_ADMIN")) {
         navigate("/admin");
       } else if (user.roles.includes("ROLE_USER")) {
         navigate("/");
       }
-
       localStorage.setItem("accessToken", user.token);
     }
   }, [loginSuccess, username, navigate, user]);
