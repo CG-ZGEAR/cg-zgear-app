@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import {Link, NavLink, useLocation, useNavigate} from "react-router-dom";
 import { MdClose } from "react-icons/md";
 import { HiMenuAlt2 } from "react-icons/hi";
 import { motion } from "framer-motion";
@@ -14,6 +14,7 @@ const Header = () => {
   const [category, setCategory] = useState(false);
   const [brand, setBrand] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   useEffect(() => {
     let ResponsiveMenu = () => {
       if (window.innerWidth < 667) {
@@ -100,28 +101,21 @@ const Header = () => {
                         <span className="text-lg">{category ? "-" : "+"}</span>
                       </h1>
                       {category && (
-                        <motion.ul
-                          initial={{ y: 15, opacity: 0 }}
-                          animate={{ y: 0, opacity: 1 }}
-                          transition={{ duration: 0.4 }}
-                          className="text-sm flex flex-col gap-1 top-2"
-                        >
-                          <li className="headerSedenavLi">Laptop</li>
-                          <li className="headerSedenavLi">Laptop Gaming</li>
-                          <li className="headerSedenavLi">PC GVN</li>
-                          <li className="headerSedenavLi">Main - CPU - VGA</li>
-                          <li className="headerSedenavLi">Case - Power - Accessories</li>
-                          <li className="headerSedenavLi">Hard Drive - Ram - Memory Card</li>
-                          <li className="headerSedenavLi"> Apple</li>
-                          <li className="headerSedenavLi">Screen</li>
-                          <li className="headerSedenavLi">Keyboard</li>
-                          <li className="headerSedenavLi">Mouse - Mouse Pad</li>
-                          <li className="headerSedenavLi">Headphones - Speakers</li>
-                          <li className="headerSedenavLi">Table - chair</li>
-                          <li className="headerSedenavLi">Software - Networking</li>
-                          <li className="headerSedenavLi">Accessory</li>
-                          <li className="headerSedenavLi">Tips - Answers</li>
-                        </motion.ul>
+                          <motion.ul
+                              initial={{ y: 15, opacity: 0 }}
+                              animate={{ y: 0, opacity: 1 }}
+                              transition={{ duration: 0.4 }}
+                              className="text-sm flex flex-col gap-1 top-2"
+                          >
+                            <li className="headerSedenavLi" onClick={() => navigate('/category/VGA')}>VGA</li>
+                            <li className="headerSedenavLi" onClick={() => navigate('/category/Monitor')}>Monitor</li>
+                            <li className="headerSedenavLi" onClick={() => navigate('/category/Laptop')}>Laptop</li>
+                            <li className="headerSedenavLi" onClick={() => navigate('/category/Gaming PC')}>Gaming PC</li>
+                            <li className="headerSedenavLi" onClick={() => navigate('/category/Keyboard')}>Keyboard</li>
+                            <li className="headerSedenavLi" onClick={() => navigate('/category/Mouse')}>Mouse</li>
+                            <li className="headerSedenavLi" onClick={() => navigate('/category/Headset')}>Headset</li>
+                            <li className="headerSedenavLi" onClick={() => navigate('/category/Gaming Chair')}>Gaming Chair</li>
+                          </motion.ul>
                       )}
                     </div>
                     <div className="mt-4">
