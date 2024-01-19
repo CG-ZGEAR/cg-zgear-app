@@ -13,20 +13,18 @@ import Swal from "sweetalert2";
 import Table from "react-bootstrap/Table";
 import Pagination from '@mui/material/Pagination';
 import {useNavigate} from 'react-router-dom';
-import UserDetails from "./UserDetails";
 
 export default function FetchDeletedUsers() {
   const dispatch = useDispatch();
   const users = useSelector(selectDeletedUsersList);
 
 
+
   const [userList, setUserList] = useState([]);
   const [render, setRender] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(5)
-  const size = 5;
   const navigate = useNavigate();
-
 
   const handleNextPage = () => {
     setCurrentPage(currentPage + 1);
@@ -68,7 +66,6 @@ export default function FetchDeletedUsers() {
     }
     setUserList(users?.content);
     setTotalPages(users?.totalPages);
-
   }, [users, render, currentPage, dispatch]);
 
   const handleIconClick = async (id, activated) => {
@@ -121,13 +118,13 @@ export default function FetchDeletedUsers() {
           <tbody>
           {userList !== undefined && userList !== null ?(
               userList.map((user) => (
-                  <tr key={user.id} onClick={() => handleUserClick(user.id)}>
-                    <td>{user.username}</td>
-                    <td>{user.fullName}</td>
-                    <td>{user.email}</td>
-                    <td>{user.phoneNumber}</td>
+                  <tr key={user.id} >
+                    <td onClick={() => handleUserClick(user.id)}>{user.username}</td>
+                    <td onClick={() => handleUserClick(user.id)}>{user.fullName}</td>
+                    <td onClick={() => handleUserClick(user.id)}>{user.email}</td>
+                    <td onClick={() => handleUserClick(user.id)}>{user.phoneNumber}</td>
                     <td className="text-center">
-                      <img src={user.avatar} alt="avatar"></img>
+                      <img src={user.avatar} alt="avatar" onClick={() => handleUserClick(user.id)}></img>
                     </td>
                     <td
                         onClick={() => handleIconClick(user.id, user.activated)}

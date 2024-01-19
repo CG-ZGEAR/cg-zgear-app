@@ -22,18 +22,16 @@ const initialState = {
 export const activeUsers = createAsyncThunk(
     "activeUsers",
     async ({ currentPage }) => {
-        console.log("slice")
-        console.log(currentPage)
       const users = await getActiveUsers(currentPage);
        return users;
     }
 );
 
 export const fetchDeletedUsers = createAsyncThunk(
-    "user/fetchDeletedUsers",
-    async () => {
+    "fetchDeletedUsers",
+    async({ currentPage }) => {
       try {
-        const deletedUsers = await getDeletedUsers();
+        const deletedUsers = await getDeletedUsers(currentPage);
         return deletedUsers;
       } catch (error) {
         console.error("Get deleted users error:", error);
@@ -94,6 +92,7 @@ export const registerUser = createAsyncThunk(
 export const loginUser = createAsyncThunk("login", async (LoginRequestDTO) => {
   try {
     const response = await getLoginUser(LoginRequestDTO);
+      console.log(response);
     return response;
   } catch (error) {
     console.error("Login user error:", error);

@@ -14,6 +14,7 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const loginSuccess = useSelector(selectLoginSuccess);
+  const [isErrorVisible, setIsErrorVisible] = useState(true);
 
   // ============= Initial State Start here =============
   const [username, setUsername] = useState("");
@@ -26,6 +27,9 @@ const SignIn = () => {
   // ============= Error Msg End here ===================
   const [successMsg, setSuccessMsg] = useState("");
   // ============= Event Handler Start here =============
+
+  const [error, setError] = useState(null);
+
   const handleEmail = (e) => {
     setUsername(e.target.value);
     setErrEmail("");
@@ -39,24 +43,34 @@ const SignIn = () => {
   const user = useSelector(selectUserLogin);
 
   useEffect(() => {
-    if (loginSuccess) {
-      setSuccessMsg(
-        `Hello dear, Thank you for your attempt. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${username}`
-      );
-      setUsername("");
-      setPassword("");
 
+    console.log("user", loginSuccess);
+    console.log("rro", error);
 
-      if (user.roles.includes("ROLE_ADMIN")) {
-        navigate("/admin");
-      } else if (user.roles.includes("ROLE_USER")) {
-        navigate("/");
+    // Check if it's the initial render
+    if (loginSuccess !== null) {
+      if (loginSuccess) {
+        // Handle successful login
+        setSuccessMsg(
+            `Hello dear, Thank you for your attempt. We are processing to validate your access. Till then stay connected and additional assistance will be sent to you by your mail at ${username}`
+        );
+        setUsername("");
+        setPassword("");
+
+        if (user.roles.includes("ROLE_ADMIN")) {
+          navigate("/admin");
+        } else if (user.roles.includes("ROLE_USER")) {
+          navigate("/");
+        }
+
+        localStorage.setItem("accessToken", user.token);
       }
-
-      localStorage.setItem("accessToken", user.token);
     }
-  }, [loginSuccess, username, navigate, user]);
+  }, [loginSuccess, username, navigate]);
 
+  const handleDismissError = () => {
+    setIsErrorVisible(false);
+  };
   const handleSignUp = (e) => {
     e.preventDefault();
 
@@ -76,6 +90,7 @@ const SignIn = () => {
 
       dispatch(loginUser(userLogin));
     }
+    setError("Login failed. Please check your credentials.");
   };
 
   return (
@@ -148,7 +163,15 @@ const SignIn = () => {
           </div>
         </div>
       </div>
+
       <div className="w-full lgl:w-1/2 h-full">
+
+        {isErrorVisible && error != null && (
+            <div style={{ color: "red", fontSize: "1.5rem" }}>
+              {error}<br/>
+              <button onClick={handleDismissError}>Understood</button>
+            </div>
+        )}
         {successMsg ? (
           <div className="w-full lgl:w-[500px] h-full flex flex-col justify-center">
             <p className="w-full px-4 py-10 text-green-500 font-medium font-titleFont">
@@ -227,7 +250,7 @@ const SignIn = () => {
             </div>
           </form>
         )}
-      </div>
+      </div>)
     </div>
   );
 };

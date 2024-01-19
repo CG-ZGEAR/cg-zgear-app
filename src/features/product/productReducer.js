@@ -6,7 +6,7 @@ import {
     getProducts,
     removeProduct,
     getProductByName,
-    getProductsByCategory
+    getProductsByCategory, searchForProducts, searchProducts
 } from "./productReducerService";
 
 const initialState = {
@@ -57,6 +57,21 @@ export const productSlice = createSlice({
                 state.success = true;
                 state.value = action.payload;
                 state.error = false;
+            })
+            .addCase(searchProducts.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(searchProducts.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.values = action.payload;
+                state.error = null;
+            })
+            .addCase(searchProducts.rejected, (state, action) => {
+                state.loading = false;
+                state.success = false;
+                state.error = action.payload;
             })
 
             .addCase(addProduct.rejected, (state, action) => {
