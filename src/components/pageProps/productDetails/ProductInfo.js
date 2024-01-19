@@ -40,12 +40,9 @@ const ProductInfo = ({ productInfo }) => {
 
     const handleSubmit = async () => {
         if (rating === 0 && comment.trim() === '') {
-            console.log('Please enter rating or comment.');
             return;
         }
-
-        console.log(`Rating: ${rating}, Comment: ${comment}`);
-
+        
         setRating(0);
         setComment('');
     };
