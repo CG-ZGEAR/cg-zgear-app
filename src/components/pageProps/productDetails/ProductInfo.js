@@ -7,7 +7,6 @@ import Image from "../../designLayouts/Image";
 import {FaRegStar, FaStar} from "react-icons/fa";
 
 const ProductInfo = ({productInfo}) => {
-    console.log(productInfo.discounts.id)
     const dispatch = useDispatch();
     const renderSpecifications = () => {
         if (productInfo && productInfo.specifications) {
