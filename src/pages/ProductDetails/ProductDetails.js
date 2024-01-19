@@ -8,6 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import ImageGallery from "react-image-gallery";
 import 'react-image-gallery/styles/css/image-gallery.css';
 import {imagesToGallery} from "../../utils/utils"
+import "../../assets/css/ProductDetails.css"
 const ProductDetails = () => {
   const location = useLocation();
   const  params = useParams();
@@ -15,7 +16,6 @@ const ProductDetails = () => {
   const [prevLocation, setPrevLocation] = useState("");
   const dispatch= useDispatch();
   const productInfo = useSelector(state => state.products.value)|| {};
-  console.log(productInfo.imageUrls)
   function formatProductName(productName) {
     const words = productName.split('-');
     const formattedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
@@ -27,7 +27,6 @@ const ProductDetails = () => {
     const galleryImages = productInfo.imageUrls
         ? imagesToGallery(productInfo.imageUrls)
         : [];
-    console.log(galleryImages)
     return (
         <ImageGallery
             items={galleryImages}

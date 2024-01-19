@@ -66,7 +66,7 @@ const SignIn = () => {
         localStorage.setItem("accessToken", user.token);
       }
     }
-  }, [loginSuccess, username, navigate]);
+  }, [loginSuccess, username, navigate, error]);
 
   const handleDismissError = () => {
     setIsErrorVisible(false);

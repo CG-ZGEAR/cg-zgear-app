@@ -46,7 +46,6 @@ export const searchProducts = createAsyncThunk(
     async (searchTerm, { rejectWithValue }) => {
         try {
             const response = await searchProductsAPI(searchTerm);
-            console.log(response)
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
