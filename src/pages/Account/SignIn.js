@@ -52,6 +52,7 @@ const SignIn = () => {
     const handleSignIn = (e) => {
         e.preventDefault();
 
+
         const usernamePattern = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/;
         const passwordPattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{6,}$/;
 

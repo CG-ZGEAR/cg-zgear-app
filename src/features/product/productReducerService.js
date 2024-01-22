@@ -2,7 +2,7 @@ import {
     createProduct,
     deleteProduct,
     findProduct, findProductByName,
-    findProducts, findProductsByCategory,
+    findProducts, findProductsByCategory, searchProductsAPI,
     updateProduct,
 } from "../../api/productAPI";
 import {createAsyncThunk} from "@reduxjs/toolkit";
@@ -41,3 +41,14 @@ export const getProductsByCategory = createAsyncThunk("category", async ({catego
     const response = await findProductsByCategory(categoryName,page, size);
     return response.data;
 });
+export const searchProducts = createAsyncThunk(
+    'products/searchProducts',
+    async (searchTerm, { rejectWithValue }) => {
+        try {
+            const response = await searchProductsAPI(searchTerm);
+            return response.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+);

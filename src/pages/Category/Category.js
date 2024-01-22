@@ -11,7 +11,6 @@ import {useParams} from "react-router-dom";
 const Category = () => {
     const [itemsPerPage, setItemsPerPage] = useState(12);
     const dispatch = useDispatch();
-    const isLoading = useSelector(isLoadingSelector);
     const products = useSelector(productListSelector);
     const [currentPage, setCurrentPage] = useState(0);
     const params = useParams();
@@ -21,12 +20,8 @@ const Category = () => {
     };
 
     useEffect(() => {
-        console.log(categoryName + currentPage + itemsPerPage)
         dispatch(getProductsByCategory({categoryName, page: currentPage, size: itemsPerPage }));
-    }, [dispatch, currentPage, itemsPerPage]);
-    if(isLoading) {
-        return <p>Loading...</p>
-    }
+    }, [dispatch, currentPage, itemsPerPage, categoryName]);
 
     if(!products) {
         return <p>Unable to fetch products</p>
