@@ -5,9 +5,6 @@ import { ClipboardText, CalendarCheck } from "phosphor-react";
 import "../../assets/css/navbar.css";
 
 export const Navbar = () => {
- /* const storedToken = localStorage.getItem("accessToken");
-  console.log(storedToken);*/
-
   return (
     <>
       <div className="navbar">

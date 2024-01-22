@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   fetchDeletedUsers,
   lockUser,
-
   selectDeletedUsersList,
   unlockUser,
 } from "../../features/user/userSlice";
@@ -39,13 +38,11 @@ export default function FetchDeletedUsers() {
   };
 
   const handlePageChange = (event, value) => {
-    console.log("Page changed", value);
     setCurrentPage(value - 1);
     setRender(true);
   };
 
   const handleUserClick = (userId) => {
-    console.log(userId);
     navigate(`/admin/user-detail/${userId}`);
   };
 

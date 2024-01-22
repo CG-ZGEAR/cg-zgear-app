@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   getActiveUsers,
   getDeletedUsers,
-  getLoginUser,
   getRegisterUser,
   lockUserAccount,
   unlockUserAccount,
@@ -89,16 +88,7 @@ export const registerUser = createAsyncThunk(
     }
 );
 
-export const loginUser = createAsyncThunk("login", async (LoginRequestDTO) => {
-  try {
-    const response = await getLoginUser(LoginRequestDTO);
-      console.log(response);
-    return response;
-  } catch (error) {
-    console.error("Login user error:", error);
-    throw error;
-  }
-});
+
 
 const userSlice = createSlice({
   name: "user",
@@ -215,41 +205,12 @@ const userSlice = createSlice({
           state.value = action.payload;
           state.error = false;
         })
-
-        .addCase(loginUser.pending, (state) => {
-          state.loginSuccess = false;
-          state.loading = true;
-          state.error = false;
-        })
-        .addCase(loginUser.rejected, (state, action) => {
-          state.loginSuccess = false;
-          state.loading = false;
-          state.error = action.error;
-        })
-        .addCase(loginUser.fulfilled, (state, action) => {
-          state.loginSuccess = true;
-          state.loading = false;
-          state.value = action.payload;
-          state.error = false;
-        });
   },
 });
 
 export const { setLoading, setError, setSuccess } = userSlice.actions;
 
-export const selectError = (state) => state.user.error;
-export const selectSuccess = (state) => state.user.success;
-export const selectLoading = (state) => state.user.loading;
 export const selectUsersList = (state) => state.user.activeUsersList;
 export const selectDeletedUsersList = (state) => state.user.fetchDeletedUsers;
 export const selectLoginSuccess = (state) => state.user.loginSuccess;
-export const selectUserLogin = (state) => state.user.value;
-
-export const setLoadingTrueIfCalled = (isCalled) => (dispatch, getState) => {
-  const currentValue = selectLoading(getState());
-  if (currentValue === isCalled) {
-    dispatch(setLoading(true));
-  }
-};
-
 export default userSlice.reducer;
