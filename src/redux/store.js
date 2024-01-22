@@ -14,6 +14,7 @@ import zgearReducer from "./zgearSlice";
 import userReducer from "../features/user/userSlice"
 import productReducer from "../features/product/productReducer";
 import adminReducer from "../features/user/adminSilce"
+import authReducer from "../features/user/authSilce"
 const persistConfig = {
   key: "root",
   version: 1,
@@ -27,6 +28,7 @@ export const store = configureStore({
     zgearReducer: persistedReducer,
     products: productReducer,
     user: userReducer,
+    auth: authReducer,
     admin: adminReducer,
   },
   middleware: (getDefaultMiddleware) =>

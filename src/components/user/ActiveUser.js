@@ -42,7 +42,6 @@ export default function ActiveUsers() {
   };
 
   const handleUserClick = (userId) => {
-    console.log(userId);
     navigate(`/admin/user-detail/${userId}`);
   };
   const getActiveUsers = async ({ currentPage }) => {
