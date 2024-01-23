@@ -6,7 +6,7 @@ import {
     getProducts,
     removeProduct,
     getProductByName,
-    getProductsByCategory, searchForProducts, searchProducts
+    getProductsByCategory, searchForProducts, searchProducts, getBestSellers
 } from "./productReducerService";
 
 const initialState = {
@@ -16,6 +16,7 @@ const initialState = {
     error: null,
     success: false,
     searchValues: null,
+    bestSellers: null,
 };
 
 export const productSlice = createSlice({
@@ -110,6 +111,21 @@ export const productSlice = createSlice({
                 state.success = true;
                 state.value = action.payload;
                 state.error = false;
+            })
+            .addCase(getBestSellers.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getBestSellers.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.bestSellers = action.payload;
+                state.error = null;
+            })
+            .addCase(getBestSellers.rejected, (state, action) => {
+                state.loading = false;
+                state.success = false;
+                state.error = action.payload;
             });
     },
 });
@@ -117,9 +133,6 @@ export const productSlice = createSlice({
 
 export const productListSelector = (state) => state.products.values;
 export const isLoadingSelector = (state) => state.products.loading;
-export const productSelector = (state) => state.products.value;
-export const productAddedSelector = (state) => state.products.value;
-export const productEditedSelector = (state) => state.products.value;
-export const productRemovedSelector = (state) => state.products.value;
 export const searchResultsSelector = (state) => state.products.searchValues;
+export const bestSellerSelector = (state) => state.products.bestSellers;
 export default productSlice.reducer;
