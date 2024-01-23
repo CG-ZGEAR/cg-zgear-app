@@ -87,3 +87,15 @@ export const findProductsByCategory = async (categoryName, page , size) => {
     return result;
 };
 
+export const getBestSellerAPI = async ( ) => {
+    let result = null;
+    try {
+        result = await axios.get(
+            `${PRODUCT_MANAGEMENT_API}/products/getBestSellers`
+        );
+    } catch (e) {
+        console.log("Find products API error: " + e);
+    }
+    return result;
+};
+

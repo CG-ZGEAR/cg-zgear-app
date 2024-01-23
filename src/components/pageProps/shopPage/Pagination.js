@@ -6,10 +6,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Product from "../../home/Products/Product";
 import "../../../assets/css/Pagination.css"
 function Items({ currentItems }) {
+
     return (
         <>
             {currentItems.map((item) => (
-                <div key={item.id} className="w-full">
+                <div key={item.id} className="w-full ">
                     <Product
                         _id={item.id}
                         img={item.imageUrls.length > 0 ? item.imageUrls[0] : 'default-image.jpg'}
@@ -18,6 +19,7 @@ function Items({ currentItems }) {
                         categoryName={item.categoryName}
                         description={item.description}
                         specifications={item.specifications.map(spec => `${spec.specKey}: ${spec.specValue}`).join(', ')}
+                        discounts={item.discounts}
                     />
                 </div>
             ))}
@@ -34,9 +36,6 @@ const Pagination = ({ itemsPerPage,products,currentPage,setCurrentPage }) => {
 
     const { content = [] , totalPages  }  = products;
 
-    const handlePageClick = (event) => {
-        setCurrentPage(event.selected);
-    };
     const handlePageChange = (event) => {
         setCurrentPage(event.selected);
     }

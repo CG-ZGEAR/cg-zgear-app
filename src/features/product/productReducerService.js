@@ -2,7 +2,7 @@ import {
     createProduct,
     deleteProduct,
     findProduct, findProductByName,
-    findProducts, findProductsByCategory, searchProductsAPI,
+    findProducts, findProductsByCategory, getBestSellerAPI, searchProductsAPI,
     updateProduct,
 } from "../../api/productAPI";
 import {createAsyncThunk} from "@reduxjs/toolkit";
@@ -49,6 +49,18 @@ export const searchProducts = createAsyncThunk(
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
+        }
+    }
+);
+
+export const getBestSellers = createAsyncThunk(
+    'products/bestSeller',
+    async () => {
+        try {
+            const response = await getBestSellerAPI();
+            return response.data;
+        } catch (error) {
+            return console.log(error);
         }
     }
 );
