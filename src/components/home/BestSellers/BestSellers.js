@@ -8,7 +8,6 @@ import {getBestSellers} from "../../../features/product/productReducerService";
 const BestSellers = () => {
   const dispatch = useDispatch();
   const products = useSelector(bestSellerSelector);
-  console.log(products);
   useEffect(() => {
     dispatch(getBestSellers());
   }, [dispatch]);
