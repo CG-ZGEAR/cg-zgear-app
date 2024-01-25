@@ -59,6 +59,7 @@ const router = createBrowserRouter(
                 <Route path="/paymentgateway" element={<Payment/>}></Route>
             </Route>
 
+
             <Route path="/admin"
                    element={<AdminNavbar/>}>
                 <Route path="/admin/active-users" element={<ActiveUser/>}/>
@@ -66,6 +67,7 @@ const router = createBrowserRouter(
                 <Route path="user-detail/:id" element={<UserDetails/>}/>
                 <Route path="/admin/search-results" element={<SearchResults/>}/>
             </Route>
+
 
             <Route path="/signup" element={<SignUp/>}></Route>
             <Route path="/signin" element={<SignIn/>}></Route>

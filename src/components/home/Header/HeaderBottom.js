@@ -1,58 +1,26 @@
-import React, {useState, useRef, useEffect} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {motion} from "framer-motion";
 import {HiOutlineMenuAlt4} from "react-icons/hi";
-import {FaSearch, FaUser, FaCaretDown, FaShoppingCart} from "react-icons/fa";
+import {FaCaretDown, FaSearch, FaShoppingCart, FaUser} from "react-icons/fa";
 import Flex from "../../designLayouts/Flex";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {paginationItems} from "../../../constants";
-import {productListSelector} from "../../../features/product/productReducer";
+import {searchResultsSelector} from "../../../features/product/productReducer";
+import {searchProducts} from "../../../features/product/productReducerService";
 import {logoutAsync} from "../../../features/user/authSilce";
 
 const HeaderBottom = () => {
-    const products = useSelector(productListSelector) || [];
+    const products = useSelector(searchResultsSelector) || [];
     const [show, setShow] = useState(false);
     const [showUser, setShowUser] = useState(false);
     const navigate = useNavigate();
     const ref = useRef();
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        if (ref && ref.current) {
-            const handleClick = (e) => {
-                if (ref.current.contains(e.target)) {
-                    setShow(true);
-                } else {
-                    setShow(false);
-                }
-            };
-            document.body.addEventListener("click", handleClick);
-
-            return () => {
-                document.body.removeEventListener("click", handleClick);
-            };
-        }
-    }, [show, ref]);
-
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [showSearchBar, setShowSearchBar] = useState(false);
-
-    const handleSearch = (e) => {
-        setSearchQuery(e.target.value);
-    };
-
-    useEffect(() => {
-        if (searchQuery === "") {
-            setFilteredProducts([]);
-        } else {
-            const filtered = products.content.filter((product) =>
-                product.productName.toLowerCase().includes(searchQuery.toLowerCase())
-            );
-            setFilteredProducts(filtered);
-        }
-    }, [searchQuery]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+
     useEffect(() => {
         const accessToken = localStorage.getItem("accessToken");
         if (accessToken) {
@@ -73,6 +41,43 @@ const HeaderBottom = () => {
         }
     };
 
+    useEffect(() => {
+        if (ref && ref.current) {
+            const handleClick = (e) => {
+                if (ref.current.contains(e.target)) {
+                    setShow(true);
+                } else {
+                    setShow(false);
+                }
+            };
+            document.body.addEventListener("click", handleClick);
+
+            return () => {
+                document.body.removeEventListener("click", handleClick);
+            };
+        }
+    }, [show, ref]);
+
+    const handleSearch = (e) => {
+        setSearchQuery(e.target.value);
+        if (e.target.value !== "") {
+            dispatch(searchProducts(e.target.value));
+        }
+    };
+
+    useEffect(() => {
+        if (searchQuery === "") {
+            setFilteredProducts([]);
+        } else {
+            // Ensure products and products.content are defined before applying filter
+            if (products && products.content && Array.isArray(products.content)) {
+                const filtered = products.content.filter((product) =>
+                    product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+                setFilteredProducts(filtered);
+            }
+        }
+    }, [searchQuery, products]);
 
     return (
         <div className="w-full bg-[#F5F5F3] relative">
@@ -94,45 +99,13 @@ const HeaderBottom = () => {
                                 transition={{duration: 0.5}}
                                 className="absolute top-14 z-50 bg-primeColor w-auto text-[#767676] h-auto p-4 pb-4 mb-0"
                             >
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Laptop
+                                <li
+                                    className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                    onClick={() => navigate("/category/VGA")}
+                                >
+                                    VGA
                                 </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    PC GVN
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Main - CPU - VGA
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Case - Power - Accessories
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Hard Drive - Ram - Memory Card
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Screen
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Keyboard
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Mouse - Mouse Pad
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Headphones - Speakers
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Table - chair
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Software - Networking
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Accessory
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Tips - Answers
-                                </li>
+                                {/* Add other list items here */}
                             </motion.ul>
                         )}
                     </div>
@@ -164,14 +137,16 @@ const HeaderBottom = () => {
                                                             item: item,
                                                         },
                                                     }
-                                                ) &
-                                                setShowSearchBar(true) &
-                                                setSearchQuery("")
+                                                ) & setShowSearchBar(true) & setSearchQuery("")
                                             }
                                             key={item._id}
                                             className="max-w-[600px] h-28 bg-gray-100 mb-3 flex items-center gap-3"
                                         >
-                                            <img className="w-24" src={item.imageUrls[0]} alt="productImg"/>
+                                            <img
+                                                className="w-24"
+                                                src={item.imageUrls[0]}
+                                                alt="productImg"
+                                            />
                                             <div className="flex flex-col gap-1">
                                                 <p className="font-semibold text-lg">
                                                     {item.productName}
@@ -194,7 +169,6 @@ const HeaderBottom = () => {
                             <FaUser/>
                             <FaCaretDown/>
                         </div>
-
                         {showUser && (
                             <motion.ul
                                 initial={{y: 30, opacity: 0}}
@@ -224,7 +198,10 @@ const HeaderBottom = () => {
                                                 Login
                                             </li>
                                         </Link>
-                                        <Link onClick={() => setShowUser(false)} to="/signup">
+                                        <Link
+                                            onClick={() => setShowUser(false)}
+                                            to="/signup"
+                                        >
                                             <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
                                                 Sign Up
                                             </li>

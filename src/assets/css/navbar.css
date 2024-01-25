@@ -18,6 +18,10 @@
 }
 
 .links {
+    justify-content: center;
+}
+
+.links {
     margin-right: auto;
     margin-left: auto;
     display: flex;
