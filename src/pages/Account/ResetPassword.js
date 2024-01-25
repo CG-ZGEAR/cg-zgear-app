@@ -28,6 +28,7 @@ const ResetPassword = () => {
     const [validation, setValidation] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleEmailChange = (value) => {
         setEmail(value);
@@ -67,7 +68,7 @@ const ResetPassword = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleSendEmail = () => {
+    const handleSendEmail = async () => {
         if (!validateEmail(email)) {
             setError('Invalid email address');
             return;
@@ -75,7 +76,8 @@ const ResetPassword = () => {
 
         setError('');
         setValidation('');
-
+        setLoading(true);
+        await new Promise(resolve => setTimeout(resolve, 5000));
         dispatch(sendOtpAsync({email}));
         dispatch(openResetPasswordOtpDialog());
     };
@@ -123,9 +125,9 @@ const ResetPassword = () => {
                         </Link>
                         <div className="flex flex-col gap-1 -mt-1">
                             <h1 className="font-titleFont text-xl font-medium">
-                                Stay sign in for more
+                                Forgot password
                             </h1>
-                            <p className="text-base">When you sign in, you are with us!</p>
+                            <p className="text-base">If you have trouble, I will always be with you!</p>
                         </div>
                         <div className="w-[300px] flex items-start gap-3">
             <span className="text-green-500 mt-1">
@@ -220,18 +222,22 @@ const ResetPassword = () => {
                                 </p>
                             )}
                             {validation && (
-                                <p style={{color: 'red'}} className="validation">
+                                <p style={{color: 'red', maxWidth: 300}} className="validation">
                                     {validation}
                                 </p>
                             )}
-                            <label className={"show_password"}>
+                            <div className={"show_password"}>
                                 <input
+                                    id='showpass'
                                     type="checkbox"
                                     checked={showPassword}
                                     onChange={handleTogglePasswordVisibility}
+                                    style={{marginBottom: 0, marginRight: 10, justifyContent: 'normal'}}
                                 />
-                                Show Password
-                            </label>
+                                <label for="showpass">
+                                    Show Password
+                                </label>
+                            </div>
                             <button
                                 onClick={handleVerifyOtpAndResetPassword}
                                 disabled={
@@ -253,10 +259,10 @@ const ResetPassword = () => {
                             />
                             <button
                                 className="submit"
-                                disabled={sendOtpStatus === 'loading'}
+                                disabled={sendOtpStatus === 'loading' || loading}
                                 onClick={handleSendEmail}
                             >
-                                Send
+                                {loading ? 'Sending...' : 'Send'}
                             </button>
                             {error && (
                                 <p style={{color: 'red'}} className="error">

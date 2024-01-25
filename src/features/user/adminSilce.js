@@ -1,7 +1,6 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
-import { getUserDetails } from  "../../api/adminAPI"
-import {setLoading} from "./userSlice";
+import {createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
+import {getUserDetails, getSearch} from "../../api/adminAPI";
 
 const initialState = {
     userDetail: null,
@@ -12,15 +11,31 @@ const initialState = {
 export const userDetails = createAsyncThunk(
     "admin/userDetails",
     async (userId) => {
-            const details = await getUserDetails(userId);
-            return details;
+        const details = await getUserDetails(userId);
+        return details;
     }
 );
 
+export const search = createAsyncThunk(
+    'admin/search',
+    async ({searchRequest, currentPage}) => {
+        try {
+            const searchUser = await getSearch(searchRequest, currentPage);
+            console.log(searchUser);
+            return searchUser;
+        } catch (error) {
+            throw error;
+        }
+    }
+);
 
 const adminSlice = createSlice({
     name: "admin",
-    initialState,
+    initialState: {
+        users: [],
+        loading: false,
+        error: null,
+    },
     reducers: {
         setLoading: (state, action) => {
             state.loading = action.payload;
@@ -49,7 +64,21 @@ const adminSlice = createSlice({
                 state.loading = false;
                 state.userDetail = action.payload;
                 state.error = null;
+            })
+
+            .addCase(search.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(search.fulfilled, (state, action) => {
+                state.loading = false;
+                state.users = action.payload;
+            })
+            .addCase(search.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error ? action.error.message : 'Unknown error';
             });
+
 
     },
 });
@@ -58,12 +87,5 @@ export const selectSuccess = (state) => state.admin.success;
 export const selectLoading = (state) => state.admin.loading;
 export const selectUserDetails = (state) => state.admin.userDetail;
 
-
-export const setLoadingTrueIfCalled = (isCalled) => (dispatch, getState) => {
-    const currentValue = selectLoading(getState());
-    if (currentValue === isCalled) {
-        dispatch(setLoading(true));
-    }
-};
-
+export const selectSearchResult = (state) => state.admin.users;
 export default adminSlice.reducer;

@@ -6,128 +6,43 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
+}
+
+.logout-navbar {
     display: flex;
-    justify-content: center;
-    
-  }
-  
-  
-  .links {
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    margin-right: 20px;
+}
+
+.links {
     margin-right: auto;
     margin-left: auto;
     display: flex;
     align-items: center;
-  }
-  
-  
-  .links a {
+}
+
+
+.links a {
     text-decoration: none;
     color: white;
     margin-left: 20px;
     font-size: 25px;
-  }
-  .links input[type="text"] {
-    width: 300px;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: none;
-    margin-left: 20px;
-  }
-  
-  
-  .links {
+}
+
+.links {
     display: flex;
     align-items: center;
-  }
-  
-  
-  .links a {
+}
+
+
+.links a {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: white;
     font-size: 16px;
     margin-right: 20px;
-  }
-  
-  
-  .links input[type="text"] {
-    padding: 8px;
-    font-size: 16px;
-  }
-  
-  
-  .links a,
-  .links input[type="text"] {
-    display: flex;
-    align-items: center;
-  }
-  
-  
-  .login {
-    position: relative;
-    display: inline-block;
-  }
-  
-  
-  .login-options {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    padding: 16px;
-    z-index: 1;
-    top: 110%;
-    left: 0;
-    border-radius: 8px;
-    width: 250px;
-    right: calc(100% + 10px);
-  
-  
-    transform: translateX(-80%);
-  }
-  
-  
-  .login:hover .login-options {
-    display: block;
-  }
-  
-  
-  .login-options a {
-    display: inline-block;
-    padding: 10px 16px;
-    margin-top: 12px;
-    text-decoration: none;
-    color: white;
-    background-color: #505c8c;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-    margin-right: 10px;
-  }
-  
-  
-  .login-options a:last-child {
-    margin-right: 0;
-  }
-  
-  
-  .login-options a:hover {
-    background-color: #f1f1f1;
-  }
-  .login {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-    margin-right: 20px;
-    position: relative;
-  }
-  .login-options h2 {
-    margin-top: 0;
-    font-size: 18px;
-    color: #505c8c;
-  }
+}
