@@ -1,13 +1,12 @@
 import React from "react";
-import { BsSuitHeartFill } from "react-icons/bs";
-import { GiReturnArrow } from "react-icons/gi";
-import { FaShoppingCart } from "react-icons/fa";
-import { MdOutlineLabelImportant } from "react-icons/md";
+import {BsSuitHeartFill} from "react-icons/bs";
+import {FaShoppingCart} from "react-icons/fa";
+import {MdOutlineLabelImportant} from "react-icons/md";
 import Image from "../../designLayouts/Image";
 import Badge from "./Badge";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { addToCart } from "../../../redux/zgearSlice";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {addToCart} from "../../../features/zgearSlice";
 
 const Product = (product) => {
   const dispatch = useDispatch();
@@ -51,11 +50,7 @@ const Product = (product) => {
                   onClick={() =>
                       dispatch(
                           addToCart({
-                            _id: product._id,
-                            name: product.productName,
-                            quantity: 1,
-                            image: product.img,
-                            price: product.price,
+                            //I want some logic here
                           })
                       )
                   }
@@ -106,7 +101,7 @@ const Product = (product) => {
       </div>
   );
 };
-const calculateDiscountedPrice = (originalPrice, discounts) => {
+export const calculateDiscountedPrice = (originalPrice, discounts) => {
   if (discounts.length === 0) {
     return {
       discountedPrice: originalPrice.toFixed(2),

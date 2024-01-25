@@ -5,7 +5,7 @@ import {
   deleteItem,
   decreaseQuantity,
   increaseQuantity,
-} from "../../redux/zgearSlice";
+} from "../../features/zgearSlice";
 
 const ItemCard = ({ item }) => {
   const dispatch = useDispatch();

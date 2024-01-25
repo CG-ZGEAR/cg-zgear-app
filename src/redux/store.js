@@ -10,9 +10,9 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import zgearReducer from "./zgearSlice";
+import zgearReducer from "../features/zgearSlice";
 import userReducer from "../features/user/userSlice"
-import productReducer from "../features/product/productReducer";
+import productReducer from "../features/product/productSlice";
 import adminReducer from "../features/user/adminSilce"
 import authReducer from "../features/user/authSilce"
 const persistConfig = {

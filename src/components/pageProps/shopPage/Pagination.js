@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect} from 'react';
 import ReactPaginate from 'react-paginate';
-import {productListSelector} from '../../../features/product/productReducer';
-import {getProducts} from "../../../features/product/productReducerService";
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Product from "../../home/Products/Product";
 import "../../../assets/css/Pagination.css"
+
 function Items({ currentItems }) {
 
     return (
