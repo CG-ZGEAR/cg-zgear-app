@@ -69,7 +69,6 @@ const HeaderBottom = () => {
         if (searchQuery === "") {
             setFilteredProducts([]);
         } else {
-            // Ensure products and products.content are defined before applying filter
             if (products && products.content && Array.isArray(products.content)) {
                 const filtered = products.content.filter((product) =>
                     product.productName.toLowerCase().includes(searchQuery.toLowerCase())
@@ -77,7 +76,8 @@ const HeaderBottom = () => {
                 setFilteredProducts(filtered);
             }
         }
-    }, [searchQuery, products]);
+    }, [searchQuery]);
+
 
     return (
         <div className="w-full bg-[#F5F5F3] relative">
