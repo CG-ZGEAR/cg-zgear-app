@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectLoading, selectUserDetails, userDetails } from '../../features/user/adminSilce';
+import React, {useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
+import {selectLoading, selectUserDetails, userDetails} from '../../features/user/adminSilce';
 import {useParams} from "react-router-dom";
 import "../../assets/css/userDetails.css"
 
@@ -10,20 +10,14 @@ const UserDetails = () => {
     const dispatch = useDispatch();
     const {id} = useParams();
     useEffect(() => {
-            dispatch(userDetails(id));
+        dispatch(userDetails(id));
     }, [dispatch, id]);
 
-/*    if (loading) {
-        return <p>Loading...</p>;
-    }*/
-
-/*    if (userDetail == null) {
-        return <p>No user details available.</p>;
-    }*/
 
     return (
         <div className="user-details-page">
-            <img className="back-img" src="https://images.unsplash.com/photo-1546527706-59aa9718a426?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+            <img className="back-img"
+                 src="https://images.unsplash.com/photo-1546527706-59aa9718a426?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"/>
             <table className="user-details-table">
                 <h2 className="user-details-title">Details of {userDetail?.fullName}</h2>
                 <div className="container">

@@ -8,6 +8,8 @@ import {
 } from '../../features/user/authSilce';
 import {Link} from 'react-router-dom';
 import '../../assets/css/ForgotPassword.css';
+import {logoLight} from "../../assets/images";
+import {BsCheckCircleFill} from "react-icons/bs";
 
 const ResetPassword = () => {
     const dispatch = useDispatch();
@@ -26,6 +28,7 @@ const ResetPassword = () => {
     const [validation, setValidation] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleEmailChange = (value) => {
         setEmail(value);
@@ -65,7 +68,7 @@ const ResetPassword = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleSendEmail = () => {
+    const handleSendEmail = async () => {
         if (!validateEmail(email)) {
             setError('Invalid email address');
             return;
@@ -73,7 +76,8 @@ const ResetPassword = () => {
 
         setError('');
         setValidation('');
-
+        setLoading(true);
+        await new Promise(resolve => setTimeout(resolve, 5000));
         dispatch(sendOtpAsync({email}));
         dispatch(openResetPasswordOtpDialog());
     };
@@ -113,89 +117,167 @@ const ResetPassword = () => {
 
     return (
         <div className="container-forgot">
-            <div className="title">
-                <p className="forgot">Forgot password</p>
-                <X size={20} color="#505c8c" weight="light"/>
-            </div>
-
-            <div className="body">
-                {resetPasswordOtpDialogVisible ? (
-                    <div className="otp-dialog">
-                        <input
-                            type="text"
-                            value={otp}
-                            onChange={(e) => setOtp(e.target.value)}
-                            placeholder="Enter OTP"
-                        />
-                        <input
-                            type={showPassword ? 'text' : 'password'}
-                            value={newPassword}
-                            onChange={(e) => handlePasswordChange(e.target.value)}
-                            placeholder="New password"
-                        />
-                        <input
-                            type={showPassword ? 'text' : 'password'}
-                            value={passwordConfirmation}
-                            onChange={(e) => handleConfirmationChange(e.target.value)}
-                            placeholder="Confirm new password"
-                        />
-                        {error && (
-                            <p style={{color: 'red'}} className="error">
-                                {error}
+            <div className="left-forgot">
+                <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
+                    <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center pt-10">
+                        <Link to="/">
+                            <img src={logoLight} alt="logoImg" className="w-28"/>
+                        </Link>
+                        <div className="flex flex-col gap-1 -mt-1">
+                            <h1 className="font-titleFont text-xl font-medium">
+                                Forgot password
+                            </h1>
+                            <p className="text-base">If you have trouble, I will always be with you!</p>
+                        </div>
+                        <div className="w-[300px] flex items-start gap-3">
+            <span className="text-green-500 mt-1">
+              <BsCheckCircleFill/>
+            </span>
+                            <p className="text-base text-gray-300">
+              <span className="text-white font-semibold font-titleFont">
+                Get started fast with ZGEAR
+              </span>
+                                <br/>
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
+                                nisi dolor recusandae consectetur!
                             </p>
-                        )}
-                        {validation && (
-                            <p style={{color: 'red'}} className="validation">
-                                {validation}
+                        </div>
+                        <div className="w-[300px] flex items-start gap-3">
+            <span className="text-green-500 mt-1">
+              <BsCheckCircleFill/>
+            </span>
+                            <p className="text-base text-gray-300">
+              <span className="text-white font-semibold font-titleFont">
+                Access all ZGEAR services
+              </span>
+                                <br/>
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
+                                nisi dolor recusandae consectetur!
                             </p>
-                        )}
-                        <label className={"show_password"}>
-                            <input
-                                type="checkbox"
-                                checked={showPassword}
-                                onChange={handleTogglePasswordVisibility}
-                            />
-                            Show Password
-                        </label>
-                        <button
-                            onClick={handleVerifyOtpAndResetPassword}
-                            disabled={
-                                verifyOtpForForgotPasswordStatus === 'loading' ||
-                                newPassword !== passwordConfirmation
-                            }
-                        >
-                            Reset Password
-                        </button>
+                        </div>
+                        <div className="w-[300px] flex items-start gap-3">
+            <span className="text-green-500 mt-1">
+              <BsCheckCircleFill/>
+            </span>
+                            <p className="text-base text-gray-300">
+              <span className="text-white font-semibold font-titleFont">
+                Trusted by online Shoppers
+              </span>
+                                <br/>
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ab omnis
+                                nisi dolor recusandae consectetur!
+                            </p>
+                        </div>
+                        <div className="flex items-center justify-between mt-10">
+                            <Link to="/">
+                                <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+                                    © ZGEAR
+                                </p>
+                            </Link>
+                            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+                                Terms
+                            </p>
+                            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+                                Privacy
+                            </p>
+                            <p className="text-sm font-titleFont font-semibold text-gray-300 hover:text-white cursor-pointer duration-300">
+                                Security
+                            </p>
+                        </div>
                     </div>
-                ) : (
-                    <>
-                        <input
-                            type="email"
-                            className="senEmail"
-                            value={email}
-                            onChange={(e) => handleEmailChange(e.target.value)}
-                            placeholder="Email"
-                        />
-                        <button
-                            className="submit"
-                            disabled={sendOtpStatus === 'loading'}
-                            onClick={handleSendEmail}
-                        >
-                            Send
-                        </button>
-                        {error && (
-                            <p style={{color: 'red'}} className="error">
-                                {error}
-                            </p>
-                        )}
-                    </>
-                )}
-                <p className="text-sm text-center font-titleFont font-medium">
-                    Did you remember your password?
+                </div>
+            </div>
+            <div className="right-forgot">
+                <div className="title">
+                    <p className="forgot">Forgot password</p>
                     <Link to="/signin">
-                        <span>Sign in</span>
+                        <X size={20} color="#505c8c" weight="light"/>
                     </Link>
-                </p>
+                </div>
+
+                <div className="body">
+                    {resetPasswordOtpDialogVisible ? (
+                        <div className="otp-dialog">
+                            <input
+                                type="number"
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                placeholder="Enter OTP"
+                            />
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={newPassword}
+                                onChange={(e) => handlePasswordChange(e.target.value)}
+                                placeholder="New password"
+                            />
+                            <input
+                                type={showPassword ? 'text' : 'password'}
+                                value={passwordConfirmation}
+                                onChange={(e) => handleConfirmationChange(e.target.value)}
+                                placeholder="Confirm new password"
+                            />
+                            {error && (
+                                <p style={{color: 'red'}} className="error">
+                                    {error}
+                                </p>
+                            )}
+                            {validation && (
+                                <p style={{color: 'red', maxWidth: 300}} className="validation">
+                                    {validation}
+                                </p>
+                            )}
+                            <div className={"show_password"}>
+                                <input
+                                    id='showpass'
+                                    type="checkbox"
+                                    checked={showPassword}
+                                    onChange={handleTogglePasswordVisibility}
+                                    style={{marginBottom: 0, marginRight: 10, justifyContent: 'normal'}}
+                                />
+                                <label for="showpass">
+                                    Show Password
+                                </label>
+                            </div>
+                            <button
+                                onClick={handleVerifyOtpAndResetPassword}
+                                disabled={
+                                    verifyOtpForForgotPasswordStatus === 'loading' ||
+                                    newPassword !== passwordConfirmation
+                                }
+                            >
+                                Reset Password
+                            </button>
+                        </div>
+                    ) : (
+                        <>
+                            <input
+                                type="email"
+                                className="senEmail"
+                                value={email}
+                                onChange={(e) => handleEmailChange(e.target.value)}
+                                placeholder="Email"
+                            />
+                            <button
+                                className="submit"
+                                disabled={sendOtpStatus === 'loading' || loading}
+                                onClick={handleSendEmail}
+                            >
+                                {loading ? 'Sending...' : 'Send'}
+                            </button>
+                            {error && (
+                                <p style={{color: 'red'}} className="error">
+                                    {error}
+                                </p>
+                            )}
+                        </>
+                    )}
+                    <p className="text-sm text-center font-titleFont font-medium">
+                        Did you remember your password?
+                        <Link to="/signin">
+                            <span>Sign in</span>
+                        </Link>
+                    </p>
+                </div>
             </div>
         </div>
     );

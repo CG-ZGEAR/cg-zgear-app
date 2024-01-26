@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loginUser, logoutUser,senOtp ,forgotPassword } from "../../api/AuthAPI";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {loginUser, logoutUser, senOtp, forgotPassword} from "../../api/AuthAPI";
 
 const initialState = {
     user: null,
@@ -15,7 +15,7 @@ const initialState = {
 
 export const loginAsync = createAsyncThunk(
     "auth/loginAsync",
-    async (loginRequestDTO, { rejectWithValue }) => {
+    async (loginRequestDTO, {rejectWithValue}) => {
         try {
             const response = await loginUser(loginRequestDTO);
             return response;
@@ -27,7 +27,7 @@ export const loginAsync = createAsyncThunk(
 
 export const logoutAsync = createAsyncThunk(
     "auth/logoutAsync",
-    async (_, { rejectWithValue }) => {
+    async (_, {rejectWithValue}) => {
         try {
             const response = await logoutUser();
             return response.data;
@@ -39,7 +39,7 @@ export const logoutAsync = createAsyncThunk(
 
 export const sendOtpAsync = createAsyncThunk(
     'auth/sendOtpAsync',
-    async (sendMailRequest, { rejectWithValue }) => {
+    async (sendMailRequest, {rejectWithValue}) => {
         try {
             const response = await senOtp(sendMailRequest);
             return response.data;
@@ -49,9 +49,9 @@ export const sendOtpAsync = createAsyncThunk(
     }
 );
 
-export const resetPasswordAsync  = createAsyncThunk(
+export const resetPasswordAsync = createAsyncThunk(
     'auth/forgotPasswordAsync',
-    async (verifyOtpRequest, { rejectWithValue }) => {
+    async (verifyOtpRequest, {rejectWithValue}) => {
         try {
             const response = await forgotPassword(verifyOtpRequest);
             return response.data;
@@ -104,31 +104,31 @@ const authSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload;
             })
-        .addCase(sendOtpAsync.pending, (state) => {
-            state.sendOtpStatus = 'loading';
-        })
-        .addCase(sendOtpAsync.fulfilled, (state) => {
-            state.sendOtpStatus = 'succeeded';
-        })
-        .addCase(sendOtpAsync.rejected, (state, action) => {
-            state.sendOtpStatus = 'failed';
-            state.error = action.error.message;
-        })
+            .addCase(sendOtpAsync.pending, (state) => {
+                state.sendOtpStatus = 'loading';
+            })
+            .addCase(sendOtpAsync.fulfilled, (state) => {
+                state.sendOtpStatus = 'succeeded';
+            })
+            .addCase(sendOtpAsync.rejected, (state, action) => {
+                state.sendOtpStatus = 'failed';
+                state.error = action.error.message;
+            })
 
-        .addCase(resetPasswordAsync .pending, (state) => {
-            state.verifyOtpForForgotPasswordStatus = 'loading';
-        })
-        .addCase(resetPasswordAsync .fulfilled, (state) => {
-            state.verifyOtpForForgotPasswordStatus = 'succeeded';
-        })
-        .addCase(resetPasswordAsync .rejected, (state, action) => {
-            state.verifyOtpForForgotPasswordStatus = 'failed';
-            state.error = action.error.message;
-        });
+            .addCase(resetPasswordAsync.pending, (state) => {
+                state.verifyOtpForForgotPasswordStatus = 'loading';
+            })
+            .addCase(resetPasswordAsync.fulfilled, (state) => {
+                state.verifyOtpForForgotPasswordStatus = 'succeeded';
+            })
+            .addCase(resetPasswordAsync.rejected, (state, action) => {
+                state.verifyOtpForForgotPasswordStatus = 'failed';
+                state.error = action.error.message;
+            });
     },
 
 });
-export const { zclearError, openResetPasswordOtpDialog, closeResetPasswordOtpDialog } = authSlice.actions;
+export const {openResetPasswordOtpDialog, closeResetPasswordOtpDialog} = authSlice.actions;
 
 export const selectUser = (state) => state.auth.user;
 export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;

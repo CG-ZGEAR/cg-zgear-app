@@ -7,6 +7,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {searchResultsSelector} from "../../../features/product/productReducer";
 import {searchProducts} from "../../../features/product/productReducerService";
+import {logoutAsync} from "../../../features/user/authSilce";
 
 const HeaderBottom = () => {
     const products = useSelector(searchResultsSelector) || [];
@@ -16,7 +17,29 @@ const HeaderBottom = () => {
     const ref = useRef();
     const dispatch = useDispatch();
     const [searchQuery, setSearchQuery] = useState("");
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [showSearchBar, setShowSearchBar] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accessToken");
+        if (accessToken) {
+            setIsLoggedIn(true);
+        } else {
+            setIsLoggedIn(false);
+        }
+    }, []);
+
+    const handleLogout = async () => {
+        try {
+            localStorage.removeItem("accessToken");
+            await dispatch(logoutAsync());
+            setIsLoggedIn(false);
+            navigate("/signin");
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
 
     useEffect(() => {
         if (ref && ref.current) {
@@ -34,14 +57,11 @@ const HeaderBottom = () => {
             };
         }
     }, [show, ref]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const [showSearchBar, setShowSearchBar] = useState(false);
 
     const handleSearch = (e) => {
         setSearchQuery(e.target.value);
         if (e.target.value !== "") {
             dispatch(searchProducts(e.target.value));
-
         }
     };
 
@@ -57,7 +77,8 @@ const HeaderBottom = () => {
                 setFilteredProducts(filtered);
             }
         }
-    }, [searchQuery]);
+    }, [searchQuery, products]);
+
     return (
         <div className="w-full bg-[#F5F5F3] relative">
             <div className="max-w-container mx-auto">
@@ -78,31 +99,13 @@ const HeaderBottom = () => {
                                 transition={{duration: 0.5}}
                                 className="absolute top-14 z-50 bg-primeColor w-auto text-[#767676] h-auto p-4 pb-4 mb-0"
                             >
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
-                                    onClick={() => navigate('/category/VGA')}>VGA
+                                <li
+                                    className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                    onClick={() => navigate("/category/VGA")}
+                                >
+                                    VGA
                                 </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
-                                    onClick={() => navigate('/category/Monitor')}>Monitor
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
-                                    onClick={() => navigate('/category/Laptop')}>Laptop
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
-                                    onClick={() => navigate('/category/Gaming PC')}>Gaming PC
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
-                                    onClick={() => navigate('/category/Keyboard')}>Keyboard
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
-                                    onClick={() => navigate('/category/Mouse')}>Mouse
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration
--300 cursor-pointer"
-                                    onClick={() => navigate('/category/Headset')}>Headset
-                                </li>
-                                <li className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
-                                    onClick={() => navigate('/category/Gaming Chair')}>Gaming Chair
-                                </li>
+                                {/* Add other list items here */}
                             </motion.ul>
                         )}
                     </div>
@@ -134,14 +137,16 @@ const HeaderBottom = () => {
                                                             item: item,
                                                         },
                                                     }
-                                                ) &
-                                                setShowSearchBar(true) &
-                                                setSearchQuery("")
+                                                ) & setShowSearchBar(true) & setSearchQuery("")
                                             }
                                             key={item._id}
                                             className="max-w-[600px] h-28 bg-gray-100 mb-3 flex items-center gap-3"
                                         >
-                                            <img className="w-24" src={item.imageUrls[0]} alt="productImg"/>
+                                            <img
+                                                className="w-24"
+                                                src={item.imageUrls[0]}
+                                                alt="productImg"
+                                            />
                                             <div className="flex flex-col gap-1">
                                                 <p className="font-semibold text-lg">
                                                     {item.productName}
@@ -171,24 +176,41 @@ const HeaderBottom = () => {
                                 transition={{duration: 0.5}}
                                 className="absolute top-6 right-0 z-50 bg-primeColor w-44 text-[#767676] h-auto p-4 pb-6"
                             >
-                                <Link to="/signin" className="">
-                                    <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                        Login
-                                    </li>
-                                </Link>
-                                <Link onClick={() => setShowUser(false)} to="/signup">
-                                    <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                        Sign Up
-                                    </li>
-                                </Link>
-                                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Profile
-                                </li>
-                                <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
-                                    Others
-                                </li>
+                                {isLoggedIn ? (
+                                    <>
+                                        <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                                            Profile
+                                        </li>
+                                        <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400  hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                                            Others
+                                        </li>
+                                        <li
+                                            className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                            onClick={handleLogout}
+                                        >
+                                            Logout
+                                        </li>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link to="/signin" className="">
+                                            <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                                                Login
+                                            </li>
+                                        </Link>
+                                        <Link
+                                            onClick={() => setShowUser(false)}
+                                            to="/signup"
+                                        >
+                                            <li className="text-gray-400 px-4 py-1 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer">
+                                                Sign Up
+                                            </li>
+                                        </Link>
+                                    </>
+                                )}
                             </motion.ul>
                         )}
+
                         <Link to="/cart">
                             <div className="relative">
                                 <FaShoppingCart/>
