@@ -28,6 +28,7 @@ import UserDetails from "./components/user/UserDetails"
 import Category from "./pages/Category/Category";
 import ResetPassword from "./pages/Account/ResetPassword";
 import SearchResults from "./components/user/SearchResults";
+import UserProfile from "./pages/Account/UserProfile "
 
 const Layout = () => {
     return (
@@ -72,7 +73,7 @@ const router = createBrowserRouter(
             <Route path="/signup" element={<SignUp/>}></Route>
             <Route path="/signin" element={<SignIn/>}></Route>
             <Route path="/forgot-password" element={<ResetPassword/>}></Route>
-
+            <Route path="/user-profile/" element={<UserProfile/>}/>
         </Route>
     )
 );

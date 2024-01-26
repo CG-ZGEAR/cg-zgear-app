@@ -43,7 +43,6 @@ const SignIn = () => {
             } else if (user.roles.includes("ROLE_USER")) {
                 navigate("/");
             }
-
             localStorage.setItem("accessToken", user.token);
 
         }
@@ -71,7 +70,8 @@ const SignIn = () => {
             try {
                 const response = await dispatch(loginAsync({username, password}));
 
-
+                console.log(response.payload.status?.error)
+                console.log(response.payload.message)
                 if (response.meta.requestStatus === "rejected") {
                     Swal.fire({
                         icon: "error",
