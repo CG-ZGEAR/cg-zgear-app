@@ -1,25 +1,16 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getBestSellers, getCart} from "./productReducerService";
+import {addToCart, getCart} from "./productReducerService";
 
 const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         items: [],
+        item: null,
         loading: false,
         error: null,
         success:false,
         total:0,
     },reducers: {
-        addToCart: (state, action) => {
-            const item = state.products.find(
-                (item) => item._id === action.payload._id
-            );
-            if (item) {
-                item.quantity += action.payload.quantity;
-            } else {
-                state.products.push(action.payload);
-            }
-        },
         increaseQuantity: (state, action) => {
             const item = state.products.find(
                 (item) => item._id === action.payload._id
@@ -64,10 +55,27 @@ const cartSlice = createSlice({
                 state.success = false;
                 state.error = action.payload;
             })
+            .addCase(addToCart.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(addToCart.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.item = action.payload;
+                state.error = null;
+            })
+            .addCase(addToCart.rejected, (state, action) => {
+                state.loading = false;
+                state.success = false;
+                state.error = action.payload;
+            })
+
     }
 });
 
 export const selectCartItems = state => state.cart.items;
+export const selectSuccess= state => state.cart.success;
 export const {
     increaseQuantity,
     decreaseQuantity,

@@ -7,22 +7,21 @@ export const addToCartAPI = async (productId) => {
         const token = localStorage.getItem("accessToken");
         let response = null;
         try {
-            response = await axios.get(
+            response = await axios.post(
                 `${CART_MANAGEMENT_API}/add/${productId}`,
+                {},
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
+                        Authorization: `Bearer ${token}`
+                    }
                 }
             );
         } catch (error) {
             console.error("error:", error);
             throw error;
         }
-    console.log(response);
         return response.data;
-
     }
 
 export const getCartAPI = async () => {
@@ -44,3 +43,4 @@ export const getCartAPI = async () => {
     }
     return response.data;
 }
+

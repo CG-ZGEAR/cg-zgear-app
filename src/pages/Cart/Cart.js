@@ -16,6 +16,7 @@ const Cart = () => {
   const [shippingCharge, setShippingCharge] = useState("");
   const products = cart.cartItems || [];
   console.log(cart.cartItems);
+
   useEffect(() => {
     dispatch(getCart());
   }, []);
