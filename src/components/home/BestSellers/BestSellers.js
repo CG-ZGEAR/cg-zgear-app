@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Heading from "../Products/Heading";
 import Product from "../Products/Product";
 import {useDispatch, useSelector} from "react-redux";
-import {bestSellerSelector, productListSelector} from "../../../features/product/productReducer";
+import {bestSellerSelector, productListSelector} from "../../../features/product/productSlice";
 import {getBestSellers} from "../../../features/product/productReducerService";
 
 const BestSellers = () => {
