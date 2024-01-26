@@ -49,12 +49,11 @@ const SignIn = () => {
         }
     }, [isAuthenticated, username, navigate, user]);
 
-    const handleSignIn = (e) => {
+    const handleSignIn = async (e) => {
         e.preventDefault();
 
-
         const usernamePattern = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/;
-        const passwordPattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{6,}$/;
+        const passwordPattern = /^[a-zA-Z0-9!@#$%^*)(+=._-]{6,}$/;
 
         if (!username) {
             setErrUsername("Enter your username");
@@ -69,9 +68,31 @@ const SignIn = () => {
         }
 
         if (username && password && usernamePattern.test(username) && passwordPattern.test(password)) {
-            dispatch(loginAsync({username, password}));
-        } else {
-            Swal.fire("Login failed. Please check your credentials.");
+            try {
+                const response = await dispatch(loginAsync({username, password}));
+
+
+                if (response.meta.requestStatus === "rejected") {
+                    Swal.fire({
+                        icon: "error",
+                        title: response.payload.message || "An error occurred",
+                        text: response.payload.status?.error || "",
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Welcome!",
+                        text: "You have successfully logged in.",
+                    });
+                }
+            } catch (error) {
+                console.log(error)
+                Swal.fire({
+                    icon: "error",
+                    title: "An error occurred",
+                    text: "Check your credentials",
+                });
+            }
         }
     };
 
