@@ -15,6 +15,7 @@ import userReducer from "../features/user/userSlice"
 import productReducer from "../features/product/productSlice";
 import adminReducer from "../features/user/adminSilce"
 import authReducer from "../features/user/authSilce"
+import cartReducer from "../features/product/cartSlice"
 const persistConfig = {
   key: "root",
   version: 1,
@@ -30,6 +31,7 @@ export const store = configureStore({
     user: userReducer,
     auth: authReducer,
     admin: adminReducer,
+    cart: cartReducer,
   },
   middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

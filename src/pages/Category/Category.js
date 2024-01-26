@@ -4,8 +4,8 @@ import Pagination from "../../components/pageProps/shopPage/Pagination";
 import ProductBanner from "../../components/pageProps/shopPage/ProductBanner";
 import ShopSideNav from "../../components/pageProps/shopPage/ShopSideNav";
 import {useDispatch, useSelector} from "react-redux";
-import {isLoadingSelector, productListSelector} from "../../features/product/productSlice";
-import {getProducts, getProductsByCategory} from "../../features/product/productReducerService";
+import {productListSelector} from "../../features/product/productSlice";
+import {getProductsByCategory} from "../../features/product/productReducerService";
 import {useParams} from "react-router-dom";
 
 const Category = () => {

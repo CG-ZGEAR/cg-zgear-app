@@ -41,9 +41,6 @@ const Product = (product) => {
             )}
 
           </div>
-          <div className="absolute top-6 left-8">
-            {product.badge && <Badge text="New" />}
-          </div>
           <div className="w-full h-32 absolute bg-white -bottom-[130px] group-hover:bottom-0 duration-700">
             <ul className="w-full h-full flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-l border-r">
               <li
@@ -120,18 +117,19 @@ export const calculateDiscountedPrice = (originalPrice, discounts) => {
       discountAmount: discount.discountAmount,
       discountType: discountType,
     };
-  } else if (discountType === 'FIXED_AMOUNT') {
-    const discountedPrice = originalPrice - discount.discountAmount;
+  } else   if(discountType === 'FIXED_AMOUNT') {
+
+    const discountAmount = discount.discountAmount;
+    const discountedPrice = originalPrice - discountAmount;
+    const percentage = Math.round((discountAmount / originalPrice) * 100);
+
     return {
       discountedPrice: discountedPrice.toFixed(2),
-      discountAmount: discount.discountAmount,
-      discountType: discountType,
+      discountAmount: percentage,
+      discountType: 'PERCENT'
     };
+
   }
-  return {
-    discountedPrice: originalPrice.toFixed(2),
-    discountAmount: 0,
-    discountType: null,
-  };
+
 };
 export default Product;

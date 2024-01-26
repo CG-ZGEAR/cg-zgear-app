@@ -1,7 +1,5 @@
-
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {getBestSellers, getCart} from "./productReducerService";
-import {addToCart, zgearSlice} from "../zgearSlice";
 
 const cartSlice = createSlice({
     name: 'cart',
@@ -11,7 +9,7 @@ const cartSlice = createSlice({
         error: null,
         success:false,
         total:0,
-    },
+    },reducers: {
         addToCart: (state, action) => {
             const item = state.products.find(
                 (item) => item._id === action.payload._id
@@ -48,6 +46,7 @@ const cartSlice = createSlice({
         resetCart: (state) => {
             state.products = [];
         },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getCart.pending, (state) => {
@@ -57,10 +56,10 @@ const cartSlice = createSlice({
             .addCase(getCart.fulfilled, (state, action) => {
                 state.loading = false;
                 state.success = true;
-                state.bestSellers = action.payload;
+                state.items = action.payload;
                 state.error = null;
             })
-            .addCase(getBestSellers.rejected, (state, action) => {
+            .addCase(getCart.rejected, (state, action) => {
                 state.loading = false;
                 state.success = false;
                 state.error = action.payload;
@@ -68,9 +67,8 @@ const cartSlice = createSlice({
     }
 });
 
-export const cartSelector =(state) => this.state.items;
+export const selectCartItems = state => state.cart.items;
 export const {
-    addToCart,
     increaseQuantity,
     decreaseQuantity,
     deleteItem,

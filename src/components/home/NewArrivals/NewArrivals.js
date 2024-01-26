@@ -5,8 +5,8 @@ import Product from "../Products/Product";
 import SampleNextArrow from "./SampleNextArrow";
 import SamplePrevArrow from "./SamplePrevArrow";
 import {useDispatch, useSelector} from "react-redux";
-import {bestSellerSelector, newArrivalSelector} from "../../../features/product/productSlice";
-import {getBestSellers, getNewArrivals} from "../../../features/product/productReducerService";
+import {newArrivalSelector} from "../../../features/product/productSlice";
+import {getNewArrivals} from "../../../features/product/productReducerService";
 
 const NewArrivals = () => {
   const dispatch = useDispatch();
