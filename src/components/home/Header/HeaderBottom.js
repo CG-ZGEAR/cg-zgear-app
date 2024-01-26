@@ -77,7 +77,7 @@ const HeaderBottom = () => {
                 setFilteredProducts(filtered);
             }
         }
-    }, [searchQuery, products]);
+    }, [searchQuery]);
 
     return (
         <div className="w-full bg-[#F5F5F3] relative">

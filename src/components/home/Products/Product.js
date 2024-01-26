@@ -47,7 +47,7 @@ const Product = (product) => {
                   onClick={() =>
                       dispatch(
                           addToCart({
-                            //I want some logic here
+                            productId:product.id
                           })
                       )
                   }
@@ -128,7 +128,6 @@ export const calculateDiscountedPrice = (originalPrice, discounts) => {
       discountAmount: percentage,
       discountType: 'PERCENT'
     };
-
   }
 
 };

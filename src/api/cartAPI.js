@@ -20,6 +20,7 @@ export const addToCartAPI = async (productId) => {
             console.error("error:", error);
             throw error;
         }
+    console.log(response);
         return response.data;
 
     }
