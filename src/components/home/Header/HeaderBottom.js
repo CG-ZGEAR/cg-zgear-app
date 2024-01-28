@@ -78,7 +78,6 @@ const HeaderBottom = () => {
         }
     }, [searchQuery]);
 
-
     return (
         <div className="w-full bg-[#F5F5F3] relative">
             <div className="max-w-container mx-auto">
@@ -105,7 +104,49 @@ const HeaderBottom = () => {
                                 >
                                     VGA
                                 </li>
-                                {/* Add other list items here */}
+                                <li
+                                    className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                    onClick={() => navigate("/category/monitor")}
+                                >
+                                    Monitor
+                                </li>
+                                <li
+                                    className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                    onClick={() => navigate("/category/laptop")}
+                                >
+                                    Laptop
+                                </li>
+                                <li
+                                    className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                    onClick={() => navigate("/category/Gaming PC")}
+                                >
+                                    Gaming PC
+                                </li>
+                                <li
+                                    className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                    onClick={() => navigate("/category/Keyboard")}
+                                >
+                                    Keyboard
+                                </li>
+                                <li
+                                    className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                    onClick={() => navigate("/category/Mouse")}
+                                >
+                                    Mouse
+                                </li>
+                                <li
+                                    className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                    onClick={() => navigate("/category/Headset")}
+                                >
+                                    Headset
+                                </li>
+                                <li
+                                    className="text-gray-400 px-4 py-2 border-b-[1px] border-b-gray-400 hover:border-b-white hover:text-white duration-300 cursor-pointer"
+                                    onClick={() => navigate("/category/VGA")}
+                                >
+                                    VGA
+                                </li>
+
                             </motion.ul>
                         )}
                     </div>
