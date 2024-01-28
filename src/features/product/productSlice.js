@@ -1,12 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import {createSlice} from '@reduxjs/toolkit';
 import {
     addProduct,
     editProduct,
+    getBestSellers, getNewArrivals,
     getProduct,
-    getProducts,
-    removeProduct,
     getProductByName,
-    getProductsByCategory, searchForProducts, searchProducts
+    getProducts,
+    getProductsByCategory,
+    removeProduct,
+    searchProducts
 } from "./productReducerService";
 
 const initialState = {
@@ -16,6 +18,8 @@ const initialState = {
     error: null,
     success: false,
     searchValues: null,
+    bestSellers: null,
+    newArrivals: null,
 };
 
 export const productSlice = createSlice({
@@ -110,16 +114,45 @@ export const productSlice = createSlice({
                 state.success = true;
                 state.value = action.payload;
                 state.error = false;
+            })
+            .addCase(getBestSellers.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getBestSellers.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.bestSellers = action.payload;
+                state.error = null;
+            })
+            .addCase(getBestSellers.rejected, (state, action) => {
+                state.loading = false;
+                state.success = false;
+                state.error = action.payload;
+            })
+            .addCase(getNewArrivals.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(getNewArrivals.fulfilled, (state, action) => {
+                state.loading = false;
+                state.success = true;
+                state.newArrivals = action.payload;
+                state.error = null;
+            })
+            .addCase(getNewArrivals.rejected, (state, action) => {
+                state.loading = false;
+                state.success = false;
+                state.error = action.payload;
             });
+
     },
 });
 
 
 export const productListSelector = (state) => state.products.values;
 export const isLoadingSelector = (state) => state.products.loading;
-export const productSelector = (state) => state.products.value;
-export const productAddedSelector = (state) => state.products.value;
-export const productEditedSelector = (state) => state.products.value;
-export const productRemovedSelector = (state) => state.products.value;
 export const searchResultsSelector = (state) => state.products.searchValues;
+export const bestSellerSelector = (state) => state.products.bestSellers;
+export const newArrivalSelector = (state) => state.products.newArrivals;
 export default productSlice.reducer;

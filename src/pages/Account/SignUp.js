@@ -11,7 +11,6 @@ const SignUp = () => {
 
   const dispatch = useDispatch();
   const loginSuccess = useSelector(selectLoginSuccess);
-  console.log(loginSuccess);
   // ============= Initial State Start here =============
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");

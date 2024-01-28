@@ -104,21 +104,3 @@ export const getRegisterUser = async (userDTO) => {
   }
 };
 
-export const getLoginUser = async (LoginRequestDTO) => {
-
-  try {
-    const response = await axios({
-      url: `http://localhost:8080/api/auth/login`,
-      method: "POST",
-      data: {
-        username: LoginRequestDTO.username,
-        password: LoginRequestDTO.password,
-      },
-    });
-    console.log(response.data)
-    return response.data;
-  } catch (error) {
-    console.error("Register user API error:", error);
-    throw error;
-  }
-};

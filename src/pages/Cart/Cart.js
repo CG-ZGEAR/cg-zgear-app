@@ -1,21 +1,29 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {Link} from "react-router-dom";
+import {motion} from "framer-motion";
 import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
-import { resetCart } from "../../redux/zgearSlice";
-import { emptyCart } from "../../assets/images/index";
+import {resetCart} from "../../features/zgearSlice";
+import {emptyCart} from "../../assets/images/index";
 import ItemCard from "./ItemCard";
+import {selectCartItems} from "../../features/product/cartSlice";
+import {getCart} from "../../features/product/productReducerService";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.zgearReducer.products);
+  const cart = useSelector(selectCartItems);
   const [totalAmt, setTotalAmt] = useState("");
   const [shippingCharge, setShippingCharge] = useState("");
+  const products = cart.cartItems || [];
+  console.log(cart.cartItems);
+  useEffect(() => {
+    dispatch(getCart());
+  }, []);
+
   useEffect(() => {
     let price = 0;
     products.map((item) => {
-      price += item.price * item.quantity;
+      price += item.subTotal * item.quantity;
       return price;
     });
     setTotalAmt(price);
@@ -32,7 +40,7 @@ const Cart = () => {
   return (
     <div className="max-w-container mx-auto px-4">
       <Breadcrumbs title="Cart" />
-      {products.length > 0 ? (
+      {products?.length > 0 ? (
         <div className="pb-20">
           <div className="w-full h-20 bg-[#F5F7F7] text-primeColor hidden lgl:grid grid-cols-5 place-content-center px-6 text-lg font-titleFont font-semibold">
             <h2 className="col-span-2">Product</h2>
@@ -120,8 +128,7 @@ const Cart = () => {
               Your Cart feels lonely.
             </h1>
             <p className="text-sm text-center px-10 -mt-2">
-              Your Shopping cart lives to serve. Give it purpose - fill it with
-              books, electronics, videos, etc. and make it happy.
+              Your Shopping cart lives to serve. Give it purpose - fill it up and make it happy.
             </p>
             <Link to="/shop">
               <button className="bg-primeColor rounded-md cursor-pointer hover:bg-black active:bg-gray-900 px-8 py-2 font-titleFont font-semibold text-lg text-gray-200 hover:text-white duration-300">
