@@ -89,7 +89,20 @@ const authSlice = createSlice({
             .addCase(loginAsync.rejected, (state, action) => {
                 state.loading = false;
                 state.isAuthenticated = false;
-                state.error = action.payload;
+                if (action.payload) {
+                    if (action.payload.status === 403) {
+                        state.error = "Account locked!";
+                    } else if (action.payload.status === 502) {
+                        state.error = "Account does not exist!";
+                    } else if (action.payload.status === 400) {
+                        state.error = "Check your username and password again!";
+                    } else {
+                        state.error = "An unexpected error occurred.";
+                    }
+                } else {
+                    state.error = "An unexpected error occurred.";
+                }
+
             })
             .addCase(logoutAsync.pending, (state) => {
                 state.loading = true;
