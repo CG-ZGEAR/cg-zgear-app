@@ -6,7 +6,7 @@ const cartSlice = createSlice({
     name: 'cart',
     initialState: {
         id: 0,
-        items: [], // Ensure items is initialized as an empty array
+        items: [],
         item: null,
         loading: false,
         error: null,
@@ -28,7 +28,14 @@ const cartSlice = createSlice({
                     state.items = state.items.filter(i => i.id !== action.payload.id);
                 }
             }
-        }
+        },
+        deleteItem: (state, action) => {
+            const itemId = action.payload.id;
+            state.items = state.items.filter(item => item.id !== itemId);
+        },
+        resetCart(state) {
+            state.items = [];
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -80,8 +87,6 @@ const cartSlice = createSlice({
                 state.success = false;
                 state.error = action.payload;
             });
-
-
     }
 });
 

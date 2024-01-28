@@ -7,7 +7,8 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {selectSuccess} from "../../../features/product/cartSlice";
 import {addToCart} from "../../../features/product/productReducerService";
-import Alert from '@mui/material/Alert';
+import Swal from "sweetalert2";
+import Alert from "@mui/material/Alert";
 
 
 const Product = (product) => {
@@ -31,13 +32,15 @@ const Product = (product) => {
       },
     });
   };
-  function handleAddToCartClick(productId) {
+  const handleAddToCartClick = (productId) => {
     dispatch(addToCart(productId));
-  }
-  const successSelector = useSelector(selectSuccess);
-  useEffect(() => {
-    <Alert severity="success">This is a success Alert.</Alert>
-  }, [successSelector]);
+    Swal.fire({
+      icon: "success",
+      title: "Item Added to Cart",
+      showConfirmButton: false,
+      timer: 1500, // Set the duration for the alert
+    });
+  };
 
   return (
       <div className="w-full relative group">

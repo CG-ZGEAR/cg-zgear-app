@@ -6,7 +6,7 @@ import Breadcrumbs from "../../components/pageProps/Breadcrumbs";
 import {resetCart, selectCartData, selectCartItems} from "../../features/product/cartSlice";
 import {emptyCart} from "../../assets/images/index";
 import ItemCard from "./ItemCard";
-import {getCart} from "../../features/product/productReducerService";
+import {getCart, updateCart} from "../../features/product/productReducerService";
 
 const Cart = () => {
     const dispatch = useDispatch();
@@ -15,9 +15,8 @@ const Cart = () => {
     const cart = useSelector(selectCartData);
     const prevCartRef = useRef();
 
-    const cartMemo = useMemo(() => cart, [cart]);
-
     useEffect(() => {
+        if (prevCartRef.current === cart) return;
         dispatch(getCart());
     }, []);
     const SHIPPING_CHARGE = 20;
@@ -42,7 +41,11 @@ const Cart = () => {
                     </div>
 
                     <button
-                        onClick={() => dispatch(resetCart())}
+                        onClick={() => {
+                            dispatch(resetCart());
+                            dispatch(updateCart());
+                        }}
+
                         className="py-2 px-10 bg-red-500 text-white font-semibold uppercase mb-4 hover:bg-red-700 duration-300"
                     >
                         Reset cart
@@ -86,11 +89,12 @@ const Cart = () => {
                                 </p>
                             </div>
                             <div className="flex justify-end">
-                                <Link to="/paymentgateway">
+                                <Link to="/checkout" state={cart}>
                                     <button className="w-52 h-10 bg-primeColor text-white hover:bg-black duration-300">
                                         Proceed to Checkout
                                     </button>
                                 </Link>
+
                             </div>
                         </div>
                     </div>
@@ -129,5 +133,6 @@ const Cart = () => {
         </div>
     );
 };
+
 
 export default Cart;

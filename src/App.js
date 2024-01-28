@@ -28,6 +28,7 @@ import UserDetails from "./components/user/UserDetails"
 import Category from "./pages/Category/Category";
 import ResetPassword from "./pages/Account/ResetPassword";
 import SearchResults from "./components/user/SearchResults";
+import Checkout from "./pages/checkout/Checkout";
 
 const Layout = () => {
     return (
@@ -57,6 +58,8 @@ const router = createBrowserRouter(
                 <Route path="/product/:productName" element={<ProductDetails/>}></Route>
                 <Route path="/cart" element={<Cart/>}></Route>
                 <Route path="/paymentgateway" element={<Payment/>}></Route>
+                <Route path="/checkout" element={<Checkout/>}></Route>
+
             </Route>
 
 

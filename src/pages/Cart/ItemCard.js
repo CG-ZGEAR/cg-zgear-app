@@ -1,15 +1,16 @@
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {ImCross} from "react-icons/im";
 import {useDispatch, useSelector} from "react-redux";
 import {decreaseQuantity, deleteItem, increaseQuantity, selectCartData,} from "../../features/product/cartSlice";
 import {updateCart} from "../../features/product/productReducerService";
+import isEqual from "lodash/isEqual";
 
 const ItemCard = ({ item }) => {
 
   const dispatch = useDispatch();
-  const cart = useSelector(selectCartData);
   const [cartChanged, setCartChanged] = useState(false);
-  const prevCartRef = useRef();
+  const { cartItems} = useSelector(selectCartData);
+  const prevItemsRef = useRef(cartItems);
 
     const handleIncreaseQuantity = () => {
       dispatch(increaseQuantity(item))
@@ -17,21 +18,24 @@ const ItemCard = ({ item }) => {
     };
 
   const handleDecreaseQuantity = () => {
-    dispatch(increaseQuantity(item))
+    dispatch(decreaseQuantity(item))
     setCartChanged(true);
 
   };
 
   const handleDeleteItem = () => {
-    dispatch(increaseQuantity(item))
+    dispatch(deleteItem(item))
+    setCartChanged(true);
   };
 
   useEffect(() => {
-    if (prevCartRef.current !== cart) {
-      dispatch(updateCart(cart));
+    if (cartChanged) {
+      setCartChanged(false);
+      if (!isEqual(prevItemsRef.current, cartItems)) {
+        dispatch(updateCart({ cartItems: cartItems }));
+      }
     }
-    prevCartRef.current = cart;
-  }, [cart])
+  }, [cartChanged, cartItems]);
 
   return (
       <div className="w-full grid grid-cols-5 mb-4 border py-2">
