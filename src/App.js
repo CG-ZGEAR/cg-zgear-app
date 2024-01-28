@@ -12,6 +12,7 @@ import Header from "./components/home/Header/Header";
 import HeaderBottom from "./components/home/Header/HeaderBottom";
 import SpecialCase from "./components/SpecialCase/SpecialCase";
 import About from "./pages/About/About";
+
 import SignIn from "./pages/Account/SignIn";
 import SignUp from "./pages/Account/SignUp";
 import Cart from "./pages/Cart/Cart";
@@ -26,6 +27,7 @@ import ActiveUser from "./components/user/ActiveUser";
 import FetchDeletedUsers from "./components/user/FetchDeletedUser";
 import UserDetails from "./components/user/UserDetails"
 import Category from "./pages/Category/Category";
+import Profile from "./pages/About/Profile";
 import ResetPassword from "./pages/Account/ResetPassword";
 import SearchResults from "./components/user/SearchResults";
 
@@ -49,7 +51,8 @@ const router = createBrowserRouter(
                 {/* ==================== Header Navlink Start here =================== */}
                 <Route index element={<Home/>}></Route>
                 <Route path="/shop" element={<Shop/>}></Route>
-                <Route path="/about" element={<About/>}></Route>
+                <Route path="/about" element={<About/>}></Route> 
+
                 <Route path="/contact" element={<Contact/>}></Route>
                 {/* ==================== Header Navlink End here ===================== */}
                 <Route path="/offer" element={<Offer/>}></Route>
@@ -71,6 +74,9 @@ const router = createBrowserRouter(
 
             <Route path="/signup" element={<SignUp/>}></Route>
             <Route path="/signin" element={<SignIn/>}></Route>
+            <Route path="/profile" element={<Profile/>}></Route>
+
+
             <Route path="/forgot-password" element={<ResetPassword/>}></Route>
 
         </Route>

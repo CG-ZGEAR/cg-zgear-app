@@ -1,7 +1,7 @@
-import React, {useEffect, useRef, useState} from "react";
-import {motion} from "framer-motion";
-import {HiOutlineMenuAlt4} from "react-icons/hi";
-import {FaCaretDown, FaSearch, FaShoppingCart, FaUser} from "react-icons/fa";
+import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { HiOutlineMenuAlt4 } from "react-icons/hi";
+import { FaCaretDown, FaSearch, FaShoppingCart, FaUser } from "react-icons/fa";
 import Flex from "../../designLayouts/Flex";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
@@ -155,15 +155,13 @@ const HeaderBottom = () => {
                                                 <p className="text-sm">
                                                     Price:{" "}
                                                     <span className="text-primeColor font-semibold">
+
                             ${item.price}
                           </span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    ))}
-                            </div>
-                        )}
+                        </p>
+                      </div>
                     </div>
+
                     <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-6 cursor-pointer relative">
                         <div onClick={() => setShowUser(!showUser)} className="flex">
                             <FaUser/>
@@ -218,13 +216,13 @@ const HeaderBottom = () => {
                                     className="absolute font-titleFont top-3 -right-2 text-xs w-4 h-4 flex items-center justify-center rounded-full bg-primeColor text-white">
                   {products.length > 0 ? products.length : 0}
                 </span>
-                            </div>
-                        </Link>
-                    </div>
-                </Flex>
-            </div>
-        </div>
-    );
+              </div>
+            </Link>
+          </div>
+        </Flex>
+      </div>
+    </div>
+  );
 };
 
 export default HeaderBottom;
