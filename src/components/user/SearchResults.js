@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {search, selectLoading, selectSearchResult} from "../../features/user/adminSilce";
 import {useNavigate} from "react-router-dom";
-
+import {RiUserSearchFill} from "react-icons/ri";
 import "../../assets/css/navbar.css";
 import Table from "react-bootstrap/Table";
 import Pagination from "@mui/material/Pagination";
@@ -97,16 +97,18 @@ const SearchResultsPage = () => {
                             placeholder="Search by email, username, or full name..."
                             value={searchRequest.searchQuery}
                             onChange={handleSearch}
+                            style={{marginRight: '-55px', height: 44}}
                         />
                         <span className="input-group-append">
-                <button
-                    className="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5"
-                    type="button"
-                    onClick={handleSearchSubmit}
-                >
-                    <i className="fa fa-search"></i>
-                </button>
-            </span>
+                        <button
+                            className="btn btn-outline-secondary bg-white border-bottom-0 border rounded-pill ms-n5"
+                            type="button"
+                            onClick={handleSearchSubmit}
+                            style={{zIndex: 9999}}
+                        >
+                            <RiUserSearchFill size={30}/>
+                        </button>
+                        </span>
                     </div>
                 </div>
             </div>
