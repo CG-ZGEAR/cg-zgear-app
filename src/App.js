@@ -30,6 +30,8 @@ import Category from "./pages/Category/Category";
 import Profile from "./pages/About/Profile";
 import ResetPassword from "./pages/Account/ResetPassword";
 import SearchResults from "./components/user/SearchResults";
+import UserProfile from "./pages/Account/UserProfile ";
+import AddProduct from "./components/user/AddProduct";
 
 const Layout = () => {
     return (
@@ -69,6 +71,7 @@ const router = createBrowserRouter(
                 <Route path="/admin/fetch-deleted-users" element={<FetchDeletedUsers/>}/>
                 <Route path="user-detail/:id" element={<UserDetails/>}/>
                 <Route path="/admin/search-results" element={<SearchResults/>}/>
+                <Route path="/admin/add-product" element={<AddProduct/>}/>
             </Route>
 
 
@@ -78,7 +81,7 @@ const router = createBrowserRouter(
 
 
             <Route path="/forgot-password" element={<ResetPassword/>}></Route>
-
+            <Route path="/user-profile/" element={<UserProfile/>}/>
         </Route>
     )
 );
