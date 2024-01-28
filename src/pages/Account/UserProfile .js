@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { selectUserDetail, setUserDetail, userDetail } from '../../features/user/userSlice';
+import { updateUser } from '../../api/userAPI';
 
 const UserProfile = () => {
   const userData = useSelector(selectUserDetail);
@@ -19,10 +20,24 @@ const UserProfile = () => {
     setEditedUser(userData);
   };
 
-  const handleSaveProfile = () => {
-    dispatch(setUserDetail(editedUser));
-    setIsEditing(false);
+  const handleSaveProfile = async () => {
+    try {
+      await updateUser(userData.userId, editedUser);
+      
+      dispatch(setUserDetail(editedUser));
+      
+      alert('User information updated successfully');
+      
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error updating user:", error);
+      
+      alert(`Error updating user information. Please try again. Details: ${error.message}`);
+      
+      console.log(error);
+    }
   };
+  
 
   const handleCancelEdit = () => {
     setIsEditing(false);
