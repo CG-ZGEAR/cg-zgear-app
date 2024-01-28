@@ -1,7 +1,8 @@
+
 import React, {useEffect, useState} from "react";
 import {BsCheckCircleFill} from "react-icons/bs";
 import {Link} from "react-router-dom";
-import {logoLight} from "../../assets/images";
+import {logoWhite} from "../../assets/images";
 import {loginAsync, selectIsAuthenticated, selectUser} from "../../features/user/authSilce";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -49,12 +50,11 @@ const SignIn = () => {
         }
     }, [isAuthenticated, username, navigate, user]);
 
-    const handleSignIn = (e) => {
+    const handleSignIn = async (e) => {
         e.preventDefault();
 
-
         const usernamePattern = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/;
-        const passwordPattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{6,}$/;
+        const passwordPattern = /^[a-zA-Z0-9!@#$%^*)(+=._-]{6,}$/;
 
         if (!username) {
             setErrUsername("Enter your username");
@@ -69,18 +69,40 @@ const SignIn = () => {
         }
 
         if (username && password && usernamePattern.test(username) && passwordPattern.test(password)) {
-            dispatch(loginAsync({username, password}));
-        } else {
-            Swal.fire("Login failed. Please check your credentials.");
+            try {
+                const response = await dispatch(loginAsync({username, password}));
+
+
+                if (response.meta.requestStatus === "rejected") {
+                    Swal.fire({
+                        icon: "error",
+                        title: response.payload.message || "An error occurred",
+                        text: response.payload.status?.error || "",
+                    });
+                } else {
+                    Swal.fire({
+                        icon: "success",
+                        title: "Welcome!",
+                        text: "You have successfully logged in.",
+                    });
+                }
+            } catch (error) {
+                console.log(error)
+                Swal.fire({
+                    icon: "error",
+                    title: "An error occurred",
+                    text: "Check your credentials",
+                });
+            }
         }
     };
 
     return (
         <div className="w-full h-screen flex items-center justify-center">
             <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
-                <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center pt-10">
+                <div className="w-[450px] h-full bg-primeColor px-12 flex flex-col gap-6 justify-center pt-10">
                     <Link to="/">
-                        <img src={logoLight} alt="logoImg" className="w-28"/>
+                        <img src={logoWhite} alt="logoImg" className="w-56" />
                     </Link>
                     <div className="flex flex-col gap-1 -mt-1">
                         <h1 className="font-titleFont text-xl font-medium">

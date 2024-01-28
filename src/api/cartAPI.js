@@ -1,5 +1,5 @@
 import axios from "axios";
-import async from "async";
+import {stringify} from "postcss";
 
 const CART_MANAGEMENT_API = "http://localhost:8080/api/carts";
 
@@ -44,3 +44,25 @@ export const getCartAPI = async () => {
     return response.data;
 }
 
+
+export const updateCartAPI = async (cartDTO) => {
+    const token = localStorage.getItem("accessToken");
+    console.log(cartDTO)
+    try {
+        const response = await axios.put(
+            `${CART_MANAGEMENT_API}/update`,
+             cartDTO,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
+
+        return response.data;
+    } catch (error) {
+        console.error("error:", error);
+        throw error;
+    }
+};

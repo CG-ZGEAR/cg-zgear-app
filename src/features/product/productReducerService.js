@@ -1,12 +1,17 @@
 import {
     createProduct,
     deleteProduct,
-    findProduct, findProductByName,
-    findProducts, findProductsByCategory, getBestSellerAPI, getNewArrivalAPI, searchProductsAPI,
+    findProduct,
+    findProductByName,
+    findProducts,
+    findProductsByCategory,
+    getBestSellerAPI,
+    getNewArrivalAPI,
+    searchProductsAPI,
     updateProduct,
 } from "../../api/productAPI";
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {addToCartAPI, getCartAPI} from "../../api/cartAPI";
+import {addToCartAPI, getCartAPI, updateCartAPI} from "../../api/cartAPI";
 
 export const getProducts = createAsyncThunk("product/list", async ({page, size}) => {
     const response = await findProducts(page, size);
@@ -82,6 +87,9 @@ export const addToCart = createAsyncThunk("carts/add", async (productId) => {
     return response.data;
 });
 export const getCart = createAsyncThunk("carts", async () => {
-    const response = await getCartAPI();
-    return response;
+    return await getCartAPI();
+});
+
+export const updateCart = createAsyncThunk("carts/update", async (cartDTO) => {
+    return await updateCartAPI(cartDTO);
 });

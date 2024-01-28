@@ -34,7 +34,6 @@ const Product = (product) => {
   function handleAddToCartClick(productId) {
     dispatch(addToCart(productId));
   }
-console.log(product);
   const successSelector = useSelector(selectSuccess);
   useEffect(() => {
     <Alert severity="success">This is a success Alert.</Alert>
