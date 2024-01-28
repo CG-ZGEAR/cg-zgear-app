@@ -18,6 +18,8 @@ const initialState = {
     activeUsersList: null,
 };
 
+
+
 export const activeUsers = createAsyncThunk(
     "activeUsers",
     async ({currentPage}) => {
@@ -42,7 +44,7 @@ export const lockUser = createAsyncThunk("user/lockUser", async (userId) => {
     } catch (error) {
         throw error;
     }
-});
+}); 
 
 export const unlockUser = createAsyncThunk(
     "user/unlockUser",
@@ -77,6 +79,7 @@ export const registerUser = createAsyncThunk(
     }
 );
 
+
 export const userDetail = createAsyncThunk(
     "user/userDetail",
     async () => {
@@ -90,22 +93,37 @@ export const userDetail = createAsyncThunk(
     }
 );
 
+
+export const setUserDetail = createAsyncThunk('user/setUserDetail', async () => {
+    try {
+      const result = await getUser();
+      console.log(`detail`, result);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  });
+
 const userSlice = createSlice({
-    name: "user",
+    name: 'user',
     initialState,
     reducers: {
-        setLoading: (state, action) => {
-            state.loading = action.payload;
-        },
-        setError: (state, action) => {
-            state.error = action.payload;
-        },
-        setSuccess: (state, action) => {
-            state.success = action.payload;
-        },
-        setUsers: (state, action) => {
-            state.success = action.payload;
-        },
+      setLoading: (state, action) => {
+        state.loading = action.payload;
+      },
+      setError: (state, action) => {
+        state.error = action.payload;
+      },
+      setSuccess: (state, action) => {
+        state.success = action.payload;
+      },
+      setUsers: (state, action) => {
+        state.users = action.payload;
+      },
+      setUserDetail: (state, action) => {  
+        const { password, ...otherUserDetails } = action.payload;
+        state.userDetail = { ...otherUserDetails, password };
+      },
     },
     extraReducers: (builder) => {
         builder

@@ -28,6 +28,7 @@ const UserDetails = () => {
 
                         <p className="user-details-element">{userDetail?.fullName}</p>
                         <p className="user-details-element">{userDetail?.email}</p>
+                        
 
                     </div>
 

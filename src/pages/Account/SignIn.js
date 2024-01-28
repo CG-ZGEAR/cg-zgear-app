@@ -2,7 +2,7 @@
 import React, {useEffect, useState} from "react";
 import {BsCheckCircleFill} from "react-icons/bs";
 import {Link} from "react-router-dom";
-import {logoLight} from "../../assets/images";
+import {logoWhite} from "../../assets/images";
 import {loginAsync, selectIsAuthenticated, selectUser} from "../../features/user/authSilce";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -44,6 +44,7 @@ const SignIn = () => {
             } else if (user.roles.includes("ROLE_USER")) {
                 navigate("/");
             }
+
             localStorage.setItem("accessToken", user.token);
 
         }
@@ -71,8 +72,7 @@ const SignIn = () => {
             try {
                 const response = await dispatch(loginAsync({username, password}));
 
-                console.log(response.payload.status?.error)
-                console.log(response.payload.message)
+
                 if (response.meta.requestStatus === "rejected") {
                     Swal.fire({
                         icon: "error",
@@ -97,6 +97,7 @@ const SignIn = () => {
         }
     };
 
+
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
@@ -111,7 +112,6 @@ const SignIn = () => {
             <p className="text-base">When you sign in, you are with us!</p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
-
             <span className="text-green-500 mt-1">
               <BsCheckCircleFill/>
             </span>
