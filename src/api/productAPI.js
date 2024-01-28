@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const PRODUCT_MANAGEMENT_API = "http://localhost:8080/api";
-export const findProducts = async (page, size ) => {
+export const findProducts = async (page, size) => {
     let result = null;
     try {
         result = await axios.get(
-                `${PRODUCT_MANAGEMENT_API}/products?page=${page}&size=${size}`
+            `${PRODUCT_MANAGEMENT_API}/products?page=${page}&size=${size}`
         );
     } catch (e) {
         console.log("Find products API error: " + e);
@@ -24,14 +24,24 @@ export const findProduct = async (productId) => {
 };
 
 export const createProduct = async (product) => {
+    const token = localStorage.getItem("accessToken");
     let result = null;
     try {
-        result = await axios.post(`${PRODUCT_MANAGEMENT_API}/products/create`, product);
+        result = await axios.post(
+            `http://localhost:8080/api/products/create`,
+            product,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            }
+        );
     } catch (e) {
-        console.log("Find product API error: " + e);
     }
     return result;
 };
+
 
 export const updateProduct = async (product) => {
     let result = null;
@@ -54,7 +64,7 @@ export const deleteProduct = async (productId) => {
     return result;
 };
 
-export const searchProductsAPI = async (searchTerm ) => {
+export const searchProductsAPI = async (searchTerm) => {
     let result = null;
     try {
         result = await axios.get(
@@ -75,8 +85,8 @@ export const findProductByName = async (productName) => {
     return result;
 };
 
-export const findProductsByCategory = async (categoryName, page , size) => {
-  let result = null;
+export const findProductsByCategory = async (categoryName, page, size) => {
+    let result = null;
     try {
         result = await axios.get(`${PRODUCT_MANAGEMENT_API}/categories/${categoryName}?page=${page}&size=${size}`);
     } catch (e) {
@@ -85,7 +95,7 @@ export const findProductsByCategory = async (categoryName, page , size) => {
     return result;
 };
 
-export const getBestSellerAPI = async ( ) => {
+export const getBestSellerAPI = async () => {
     let result = null;
     try {
         result = await axios.get(
@@ -96,7 +106,7 @@ export const getBestSellerAPI = async ( ) => {
     }
     return result;
 };
-export const getNewArrivalAPI = async ( ) => {
+export const getNewArrivalAPI = async () => {
     let result = null;
     try {
         result = await axios.get(
