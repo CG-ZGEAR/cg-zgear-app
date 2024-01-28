@@ -1,6 +1,13 @@
 import React from "react";
 import {Link, Outlet} from "react-router-dom";
-import {ClipboardText, CalendarCheck, FileSearch, UserSwitch} from "phosphor-react";
+import {
+    ClipboardText,
+    CalendarCheck,
+    FileSearch,
+    UserSwitch,
+    Package,
+    ListBullets
+} from "phosphor-react";
 import {useNavigate} from "react-router-dom";
 
 import "../../assets/css/navbar.css";
@@ -48,6 +55,24 @@ export const Navbar = () => {
                         Search
                         <br/>
                         Users
+                    </Link>
+
+                    <Link
+                        to={`/admin/search-results`}
+                        className="searchresults"
+                    >
+                        <ListBullets size={46}/>
+                        Product
+                    </Link>
+
+                    <Link
+                        to={`/admin/add-product`}
+                        className="searchresults"
+                    >
+                        <Package size={46}/>
+                        Add
+                        <br/>
+                        Product
                     </Link>
 
                     <button className="logout-navbar" onClick={handleLogout}>
