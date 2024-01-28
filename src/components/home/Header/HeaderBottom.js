@@ -5,7 +5,7 @@ import {FaCaretDown, FaSearch, FaShoppingCart, FaUser} from "react-icons/fa";
 import Flex from "../../designLayouts/Flex";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {searchResultsSelector} from "../../../features/product/productReducer";
+import {searchResultsSelector} from "../../../features/product/productSlice";
 import {searchProducts} from "../../../features/product/productReducerService";
 import {logoutAsync} from "../../../features/user/authSilce";
 
