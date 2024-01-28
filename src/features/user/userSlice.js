@@ -1,9 +1,9 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import {createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {
     getActiveUsers,
     getDeletedUsers,
     getRegisterUser,
+    getUser,
     lockUserAccount,
     unlockUserAccount,
 } from "../../api/userAPI";
@@ -18,11 +18,12 @@ const initialState = {
     activeUsersList: null,
 };
 
+
+
 export const activeUsers = createAsyncThunk(
     "activeUsers",
     async ({currentPage}) => {
-        const users = await getActiveUsers(currentPage);
-        return users;
+        return await getActiveUsers(currentPage);
     }
 );
 
@@ -30,8 +31,7 @@ export const fetchDeletedUsers = createAsyncThunk(
     "fetchDeletedUsers",
     async ({currentPage}) => {
         try {
-            const deletedUsers = await getDeletedUsers(currentPage);
-            return deletedUsers;
+            return await getDeletedUsers(currentPage);
         } catch (error) {
             throw error;
         }
@@ -40,19 +40,17 @@ export const fetchDeletedUsers = createAsyncThunk(
 
 export const lockUser = createAsyncThunk("user/lockUser", async (userId) => {
     try {
-        const response = await lockUserAccount(userId);
-        return response;
+        return await lockUserAccount(userId);
     } catch (error) {
         throw error;
     }
-});
+}); 
 
 export const unlockUser = createAsyncThunk(
     "user/unlockUser",
     async (userId) => {
         try {
-            const response = await unlockUserAccount(userId);
-            return response;
+            return await unlockUserAccount(userId);
         } catch (error) {
             throw error;
         }
@@ -63,8 +61,7 @@ export const deleteUser = createAsyncThunk(
     "user/deleteUser",
     async (userId) => {
         try {
-            const response = await getDeletedUsers(userId);
-            return response;
+            return await getDeletedUsers(userId);
         } catch (error) {
             throw error;
         }
@@ -75,8 +72,7 @@ export const registerUser = createAsyncThunk(
     "user/registerUser",
     async (userDTO) => {
         try {
-            const response = await getRegisterUser(userDTO);
-            return response;
+            return await getRegisterUser(userDTO);
         } catch (error) {
             throw error;
         }
@@ -84,19 +80,50 @@ export const registerUser = createAsyncThunk(
 );
 
 
+export const userDetail = createAsyncThunk(
+    "user/userDetail",
+    async () => {
+        try {
+            const result = await getUser();
+            console.log(`detail`, result)
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+);
+
+
+export const setUserDetail = createAsyncThunk('user/setUserDetail', async () => {
+    try {
+      const result = await getUser();
+      console.log(`detail`, result);
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  });
+
 const userSlice = createSlice({
-    name: "user",
+    name: 'user',
     initialState,
     reducers: {
-        setLoading: (state, action) => {
-            state.loading = action.payload;
-        },
-        setError: (state, action) => {
-            state.error = action.payload;
-        },
-        setSuccess: (state, action) => {
-            state.success = action.payload;
-        },
+      setLoading: (state, action) => {
+        state.loading = action.payload;
+      },
+      setError: (state, action) => {
+        state.error = action.payload;
+      },
+      setSuccess: (state, action) => {
+        state.success = action.payload;
+      },
+      setUsers: (state, action) => {
+        state.users = action.payload;
+      },
+      setUserDetail: (state, action) => {  
+        const { password, ...otherUserDetails } = action.payload;
+        state.userDetail = { ...otherUserDetails, password };
+      },
     },
     extraReducers: (builder) => {
         builder
@@ -199,12 +226,29 @@ const userSlice = createSlice({
                 state.value = action.payload;
                 state.error = false;
             })
+            .addCase(userDetail.pending, (state) => {
+                state.success = false;
+                state.loading = true;
+                state.error = false;
+            })
+            .addCase(userDetail.rejected, (state, action) => {
+                state.success = false;
+                state.loading = false;
+                state.error = action.error;
+            })
+            .addCase(userDetail.fulfilled, (state, action) => {
+                state.success = true;
+                state.loading = false;
+                state.users = action.payload;
+                state.error = false;
+            })
     },
 });
 
-export const {setLoading, setError, setSuccess} = userSlice.actions;
+export const {setLoading, setError, setSuccess, setUsers} = userSlice.actions;
 
 export const selectUsersList = (state) => state.user.activeUsersList;
 export const selectDeletedUsersList = (state) => state.user.fetchDeletedUsers;
 export const selectLoginSuccess = (state) => state.user.loginSuccess;
+export const selectUserDetail = (state) => state.user.users;
 export default userSlice.reducer;

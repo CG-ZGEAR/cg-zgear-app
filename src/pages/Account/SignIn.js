@@ -97,6 +97,7 @@ const SignIn = () => {
         }
     };
 
+
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
@@ -111,7 +112,7 @@ const SignIn = () => {
             <p className="text-base">When you sign in, you are with us!</p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
-              <span className="text-green-500 mt-1">
+            <span className="text-green-500 mt-1">
               <BsCheckCircleFill/>
             </span>
                         <p className="text-base text-gray-300">
