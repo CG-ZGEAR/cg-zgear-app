@@ -2,10 +2,11 @@ import {
     createProduct,
     deleteProduct,
     findProduct, findProductByName,
-    findProducts, findProductsByCategory, searchProductsAPI,
+    findProducts, findProductsByCategory, getBestSellerAPI, getNewArrivalAPI, searchProductsAPI,
     updateProduct,
 } from "../../api/productAPI";
 import {createAsyncThunk} from "@reduxjs/toolkit";
+import {addToCartAPI, getCartAPI} from "../../api/cartAPI";
 
 export const getProducts = createAsyncThunk("product/list", async ({page, size}) => {
     const response = await findProducts(page, size);
@@ -52,3 +53,35 @@ export const searchProducts = createAsyncThunk(
         }
     }
 );
+
+export const getBestSellers = createAsyncThunk(
+    'products/bestSeller',
+    async () => {
+        try {
+            const response = await getBestSellerAPI();
+            return response.data;
+        } catch (error) {
+            return console.log(error);
+        }
+    }
+);
+export const getNewArrivals = createAsyncThunk(
+    'products/newArrivals',
+    async () => {
+        try {
+            const response = await getNewArrivalAPI();
+            return response.data;
+        } catch (error) {
+            return console.log(error);
+        }
+    }
+);
+
+export const addToCart = createAsyncThunk("carts/add", async (productId) => {
+    const response = await addToCartAPI(productId);
+    return response.data;
+});
+export const getCart = createAsyncThunk("carts", async () => {
+    const response = await getCartAPI();
+    return response;
+});

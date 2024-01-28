@@ -5,7 +5,6 @@ import {
     createRoutesFromElements,
     Route,
     ScrollRestoration,
-    Routes,
 } from "react-router-dom";
 import Footer from "./components/home/Footer/Footer";
 import FooterBottom from "./components/home/Footer/FooterBottom";
@@ -28,7 +27,12 @@ import ActiveUser from "./components/user/ActiveUser";
 import FetchDeletedUsers from "./components/user/FetchDeletedUser";
 import UserDetails from "./components/user/UserDetails"
 import Category from "./pages/Category/Category";
+<<<<<<< HEAD
 import Profile from "./pages/About/Profile";
+=======
+import ResetPassword from "./pages/Account/ResetPassword";
+import SearchResults from "./components/user/SearchResults";
+>>>>>>> 130d4a83bc7fa2ca4a3356a8f8bc5cb675b8565f
 
 const Layout = () => {
     return (
@@ -61,23 +65,25 @@ const router = createBrowserRouter(
                 <Route path="/paymentgateway" element={<Payment/>}></Route>
             </Route>
 
+
             <Route path="/admin"
                    element={<AdminNavbar/>}>
                 <Route path="/admin/active-users" element={<ActiveUser/>}/>
                 <Route path="/admin/fetch-deleted-users" element={<FetchDeletedUsers/>}/>
                 <Route path="user-detail/:id" element={<UserDetails/>}/>
-            </Route>
-            <Route path="/adminnavbar" element={<AdminNavbar/>}>
-                <Route path="/adminnavbar/active-users" element={<ActiveUser/>}/>
-                <Route path="/adminnavbar/fetch-deleted-users" element={<FetchDeletedUsers/>}/>
+                <Route path="/admin/search-results" element={<SearchResults/>}/>
             </Route>
 
 
             <Route path="/signup" element={<SignUp/>}></Route>
             <Route path="/signin" element={<SignIn/>}></Route>
+<<<<<<< HEAD
             <Route path="/profile" element={<Profile/>}></Route>
 
 
+=======
+            <Route path="/forgot-password" element={<ResetPassword/>}></Route>
+>>>>>>> 130d4a83bc7fa2ca4a3356a8f8bc5cb675b8565f
 
         </Route>
     )
