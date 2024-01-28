@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import { logoLight } from "../../assets/images";
+import { logoWhite } from "../../assets/images";
 import {
   loginUser,
   selectLoginSuccess,
@@ -96,9 +96,9 @@ const SignIn = () => {
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
-        <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center pt-10">
+        <div className="w-[450px] h-full bg-primeColor px-12 flex flex-col gap-6 justify-center pt-10">
           <Link to="/">
-            <img src={logoLight} alt="logoImg" className="w-28" />
+            <img src={logoWhite} alt="logoImg" className="w-56" />
           </Link> 
           <div className="flex flex-col gap-1 -mt-1">
             <h1 className="font-titleFont text-xl font-medium">
