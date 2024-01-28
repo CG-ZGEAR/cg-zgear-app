@@ -1,4 +1,20 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
+
+const userSlice = createSlice({
+  name: 'user',
+  initialState: {
+    userDetail: {
+      password: '',
+    },
+  },
+  reducers: {
+    setUserDetail: (state, action) => {
+      const { password, ...otherUserDetails } = action.payload;
+      state.userDetail = { ...otherUserDetails, password };
+    },
+  },
+});
+
 
 const initialState = {
   userInfo: [],
@@ -48,6 +64,9 @@ export const zgearSlice = createSlice({
   },
 });
 
+export const { setUserDetail } = userSlice.actions;
+export const selectUserDetail = (state) => state.user.userDetail;
+
 export const {
   addToCart,
   increaseQuantity,
@@ -55,4 +74,5 @@ export const {
   deleteItem,
   resetCart,
 } = zgearSlice.actions;
-export default zgearSlice.reducer;
+export default userSlice.reducer;
+

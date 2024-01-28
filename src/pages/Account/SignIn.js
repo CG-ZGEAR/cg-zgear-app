@@ -1,16 +1,3 @@
-<<<<<<< HEAD
-import React, { useEffect, useState } from "react";
-import { BsCheckCircleFill } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import { logoWhite } from "../../assets/images";
-import {
-  loginUser,
-  selectLoginSuccess,
-  selectUserLogin,
-} from "../../features/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-=======
 import React, {useEffect, useState} from "react";
 import {BsCheckCircleFill} from "react-icons/bs";
 import {Link} from "react-router-dom";
@@ -19,7 +6,6 @@ import {loginAsync, selectIsAuthenticated, selectUser} from "../../features/user
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
->>>>>>> 130d4a83bc7fa2ca4a3356a8f8bc5cb675b8565f
 
 const SignIn = () => {
     const dispatch = useDispatch();
@@ -57,6 +43,7 @@ const SignIn = () => {
             } else if (user.roles.includes("ROLE_USER")) {
                 navigate("/");
             }
+
             localStorage.setItem("accessToken", user.token);
 
         }
@@ -84,8 +71,7 @@ const SignIn = () => {
             try {
                 const response = await dispatch(loginAsync({username, password}));
 
-                console.log(response.payload.status?.error)
-                console.log(response.payload.message)
+
                 if (response.meta.requestStatus === "rejected") {
                     Swal.fire({
                         icon: "error",
@@ -110,27 +96,6 @@ const SignIn = () => {
         }
     };
 
-<<<<<<< HEAD
-      dispatch(loginUser(userLogin));
-    }
-    setError("Login failed. Please check your credentials.");
-  };
-
-  return (
-    <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
-        <div className="w-[450px] h-full bg-primeColor px-12 flex flex-col gap-6 justify-center pt-10">
-          <Link to="/">
-            <img src={logoWhite} alt="logoImg" className="w-56" />
-          </Link> 
-          <div className="flex flex-col gap-1 -mt-1">
-            <h1 className="font-titleFont text-xl font-medium">
-              Stay sign in for more
-            </h1>
-            <p className="text-base">When you sign in, you are with us!</p>
-          </div>
-          <div className="w-[300px] flex items-start gap-3">
-=======
     return (
         <div className="w-full h-screen flex items-center justify-center">
             <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
@@ -145,7 +110,6 @@ const SignIn = () => {
                         <p className="text-base">When you sign in, you are with us!</p>
                     </div>
                     <div className="w-[300px] flex items-start gap-3">
->>>>>>> 130d4a83bc7fa2ca4a3356a8f8bc5cb675b8565f
             <span className="text-green-500 mt-1">
               <BsCheckCircleFill/>
             </span>

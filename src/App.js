@@ -54,6 +54,8 @@ const router = createBrowserRouter(
         <Route index element={<Home />}></Route>
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/about" element={<About />}></Route>
+              <Route path="/user-profile/" element={<UserProfile />} />
+
 
         <Route path="/contact" element={<Contact />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
@@ -65,6 +67,8 @@ const router = createBrowserRouter(
         ></Route>
         <Route path="/cart" element={<Cart />}></Route>
         <Route path="/paymentgateway" element={<Payment />}></Route>
+        <Route path="/user-profile/" element={<UserProfile />} />
+ 
       </Route>
 
       <Route path="/admin" element={<AdminNavbar />}>
@@ -81,7 +85,6 @@ const router = createBrowserRouter(
       <Route path="/signin" element={<SignIn />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
       <Route path="/forgot-password" element={<ResetPassword />}></Route>
-      <Route path="/user-profile/" element={<UserProfile />} />
     </Route>
   )
 );
