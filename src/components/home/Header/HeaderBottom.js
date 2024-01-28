@@ -155,10 +155,7 @@ const HeaderBottom = () => {
                                                 <p className="text-sm">
                                                     Price:{" "}
                                                     <span className="text-primeColor font-semibold">
-<<<<<<< HEAD
-=======
 
->>>>>>> 611eab3b39b3a3cdd813def188c334d0a771c00a
                             ${item.price}
                           </span>
                                                 </p>
@@ -168,10 +165,7 @@ const HeaderBottom = () => {
                             </div>
                         )}
                     </div>
-<<<<<<< HEAD
-=======
 
->>>>>>> 611eab3b39b3a3cdd813def188c334d0a771c00a
                     <div className="flex gap-4 mt-2 lg:mt-0 items-center pr-6 cursor-pointer relative">
                         <div onClick={() => setShowUser(!showUser)} className="flex">
                             <FaUser/>

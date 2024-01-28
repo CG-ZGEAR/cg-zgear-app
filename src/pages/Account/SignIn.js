@@ -1,11 +1,8 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> 611eab3b39b3a3cdd813def188c334d0a771c00a
 import React, {useEffect, useState} from "react";
 import {BsCheckCircleFill} from "react-icons/bs";
 import {Link} from "react-router-dom";
-import {logoLight} from "../../assets/images";
+import {logoWhite} from "../../assets/images";
 import {loginAsync, selectIsAuthenticated, selectUser} from "../../features/user/authSilce";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
@@ -100,22 +97,7 @@ const SignIn = () => {
         }
     };
 
-<<<<<<< HEAD
-    return (
-        <div className="w-full h-screen flex items-center justify-center">
-            <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
-                <div className="w-[450px] h-full bg-primeColor px-10 flex flex-col gap-6 justify-center pt-10">
-                    <Link to="/">
-                        <img src={logoLight} alt="logoImg" className="w-28"/>
-                    </Link>
-                    <div className="flex flex-col gap-1 -mt-1">
-                        <h1 className="font-titleFont text-xl font-medium">
-                            Stay sign in for more
-                        </h1>
-                        <p className="text-base">When you sign in, you are with us!</p>
-                    </div>
-                    <div className="w-[300px] flex items-start gap-3">
-=======
+
   return (
     <div className="w-full h-screen flex items-center justify-center">
       <div className="w-1/2 hidden lgl:inline-flex h-full text-white">
@@ -130,8 +112,6 @@ const SignIn = () => {
             <p className="text-base">When you sign in, you are with us!</p>
           </div>
           <div className="w-[300px] flex items-start gap-3">
-
->>>>>>> 611eab3b39b3a3cdd813def188c334d0a771c00a
             <span className="text-green-500 mt-1">
               <BsCheckCircleFill/>
             </span>

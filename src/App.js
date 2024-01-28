@@ -30,13 +30,8 @@ import Category from "./pages/Category/Category";
 import Profile from "./pages/About/Profile";
 import ResetPassword from "./pages/Account/ResetPassword";
 import SearchResults from "./components/user/SearchResults";
-<<<<<<< HEAD
-
-import UserProfile from "./pages/Account/UserProfile ";
-=======
 import UserProfile from "./pages/Account/UserProfile ";
 import AddProduct from "./components/user/AddProduct";
->>>>>>> 611eab3b39b3a3cdd813def188c334d0a771c00a
 
 const Layout = () => {
   return (
@@ -62,7 +57,6 @@ const router = createBrowserRouter(
               <Route path="/user-profile/" element={<UserProfile />} />
 
 
-<<<<<<< HEAD
         <Route path="/contact" element={<Contact />}></Route>
         {/* ==================== Header Navlink End here ===================== */}
         <Route path="/offer" element={<Offer />}></Route>
@@ -76,7 +70,6 @@ const router = createBrowserRouter(
         <Route path="/user-profile/" element={<UserProfile />} />
  
       </Route>
-=======
             <Route path="/admin"
                    element={<AdminNavbar/>}>
                 <Route path="/admin/active-users" element={<ActiveUser/>}/>
@@ -85,7 +78,6 @@ const router = createBrowserRouter(
                 <Route path="/admin/search-results" element={<SearchResults/>}/>
                 <Route path="/admin/add-product" element={<AddProduct/>}/>
             </Route>
->>>>>>> 611eab3b39b3a3cdd813def188c334d0a771c00a
 
       <Route path="/admin" element={<AdminNavbar />}>
         <Route path="/admin/active-users" element={<ActiveUser />} />
@@ -97,24 +89,17 @@ const router = createBrowserRouter(
         <Route path="/admin/search-results" element={<SearchResults />} />
       </Route>
 
-<<<<<<< HEAD
       <Route path="/signup" element={<SignUp />}></Route>
       <Route path="/signin" element={<SignIn />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
       <Route path="/forgot-password" element={<ResetPassword />}></Route>
     </Route>
-  )
-=======
-            <Route path="/signup" element={<SignUp/>}></Route>
-            <Route path="/signin" element={<SignIn/>}></Route>
-            <Route path="/profile" element={<Profile/>}></Route>
+  ),
 
 
-            <Route path="/forgot-password" element={<ResetPassword/>}></Route>
-            <Route path="/user-profile/" element={<UserProfile/>}/>
-        </Route>
-    )
->>>>>>> 611eab3b39b3a3cdd813def188c334d0a771c00a
+
+           
+    
 );
 
 function App() {
