@@ -34,7 +34,6 @@ export const getSearch = async (searchRequest, currentPage) => {
                 },
             }
         );
-        console.log(response.data)
         return response.data;
     } catch (error) {
         throw error;
