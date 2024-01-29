@@ -1,12 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {BsSuitHeartFill} from "react-icons/bs";
 import {FaShoppingCart} from "react-icons/fa";
 import {MdOutlineLabelImportant} from "react-icons/md";
 import Image from "../../designLayouts/Image";
-import Badge from "./Badge";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {addToCart} from "../../../features/zgearSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {selectSuccess} from "../../../features/product/cartSlice";
+import {addToCart} from "../../../features/product/productReducerService";
+import Swal from "sweetalert2";
+import Alert from "@mui/material/Alert";
+
 
 const Product = (product) => {
   const dispatch = useDispatch();
@@ -29,6 +32,16 @@ const Product = (product) => {
       },
     });
   };
+  const handleAddToCartClick = (productId) => {
+    dispatch(addToCart(productId));
+    Swal.fire({
+      icon: "success",
+      title: "Item Added to Cart",
+      showConfirmButton: false,
+      timer: 1500, // Set the duration for the alert
+    });
+  };
+
   return (
       <div className="w-full relative group">
         <div className="max-w-80 max-h-80 h-[300px] relative overflow-y-hidden ">
@@ -44,13 +57,7 @@ const Product = (product) => {
           <div className="w-full h-32 absolute bg-white -bottom-[130px] group-hover:bottom-0 duration-700">
             <ul className="w-full h-full flex flex-col items-end justify-center gap-2 font-titleFont px-2 border-l border-r">
               <li
-                  onClick={() =>
-                      dispatch(
-                          addToCart({
-                            //I want some logic here
-                          })
-                      )
-                  }
+                  onClick={() => handleAddToCartClick(product._id)}
                   className="text-[#767676] hover:text-primeColor text-sm font-normal border-b-[1px] border-b-gray-200 hover:border-b-primeColor flex items-center justify-end gap-2 hover:cursor-pointer pb-1 duration-300 w-full"
               >
                 Add to Cart
@@ -128,7 +135,6 @@ export const calculateDiscountedPrice = (originalPrice, discounts) => {
       discountAmount: percentage,
       discountType: 'PERCENT'
     };
-
   }
 
 };

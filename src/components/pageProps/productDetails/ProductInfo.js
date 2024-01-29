@@ -1,8 +1,9 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {addToCart} from "../../../features/zgearSlice";
+import {addToCart} from "../../../features/product/productReducerService";
 import {FaRegStar, FaStar} from "react-icons/fa";
 import {calculateDiscountedPrice} from "../../home/Products/Product";
+import Swal from "sweetalert2";
 
 const ProductInfo = ({productInfo}) => {
     const dispatch = useDispatch();
@@ -51,6 +52,15 @@ const ProductInfo = ({productInfo}) => {
         setRating(0);
         setComment('');
     };
+    const handleAddToCartClick = (productId) => {
+        dispatch(addToCart(productId));
+        Swal.fire({
+            icon: "success",
+            title: "Item Added to Cart",
+            showConfirmButton: false,
+            timer: 1500,
+        });
+    };
 
     return (
         <div className="flex flex-col gap-4">
@@ -76,18 +86,7 @@ const ProductInfo = ({productInfo}) => {
             <p className="text-base text-gray-600">{productInfo.description}</p>
             <p className="text-sm">Be the first to leave a review.</p>
             <button
-                onClick={() => {
-                    dispatch(
-                        addToCart({
-                            _id: productInfo.id,
-                            name: productInfo.productName,
-                            quantity: 1,
-                            image: productInfo.imageUrls[0],
-                            price: discountedPrice,
-                        })
-                    )
-                }
-                }
+                onClick={() => handleAddToCartClick(productInfo.id)}
                 className="w-full py-4 bg-primeColor hover:bg-black duration-300 text-white text-lg font-titleFont"
             >
                 Add to Cart

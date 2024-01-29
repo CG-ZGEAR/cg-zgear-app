@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Heading from "../Products/Heading";
 import Product from "../Products/Product";
 import {
@@ -7,50 +7,38 @@ import {
   spfThree,
   spfFour,
 } from "../../../assets/images/index";
+import {useDispatch, useSelector} from "react-redux";
+import {bestSellerSelector} from "../../../features/product/productSlice";
+import {getBestSellers} from "../../../features/product/productReducerService";
 
 const SpecialOffers = () => {
+  const dispatch = useDispatch();
+  const products = useSelector(bestSellerSelector);
+  useEffect(() => {
+    dispatch(getBestSellers());
+  }, [dispatch]);
+
+  if(!products) {
+    return <p>Unable to fetch products</p>
+  }
+
   return (
-    <div className="w-full pb-20">
-      <Heading heading="Special Offers" />
-      <div className="w-full grid grid-cols-1 md:grid-cols-2 lgl:grid-cols-3 xl:grid-cols-4 gap-10">
-        <Product
-          _id="1101"
-          img={spfOne}
-          productName="Cap for Boys"
-          price="35.00"
-          color="Blank and White"
-          badge={true}
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
-        />
-        <Product
-          _id="1102"
-          img={spfTwo}
-          productName="Tea Table"
-          price="180.00"
-          color="Gray"
-          badge={true}
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
-        />
-        <Product
-          _id="1103"
-          img={spfThree}
-          productName="Headphones"
-          price="25.00"
-          color="Mixed"
-          badge={true}
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
-        />
-        <Product
-          _id="1104"
-          img={spfFour}
-          productName="Sun glasses"
-          price="220.00"
-          color="Black"
-          badge={true}
-          des="Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic excepturi quibusdam odio deleniti reprehenderit facilis."
-        />
+      <div className="w-full pb-20">
+        <Heading heading="Special Offers" />
+        <div className="w-full grid grid-cols-1 md:grid-cols-2 lgl:grid-cols-3 xl:grid-cols-4 gap-10">
+          {products.content.map((item) => (
+              <div key={item.id} className="w-full ">
+                <Product
+                    _id={item.id}
+                    img={item.imageUrls.length > 0 ? item.imageUrls[0] : 'default-image.jpg'}
+                    productName={item.productName}
+                    price={item.price}
+                    discounts={item.discounts}
+                />
+              </div>
+          ))}
+        </div>
       </div>
-    </div>
   );
 };
 
