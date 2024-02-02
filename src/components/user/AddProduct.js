@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {addProduct} from '../../features/product/productReducerService';
 import axios from 'axios';
-import '../../assets/css/AddProduct.css';
 import Swal from 'sweetalert2';
 
 const AddProduct = () => {
