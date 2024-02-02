@@ -9,7 +9,7 @@ const AddProduct = () => {
     const dispatch = useDispatch();
     const [productData, setProductData] = useState({
         productName: '',
-        price: 0,
+        price: '',
         currency: 'USD',
         categoryName: '',
         description: '',
@@ -160,29 +160,30 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="add-product-container">
-            <h2>Add Product</h2>
+        <div className="container-fluid d-flex flex-column align-items-center justify-content-center vh-50 mt-3 pt-3">
+            <h2 className="mb-4">Add Product</h2>
 
-            <form onSubmit={handleSubmit} className="add-product-form">
-                <div className="image-section">
-                    <label>Image Upload:</label>
+            <form onSubmit={handleSubmit} className="row g-3">
+                <div className="col-md-6">
+                    <label className="form-label">Image Upload:</label>
                     <input
                         type="file"
+                        className="form-control"
                         name="image"
                         accept="image/*"
                         onChange={handleImageChange}
                         multiple
                     />
-                    <button type="button" onClick={handleClearImages}>
+                    <button type="button" className="btn btn-secondary mt-2" onClick={handleClearImages}>
                         Clear Images
                     </button>
                     {productData.imageUrls.length > 0 && (
-                        <div>
+                        <div className="mt-3">
                             <p>Selected Images:</p>
-                            <ul>
+                            <ul className="list-unstyled">
                                 {productData.imageUrls.map((url, index) => (
                                     <li key={index}>
-                                        <img src={url} alt={`Image ${index + 1}`}/>
+                                        <img src={url} alt={`Image ${index + 1}`} className="img-thumbnail"/>
                                     </li>
                                 ))}
                             </ul>
@@ -190,27 +191,30 @@ const AddProduct = () => {
                     )}
                 </div>
 
-                <div className="product-details-section">
-                    <label>Product Name:</label>
+                <div className="col-md-6">
+                    <label className="form-label">Product Name:</label>
                     <input
                         type="text"
+                        className="form-control"
                         name="productName"
                         value={productData.productName}
                         onChange={handleInputChange}
                         required
                     />
 
-                    <label>Price:</label>
+                    <label className="form-label">Price:</label>
                     <input
                         type="number"
+                        className="form-control"
                         name="price"
                         value={productData.price}
                         onChange={handleInputChange}
                         required
                     />
 
-                    <label>Currency:</label>
+                    <label className="form-label">Currency:</label>
                     <select
+                        className="form-select"
                         name="currency"
                         value={productData.currency}
                         onChange={handleInputChange}
@@ -220,8 +224,9 @@ const AddProduct = () => {
                         <option value="EUR">EUR</option>
                     </select>
 
-                    <label>Category:</label>
+                    <label className="form-label">Category:</label>
                     <select
+                        className="form-select"
                         name="categoryName"
                         value={selectedCategory}
                         onChange={handleInputChange}
@@ -235,8 +240,9 @@ const AddProduct = () => {
                         ))}
                     </select>
 
-                    <label>Description:</label>
+                    <label className="form-label">Description:</label>
                     <textarea
+                        className="form-control"
                         name="description"
                         value={productData.description}
                         onChange={handleInputChange}
@@ -245,33 +251,36 @@ const AddProduct = () => {
                     />
 
                     {specTemplates.length > 0 && (
-                        <div>
-                            <label>Specification Templates:</label>
-                            <ul>
+                        <div className="mt-3">
+                            <label className="form-label">Specification Templates:</label>
+                            <ul className="list-unstyled">
                                 {specTemplates.map((specTemplate) => (
                                     <li key={specTemplate.id}>
-                                        <label>{specTemplate.specKey}:</label>
+                                        <label className="form-label">{specTemplate.specKey}:</label>
                                         <input
                                             type="text"
+                                            className="form-control"
                                             name={`specifications.${specTemplate.specKey}`}
                                             value={
                                                 productData.specifications.find(
                                                     (spec) => spec.specKey === specTemplate.specKey
                                                 )?.specValue || ''
                                             }
-                                            onChange={(e) =>
-                                                handleSpecificationChange(e, specTemplate.specKey)
-                                            }
+                                            onChange={(e) => handleSpecificationChange(e, specTemplate.specKey)}
                                         />
                                     </li>
                                 ))}
                             </ul>
                         </div>
                     )}
+
+                    <button type="submit" className="btn btn-primary mt-3">
+                        Add Product
+                    </button>
                 </div>
-                <button type="submit">Add Product</button>
             </form>
         </div>
+
     );
 };
 

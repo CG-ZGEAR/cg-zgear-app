@@ -1,76 +1,64 @@
+/*
 .add-product-container {
+    border: 1px solid black;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    height: 100vh;
-    padding: 20px;
+    height: 100%;
 }
 
 .add-product-form {
+    border: 1px solid black;
     display: flex;
-    flex-wrap: wrap;
-    width: 80%;
-    flex-direction: column;
 }
 
 .image-section {
-    flex-basis: 40%;
-    margin-right: 20px;
+    border: 1px solid black;
+    width: 40%;
+    overflow: hidden; !* Ẩn phần thừa của hình ảnh *!
+}
+
+.image-section img {
+    width: 100%; !* Tạo hình ảnh bự cố định *!
+    height: auto; !* Duy trì tỷ lệ khung hình *!
+    display: block; !* Loại bỏ dấu cách dưới hình ảnh *!
 }
 
 .product-details-section {
-    flex-grow: 1;
-    display: flex;
+    border: 1px solid black;
+    height: 100%;
     flex-direction: column;
-    gap: 10px;
+    display: flex;
+    width: 60%;
 }
 
-
-label {
+.product-details-section label {
     margin-bottom: 5px;
-    font-weight: bold;
 }
 
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+.product-details-section textarea {
+    resize: vertical;
+    margin-bottom: 10px;
 }
 
-button {
+!* Tùy chỉnh nút Clear Images và Selected Images *!
+.image-section button {
     margin-top: 10px;
-    padding: 8px;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
 
-ul {
+.image-section ul {
     list-style: none;
     padding: 0;
+    margin-top: 10px;
 }
 
-li img {
-    width: 100px;
-    height: auto;
-    margin-right: 5px;
+.image-section ul li {
     margin-bottom: 5px;
 }
 
-button[type="submit"] {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+.image-section ul li img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ddd;
+    padding: 5px;
 }
-
-button[type="submit"]:hover {
-    background-color: #45a049;
-}
+*/
