@@ -17,6 +17,8 @@
     "crypto-browserify": "^3.12.0",
     "font-awesome": "^4.7.0",
     "framer-motion": "^8.0.2",
+    "immer": "^10.0.3",
+    "lodash": "^4.17.21",
     "jsonwebtoken": "^9.0.2",
     "mdb-react-ui-kit": "^7.2.0",
     "mdbreact": "^5.2.0",

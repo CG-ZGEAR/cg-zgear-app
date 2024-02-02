@@ -22,6 +22,28 @@ export const getActiveUsers = async (currentPage) => {
     }
 };
 
+
+export const updateUser = async (userId, updatedUser) => {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await axios.put(
+        `${USER_MANAGEMENT_API}/${userId}`,
+        updatedUser,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+  
+
 export const getDeletedUsers = async (currentPage) => {
     const token = localStorage.getItem("accessToken");
     try {
@@ -115,6 +137,7 @@ export const getUser = async () => {
                 },
             }
         );
+        console.log(response.data)
         return response.data;
     } catch (error) {
         console.error("Get active users API error:", error);

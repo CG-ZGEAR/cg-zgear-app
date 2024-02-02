@@ -6,6 +6,7 @@ import {
     getUser,
     lockUserAccount,
     unlockUserAccount,
+    updateUser
 } from "../../api/userAPI";
 
 const initialState = {
@@ -45,6 +46,7 @@ export const lockUser = createAsyncThunk("user/lockUser", async (userId) => {
         throw error;
     }
 }); 
+
 
 export const unlockUser = createAsyncThunk(
     "user/unlockUser",
@@ -242,6 +244,7 @@ const userSlice = createSlice({
                 state.users = action.payload;
                 state.error = false;
             })
+        
     },
 });
 
