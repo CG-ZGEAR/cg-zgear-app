@@ -223,7 +223,7 @@ const SignUp = () => {
           </div>
         ) : (
           <form className="w-full lgl:w-[500px] h-screen flex items-center justify-center">
-            <div className="px-6 py-4 w-full h-[96%] flex flex-col justify-start overflow-y-scroll scrollbar-thin scrollbar-thumb-primeColor">
+            <div className="px-6 py-4 w-full h-[96%] flex flex-col justify-start ">
               <h1 className="font-titleFont underline underline-offset-4 decoration-[1px] font-semibold text-2xl mdl:text-3xl mb-4">
                 Create your account
               </h1>

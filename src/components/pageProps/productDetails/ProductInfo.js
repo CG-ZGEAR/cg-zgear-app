@@ -107,7 +107,7 @@ const ProductInfo = ({productInfo}) => {
                     {[1, 2, 3, 4, 5].map((value) => (
                         <button
                             key={value}
-                            className={`p-2 rounded-full`}
+                            className={`p-2 rounded-full bg-black`}
                             onClick={() => handleRatingChange(value)}
                         >
                             {value <= rating ? <FaStar/> : <FaRegStar/>}
